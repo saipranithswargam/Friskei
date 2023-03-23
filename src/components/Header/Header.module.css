@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@700&family=Space+Grotesk&display=swap");
+
+.container {
+    gap: 2rem !important;
+    text-align: center;
+}
+.navToggler {
+    border: none !important;
+}
+.navToggler:focus,
+.navToggler:active {
+    outline: 10px solid #f8f9fa !important;
+}
+.close button:focus,
+.close button:active {
+    outline: 5px solid #fff !important;
+}
+.nav {
+    padding: 1.2rem 1rem !important;
+    background-color: transparent;
+    margin: 0 !important;
+}
+.close {
+    text-align: center;
+}
+.navLink {
+    padding: 0.5rem 1rem;
+    color: #035772 !important;
+    font-family: "Poppins", sans-serif !important;
+}
+.navLink:global(.active) {
+    border-radius: 10px;
+    background-color: #035772;
+    color: #fff !important;
+}
+.navLink:hover {
+    background-color: #035772;
+    border-radius: 10px;
+    color: white !important;
+}
+:global(.offcanvas-backdrop) {
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12.8px);
+    opacity: 0.7 !important;
+}
+.navBrand {
+    font-family: 'Edu NSW ACT Foundation', cursive;
+    font-size: 38px !important;
+    font-weight: 400 !important;
+    color: #386876 !important;
+}
+.active{
+    background-color: #035772;
+    color: #f8f9fa !important;
+    border-radius: 10px;
+}
+
+
+/*media quries*/

@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.mainDiv{
+    height: fit-content;
+    width: 100vw;
+    padding: 3rem 0;
+}
+.mainLine h1{
+    text-align: center;
+    font-size: 70px;
+    font-family: 'Space Grotesk', sans-serif;
+    color: #035772;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.serviceIcons{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 3rem;
+}
+.pair{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+}
+.pair p{
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #035772;
+    margin: 0;
+}
+.imagesGrid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 60vh;
+    margin: 0 auto;
+    margin-top: 2rem;
+    width: 80vw;
+    gap:1rem;
+}
+.imageTextWrapper{
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.imageTextWrapper img{
+    width: 100%;
+    border-radius: 12px;
+    backdrop-filter: rgba(0, 0, 0, 0.826);
+}
+.imageTextWrapper p{
+    font-family: 'Poppins', sans-serif;
+    color: white;
+
+}
