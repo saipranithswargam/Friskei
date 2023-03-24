@@ -78,65 +78,41 @@ const Services = () => {
                     </div>
                 </div>
                 <div className={styles.imagesGrid}>
-                    <div
-                        className={styles.imageTextWrapper}
-                        style={{
-                            backgroundImage: `url(${Grooming2})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "100%",
-                        }}
-                    >
-                        <p>Grooming</p>
+                    <div className={styles.imgContainer}>
+                        <img src={Grooming2} alt="training2" />
+                        <div className={styles.imgContent}>
+                            <h3>Grooming</h3>
+                        </div>
                     </div>
-                    <div
-                        className={styles.imageTextWrapper}
-                        style={{
-                            backgroundImage: `url(${Training2})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                        }}
-                    >
-                        <p>Training</p>
+                    <div className={styles.imgContainer}>
+                        <img src={Training2} alt="training2" />
+                        <div className={styles.imgContent}>
+                            <h3>Training</h3>
+                        </div>
                     </div>
-                    <div
-                        className={styles.imageTextWrapper}
-                        style={{
-                            backgroundImage: `url(${Walking2})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                        }}
-                    >
-                        <p>Walking</p>
+                    <div className={styles.imgContainer}>
+                        <img src={Walking2} alt="training2" />
+                        <div className={styles.imgContent}>
+                            <h3>Walking</h3>
+                        </div>
                     </div>
-                    <div
-                        className={styles.imageTextWrapper}
-                        style={{
-                            backgroundImage: `url(${Vet2})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                        }}
-                    >
-                        <p>Consult Your Vet</p>
+                    <div className={styles.imgContainer}>
+                        <img src={Vet2} alt="training2" />
+                        <div className={styles.imgContent}>
+                            <h3>consult your vet</h3>
+                        </div>
                     </div>
-                    <div
-                        className={styles.imageTextWrapper}
-                        style={{
-                            backgroundImage: `url(${DayCare})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                        }}
-                    >
-                        <p>DayCare</p>
+                    <div className={styles.imgContainer}>
+                        <img src={DayCare} alt="training2" />
+                        <div className={styles.imgContent}>
+                            <h3>DayCare</h3>
+                        </div>
                     </div>
-                    <div
-                        className={styles.imageTextWrapper}
-                        style={{
-                            backgroundImage: `url(${Breeding})`,
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "cover",
-                        }}
-                    >
-                        <p>Breeding</p>
+                    <div className={styles.imgContainer}>
+                        <img src={Breeding} alt="training2" />
+                        <div className={styles.imgContent}>
+                            <h3>Breeding</h3>
+                        </div>
                     </div>
                 </div>
             </div>
