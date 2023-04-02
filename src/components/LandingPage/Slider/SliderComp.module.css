@@ -1,0 +1,35 @@
+.slider{
+    padding: 0 0 0 1rem;
+}
+.sliderContainer{
+    position: relative;
+    width: 100vw;
+}
+.backArrow{
+    position: absolute;
+    top: 40%;
+    left: 1%;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    z-index: 9999;
+}
+    .nextArrow{
+    position: absolute;
+    top: 40%;
+    right: 1%;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    z-index: 999;
+}
+    .backArrow:hover{
+    color: rgb(98, 97, 97);
+}
+    .nextArrow:hover{
+    color: rgb(98, 97, 97);
+}

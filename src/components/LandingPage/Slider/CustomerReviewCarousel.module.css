@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@700&family=Space+Grotesk&display=swap");
+.productGalleryContainer {
+    background-color: transparent;
+}
+.galleryContainer {
+    width: 95%;
+}
+.galleryImage img {
+    width: 340px;
+    height: 230px;
+    margin: 0;
+}
+.main {
+    margin-top: 2px;
+    height: fit-content;
+    width: 100vw;
+    background-color: #035772;
+    padding-bottom: 3rem;
+}
+
+.content {
+    padding-top: 8rem;
+}
+
+.content h1 {
+    text-align: center;
+    font-size: 70px;
+    color: #f6f9f5;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.content .buttonDiv{
+    text-align: center;
+    margin-bottom: 2.5rem;
+    margin-top: 1rem;
+} 
+.buttonDiv button{
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    border: none;
+    color: #035772;
+
+}
+
+.buttonDiv button:hover{
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+}

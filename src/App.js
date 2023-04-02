@@ -1,9 +1,18 @@
+import React from "react";
 import Header from "./components/Header/Header";
 import Hero from "./components/LandingPage/Hero/Hero";
 import { Fragment } from "react";
 import Fab from "@mui/material/Fab";
-import "./App.js";
 import Services from "./components/LandingPage/Services/Services";
+import JoinUs from "./components/LandingPage/JoinUs/JoinUs";
+import CustomerReview from "./components/LandingPage/CustomerReview/CustomerReview";
+import CustomerReviewCarousel from "./components/LandingPage/Slider/CustomerReviewCarousel";
+import Footer from "./components/Footer/Footer";
+import LandingForm from "./components/Form/LandingForm";
+import { Route, Routes } from "react-router-dom";
+import UserLogin from "./components/AuthForms/UserLogin";
+import UserRegsiter from "./components/AuthForms/UserRegister";
+import ForgotPassword from "./components/AuthForms/ForgotPassword";
 function App() {
     const style = {
         margin: 0,
@@ -12,18 +21,41 @@ function App() {
         bottom: 20,
         left: "auto",
         position: "fixed",
-        padding:"1rem 2rem",
-        backgroundColor:"#035772",
-        color:"#FFF"
+        padding: "1rem 2rem",
+        backgroundColor: "#035772",
+        color: "#FFF",
     };
     return (
         <Fragment>
-            <Header />
-            <Hero />
-            <Fab variant="extended" style={style} onClick={()=>{console.log("testing")}}> 
-                Let's Chat
-            </Fab>
-            <Services />
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <React.Fragment>
+                            <Header />
+                            <Hero />
+                            <Fab
+                                variant="extended"
+                                style={style}
+                                onClick={() => {
+                                    console.log("testing");
+                                }}
+                            >
+                                Let's Chat
+                            </Fab>
+                            <LandingForm />
+                            <Services />
+                            <JoinUs />
+                            <CustomerReview />
+                            <CustomerReviewCarousel />
+                            <Footer />
+                        </React.Fragment>
+                    }
+                />
+                <Route element={<UserLogin />} path="/login" />
+                <Route element={<UserRegsiter />} path="/register" />
+                <Route element={<ForgotPassword />} path="/forgotPassword" />
+            </Routes>
         </Fragment>
     );
 }

@@ -1,0 +1,91 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999999999;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+.productModalContainer {
+    position: fixed;    
+    margin: auto;
+    background-color: white;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 9999999999999999999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 2rem;
+}
+.closeButton{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    background: transparent;
+}
+.modalImage img{
+    height: 500px;
+}
+.modalImage{
+    padding: 0 3rem;
+}
+.modalContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 3rem;
+    height: 100%;
+    gap: 1rem;
+}
+.description{
+    font-size: 2rem;
+    margin: 0;
+    color: rgb(87, 87, 87);
+}
+.price{
+    font-size: 1.5rem;
+    margin: 0;
+    color: rgb(87, 87, 87);
+}
+.set,.quantity{
+    border-radius: 10px;
+    background-color: #e1e7e3;
+    height: 2rem;
+    border: none;
+    outline: none;
+    padding: 1rem 2rem;
+}
+
+@media (max-width: 1050px) {
+    .productModalContainer{
+        flex-direction: column;
+        top: 5vh;
+    }
+}
+@media (max-width: 700px) {
+    .productModalContainer{
+        padding: 1rem;
+    }
+    .modalImage img{
+        height: 300px;
+    }
+}
+@media (max-width: 500px) {
+    .modalImage{
+        padding: 0 1rem;
+    }
+    .modalImage img{
+        height: 200px;
+    }
+    .modalContent{
+        padding: 1rem;
+    }
+}
