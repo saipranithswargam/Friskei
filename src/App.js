@@ -13,6 +13,9 @@ import { Route, Routes } from "react-router-dom";
 import UserLogin from "./components/AuthForms/UserLogin";
 import UserRegsiter from "./components/AuthForms/UserRegister";
 import ForgotPassword from "./components/AuthForms/ForgotPassword";
+import JoinUsPage from "./components/JoinUs/JoinUs";
+import JoinUsRegsiterForm from "./components/AuthForms/JoinUsRegisterForm";
+import JoinUsServiceDetails from "./components/AuthForms/JoinUsServiceDetails";
 function App() {
     const style = {
         margin: 0,
@@ -54,7 +57,24 @@ function App() {
                 />
                 <Route element={<UserLogin />} path="/login" />
                 <Route element={<UserRegsiter />} path="/register" />
+                <Route
+                    element={
+                        <>
+                            <Header />
+                            <JoinUsPage />
+                        </>
+                    }
+                    path="/joinus"
+                />
                 <Route element={<ForgotPassword />} path="/forgotPassword" />
+                <Route
+                    element={<JoinUsRegsiterForm />}
+                    path="/joinus/register/:joinAs"
+                />
+                <Route
+                    element={<JoinUsServiceDetails />}
+                    path="/joinus/register/:joinAs/serviceDetails"
+                />
             </Routes>
         </Fragment>
     );
