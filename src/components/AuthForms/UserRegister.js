@@ -8,7 +8,29 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import { useNavigate } from "react-router-dom";
 const UserRegsiter = () => {
+    const navigate = useNavigate();
+    const [name, setName] = React.useState("");
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [gender, setGender] = React.useState("");
+    const [city, setCity] = React.useState("");
+    const emailChangeHandler = (event) => {
+        setEmail(event.target.value);
+    };
+    const nameChangeHandler = (event) => {
+        setName(event.target.value);
+    };
+    const passwordChangeHandler = (event) => {
+        setPassword(event.target.value);
+    };
+    const genderChangeHandler = (event) => {
+        setGender(event.target.value);
+    };
+    const cityChangeHandler = (event) => {
+        setCity(event.target.value);
+    };
     const { control, handleSubmit } = useForm({
         defaultValues: {
             phone: "",
@@ -16,13 +38,28 @@ const UserRegsiter = () => {
     });
 
     const onSubmit = (data) => {
-        console.log(data);
+        localStorage.setItem("loggedIn", true);
+        const Data = {
+            name: name,
+            email: email,
+            gender: gender,
+            password: password,
+            mobileNum: data.phone,
+            city: city,
+        };
+        fetch("https://friskei-backend.onrender.com/users/register", {
+            method: "POST",
+            body: JSON.stringify(Data),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            if (response.ok) {
+                navigate("/login");
+            }
+        });
     };
-    const [Gender, setGender] = React.useState("");
 
-    const handleChange = (event) => {
-        setGender(event.target.value);
-    };
     return (
         <div className={styles.main}>
             <div className={styles.registerCard}>
@@ -42,6 +79,8 @@ const UserRegsiter = () => {
                                 borderColor: "#035772",
                             },
                         }}
+                        onChange={nameChangeHandler}
+                        value={name}
                     />
                     <Controller
                         control={control}
@@ -68,6 +107,8 @@ const UserRegsiter = () => {
                                 borderColor: "#035772",
                             },
                         }}
+                        value={email}
+                        onChange={emailChangeHandler}
                     />
                     <TextField
                         label="Create Password"
@@ -80,6 +121,8 @@ const UserRegsiter = () => {
                                 borderColor: "#035772",
                             },
                         }}
+                        onChange={passwordChangeHandler}
+                        value={password}
                     />
                     <Box sx={{ minWidth: 120 }}>
                         <FormControl fullWidth>
@@ -89,9 +132,9 @@ const UserRegsiter = () => {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={Gender}
+                                value={gender}
                                 label="Gender"
-                                onChange={handleChange}
+                                onChange={genderChangeHandler}
                             >
                                 <MenuItem value={"Male"}>Male</MenuItem>
                                 <MenuItem value={"Female"}>Female</MenuItem>
@@ -110,12 +153,14 @@ const UserRegsiter = () => {
                                 borderColor: "#035772",
                             },
                         }}
+                        onChange={cityChangeHandler}
+                        value={city}
                     />
-                    <Box sx={{textAlign:"center"}} >
+                    <Box sx={{ textAlign: "center" }}>
                         <Button
                             type="submit"
                             variant="contained"
-                            sx={{ mt: 2}}
+                            sx={{ mt: 2 }}
                             className={styles.button}
                         >
                             Create an account

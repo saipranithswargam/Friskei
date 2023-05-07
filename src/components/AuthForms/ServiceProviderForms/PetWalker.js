@@ -6,6 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import styles from "./PetWalker.module.css";
 import MultipleSelectCheckmarks from "./MultiselectDropdown";
+import TextField from "@mui/material/TextField";
 const variants = [
     {
         id: 3,
@@ -86,7 +87,7 @@ const PetWalker = () => {
                                 </FormControl>
                             </Box>
                         </div>
-                        <div className={styles.input}>
+                        {/* <div className={styles.input}>
                             <label>
                                 {`How many ${type} do you need walked ?`}
                             </label>
@@ -96,8 +97,8 @@ const PetWalker = () => {
                                 min={1}
                                 max={8}
                             />
-                        </div>
-                        <div className={styles.input}>
+                        </div> */}
+                        {/* <div className={styles.input}>
                             <label>{`Breed of the ${type} ?`}</label>
                             <Box sx={{ minWidth: 120 }}>
                                 <FormControl fullWidth>
@@ -120,15 +121,15 @@ const PetWalker = () => {
                                     </Select>
                                 </FormControl>
                             </Box>
-                        </div>
-                        <div className={styles.input}>
+                        </div> */}
+                        {/* <div className={styles.input}>
                             <label>Size of the Dog ?</label>
                             <MultipleSelectCheckmarks
                                 variantName={variantName}
                                 handleChange={handleChange}
                                 variants={variants}
                             />
-                        </div>
+                        </div> */}
                         <div className={styles.input}>
                             <label>Price Per Hour ?</label>
                             <div className={styles.select}>
@@ -140,7 +141,21 @@ const PetWalker = () => {
                                 <input></input>
                             </div>
                         </div>
+                        <div className={styles.input}>
+                            <label>Note</label>
+                            <TextField
+                                label="Pet Breed, Allergies"
+                                sx={{
+                                    "& label.Mui-focused": {
+                                        color: "#035772",
+                                    },
 
+                                    "&.Mui-focused fieldset'": {
+                                        borderColor: "#035772",
+                                    },
+                                }}
+                            />
+                        </div>
                         <Box sx={{ textAlign: "center" }}>
                             <Button
                                 variant="contained"

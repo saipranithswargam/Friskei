@@ -18,7 +18,7 @@ const JoinUsRegisterForm = (props) => {
     const [city, setCity] = React.useState("");
     const [pincode, setPincode] = React.useState("");
     const [gender, setGender] = React.useState("");
-
+    const [petParent, setPetParent] = React.useState("");
     const emailChangeHandler = (event) => {
         setEmail(event.target.value);
     };
@@ -34,6 +34,9 @@ const JoinUsRegisterForm = (props) => {
     const pincodeChangeHandler = (event) => {
         setPincode(event.target.value);
     };
+    const petParentChangeHandler = (event) => {
+        setPetParent(event.target.value);
+    };
     const { control, handleSubmit } = useForm({
         defaultValues: {
             phone: "",
@@ -43,11 +46,27 @@ const JoinUsRegisterForm = (props) => {
         setGender(event.target.value);
     };
     const onSubmit = (data) => {
-        console.log(name, email, gender, password, data);
-        const param = params.joinAs;
-        console.log(param);
         localStorage.setItem("loggedIn", true);
-        navigate(`/joinus/register/${param}/serviceDetails`);
+        const Data = {
+            name: name,
+            email: email,
+            gender: gender,
+            password: password,
+            mobileNum: data.phone,
+            city: city,
+            petParent: petParent,
+        };
+        fetch("https://friskei-backend.onrender.com/providers/register", {
+            method: "POST",
+            body: JSON.stringify(Data),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then(response=> {
+            if(response.ok){
+            navigate(`/joinus/register/${params.joinAs}/serviceDetails`);
+            }
+        });
     };
     return (
         <div className={styles.main}>
@@ -70,6 +89,7 @@ const JoinUsRegisterForm = (props) => {
                         }}
                         value={name}
                         onChange={nameChangeHandler}
+                        required
                     />
                     <Controller
                         control={control}
@@ -98,6 +118,7 @@ const JoinUsRegisterForm = (props) => {
                         }}
                         onChange={emailChangeHandler}
                         value={email}
+                        required
                     />
                     <TextField
                         label="Create Password"
@@ -112,9 +133,10 @@ const JoinUsRegisterForm = (props) => {
                         }}
                         type={"password"}
                         onChange={passwordChangeHandler}
+                        required
                     />
                     <Box sx={{ minWidth: 120 }}>
-                        <FormControl fullWidth>
+                        <FormControl fullWidth required>
                             <InputLabel id="demo-simple-select-label">
                                 Gender
                             </InputLabel>
@@ -144,11 +166,25 @@ const JoinUsRegisterForm = (props) => {
                         }}
                         onChange={cityChangeHandler}
                         value={city}
+                        required
                     />
-                    <TextField label="Service"
-                        value={params.joinAs}
-                        aria-readonly
-                     />
+                    <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth required>
+                            <InputLabel id="demo-simple-select-label">
+                                Pet Parent
+                            </InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={petParent}
+                                label="Pet Parent"
+                                onChange={petParentChangeHandler}
+                            >
+                                <MenuItem value={"Yes"}>Yes</MenuItem>
+                                <MenuItem value={"No"}>No</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
                     <TextField
                         label="Pincode"
                         sx={{

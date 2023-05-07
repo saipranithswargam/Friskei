@@ -1,4 +1,4 @@
-import styles from "./PetGroomer.module.css";
+import styles from "./PetTrainer.module.css";
 import * as React from "react";
 import { Box, Button } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -7,7 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import MultipleSelectCheckmarks from "./MultiselectDropdown";
 import TextField from "@mui/material/TextField";
-const PetGroomer = () => {
+const PetTrainer = () => {
     const [type, setType] = React.useState("Cat");
     const [breed, setBreed] = React.useState("");
     const handlePetChange = (event) => {
@@ -127,4 +127,4 @@ const PetGroomer = () => {
     );
 };
 
-export default PetGroomer;
+export default PetTrainer;
