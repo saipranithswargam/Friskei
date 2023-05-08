@@ -25,3 +25,8 @@
     font: 20px;
     font-family: 'Poppins', sans-serif;
 }
+@media(max-width:450px){
+    .above{
+        flex-direction: column;
+    }
+}

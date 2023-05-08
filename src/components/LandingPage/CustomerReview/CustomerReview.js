@@ -12,7 +12,13 @@ const CustomerReview = () => {
             <div className={styles.review}>
                 <div className={styles.review1}>
                     <div className={styles.reviewCard}>
-                        <img alt="dog1" src={DogReview} className={styles.image} />
+                        <div className={styles.Img} >
+                            <img
+                                alt="dog1"
+                                src={DogReview}
+                                className={styles.image}
+                            />
+                        </div>
                         <div>
                             <p>
                                 “I'm a testimonial. Click to edit me and add
@@ -25,7 +31,13 @@ const CustomerReview = () => {
                 </div>
                 <div className={styles.review2}>
                     <div className={styles.reviewCard2}>
-                        <img alt="dog2" src={DogReview2} className={styles.image} />
+                        <div className={styles.Img}>
+                            <img
+                                alt="dog2"
+                                src={DogReview2}
+                                className={styles.image}
+                            />
+                        </div>
                         <div>
                             <p>
                                 “I'm a testimonial. Click to edit me and add
@@ -38,7 +50,13 @@ const CustomerReview = () => {
                 </div>
                 <div className={styles.review3}>
                     <div className={styles.reviewCard3}>
-                        <img alt="dog3" src={DogReview3} className={styles.image} />
+                        <div className={styles.Img}>
+                            <img
+                                alt="dog3"
+                                src={DogReview3}
+                                className={styles.image}
+                            />
+                        </div>
                         <div>
                             <p>
                                 “I'm a testimonial. Click to edit me and add

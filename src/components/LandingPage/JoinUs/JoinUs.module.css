@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 .main {
-    height: 70vh;
+    height: fit-content;
+    padding-bottom: 2rem;
     width: 100vw;
 }
 .mainLines h1 {
@@ -22,7 +23,10 @@
 }
 .imagesDiv {
     margin-top: 2.5rem;
-    display: flex;
+    display: grid;
+    padding: 0 1rem;
+    gap:10px;
+    grid-template-columns: repeat(6,1fr);
     justify-content: space-evenly;
 }
 
@@ -40,4 +44,29 @@
 }
 .remove{
     text-decoration: none;
+}
+@media(max-width:800px){
+    .mainLines h1{
+        font-size: 40px;
+    }
+    .imagesDiv{
+        grid-template-columns: repeat(3,1fr);
+        justify-content: center;
+        align-items: center;
+    }
+    .Img{
+        text-align: center;
+    }
+    .description p{
+        font-size: 15px;
+    }
+}
+@media (max-width:400px){
+    .imagesDiv{
+        grid-template-columns: repeat(2,1fr);
+        gap: 2rem;
+    }
+    .mainLines h1{
+        font-size: 30px;
+    }
 }

@@ -23,44 +23,65 @@ const JoinUs = () => {
                 </p>
             </div>
             <div className={styles.imagesDiv}>
-                <Link to="/joinus/register/petgroomer" className={styles.remove} >
+                <Link
+                    to="/joinus/register/petgroomer"
+                    className={styles.remove}
+                >
                     <div className={styles.imageContent}>
-                        <img src={JoinUsGrooming} alt="JoinUsGrooming" />
+                        <div className={styles.Img}>
+                            <img src={JoinUsGrooming} alt="JoinUsGrooming" />
+                        </div>
                         <p>As a Friskee </p>
                         <p>Groomer</p>
                     </div>
                 </Link>
-                <Link to="/joinus/register/petbreeder" className={styles.remove}>
+                <Link
+                    to="/joinus/register/petbreeder"
+                    className={styles.remove}
+                >
                     <div className={styles.imageContent}>
-                        <img src={JoinUsCat} alt="joionUsCat" />
+                        <div className={styles.Img}>
+                            <img src={JoinUsCat} alt="joionUsCat" />
+                        </div>
                         <p>As a Friskee</p>
                         <p>Breeder</p>
                     </div>
                 </Link>
                 <Link to="/joinus/register/daycarer" className={styles.remove}>
                     <div className={styles.imageContent}>
-                        <img src={JoinUsDogg} alt="JoinUsDogg" />
+                        <div className={styles.Img}>
+                            <img src={JoinUsDogg} alt="JoinUsDogg" />
+                        </div>
                         <p>As a Friskee</p>
                         <p>Daycare</p>
                     </div>
                 </Link>
                 <Link to="/joinus/register/vet" className={styles.remove}>
                     <div className={styles.imageContent}>
-                        <img src={JoinUsVet} alt="JoinUsVet" />
+                        <div className={styles.Img}>
+                            <img src={JoinUsVet} alt="JoinUsVet" />
+                        </div>
                         <p>As a Friskee </p>
                         <p>Vetenirary</p>
                     </div>
                 </Link>
                 <Link to="/joinus/register/petwalker" className={styles.remove}>
                     <div className={styles.imageContent}>
-                        <img src={JoinUsTwoDogs} alt="JoinUsTwoDogs" />
+                        <div className={styles.Img}>
+                            <img src={JoinUsTwoDogs} alt="JoinUsTwoDogs" />
+                        </div>
                         <p>As a Friskee </p>
                         <p>Walker</p>
                     </div>
                 </Link>
-                <Link to="/joinus/register/pettrainer" className={styles.remove}>
+                <Link
+                    to="/joinus/register/pettrainer"
+                    className={styles.remove}
+                >
                     <div className={styles.imageContent}>
-                        <img src={JoinUsTraining} alt="JoinUsTraining" />
+                        <div className={styles.Img}>
+                            <img src={JoinUsTraining} alt="JoinUsTraining" />
+                        </div>
                         <p>As a Friskee </p>
                         <p>Trainer</p>
                     </div>
