@@ -73,10 +73,10 @@ const LandingForm = () => {
             </div>
             {(!selectedCat || selectedDog) && (
                 <div className={styles.lower}>
-                    <div className={styles.outerSentance}>
+                    {/* <div className={styles.outerSentance}>
                         <p>For When You're Away</p>
                         <p>For When You're At Work</p>
-                    </div>
+                    </div> */}
                     <div className={styles.options}>
                         <div
                             className={`${styles.Boarding} ${
@@ -92,7 +92,12 @@ const LandingForm = () => {
                             <p>Boarding</p>
                         </div>
                         <div
-                            className={[styles.HouseSitting,setChosenPara==="House Sitting near" ? styles.active : ''].join(' ')}
+                            className={[
+                                styles.HouseSitting,
+                                setChosenPara === "House Sitting near"
+                                    ? styles.active
+                                    : "",
+                            ].join(" ")}
                             onClick={houseSittingClickHandler}
                         >
                             <div className={styles.imageDiv}>
@@ -141,33 +146,6 @@ const LandingForm = () => {
                         </div>
                     </div>
                     <div className={styles.InputDatePicker}>
-                        <div className={styles.zipPicker}>
-                            <p>{chosenPara}</p>
-                            <input
-                                type="text"
-                                placeholder="Zip code"
-                                style={{
-                                    padding: "16.5px 0 16.5px 18px",
-                                    width: "100%",
-                                }}
-                            />
-                        </div>
-                        <div className={styles.DatePicker}>
-                            <p>For these days</p>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker label={datePlaceholder.first} />
-                            </LocalizationProvider>
-                            <img
-                                alt="arrow"
-                                src={Arrow}
-                                className={styles.arrow}
-                            />
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DatePicker label={datePlaceholder.second} />
-                            </LocalizationProvider>
-                        </div>
-                    </div>
-                    <div className={styles.sizeSearch}>
                         <div className={styles.sizeOuter}>
                             <p>My Dog Size</p>
                             <div className={styles.size}>
@@ -189,6 +167,33 @@ const LandingForm = () => {
                                 </div>
                             </div>
                         </div>
+                        {/* <div className={styles.DatePicker}>
+                            <p>For these days</p>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker label={datePlaceholder.first} />
+                            </LocalizationProvider>
+                            <img
+                                alt="arrow"
+                                src={Arrow}
+                                className={styles.arrow}
+                            />
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker label={datePlaceholder.second} />
+                            </LocalizationProvider>
+                        </div> */}
+                    </div>
+                    <div className={styles.sizeSearch}>
+                        <div className={styles.zipPicker}>
+                            <p>{chosenPara}</p>
+                            <input
+                                type="text"
+                                placeholder="Zip code"
+                                style={{
+                                    padding: "16.5px 0 16.5px 18px",
+                                    width: "100%",
+                                }}
+                            />
+                        </div>
                         <div className={styles.button}>
                             <button>Search</button>
                         </div>
@@ -197,9 +202,9 @@ const LandingForm = () => {
             )}
             {selectedCat && !selectedDog && (
                 <div className={styles.lower}>
-                    <div className={styles.outerSentance}>
+                    {/* <div className={styles.outerSentance}>
                         <p>For When You're Away</p>
-                    </div>
+                    </div> */}
                     <div className={styles.options2}>
                         <div className={styles.Boarding2}>
                             <div className={styles.imageDiv}>
@@ -220,9 +225,9 @@ const LandingForm = () => {
                             <p>Drop-In Visits</p>
                         </div>
                     </div>
-                    <div className={styles.InputDatePicker}>
+                    <div className={styles.sizeSearch}>
                         <div className={styles.zipPicker}>
-                            <p>Boarding near</p>
+                            <p>{chosenPara}</p>
                             <input
                                 type="text"
                                 placeholder="Zip code"
@@ -232,7 +237,10 @@ const LandingForm = () => {
                                 }}
                             />
                         </div>
-                        <div className={styles.DatePicker}>
+                        <div className={styles.button}>
+                            <button>Search</button>
+                        </div>
+                        {/* <div className={styles.DatePicker}>
                             <p>For these days</p>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker label="Drop off" />
@@ -245,10 +253,7 @@ const LandingForm = () => {
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker label="Pick up" />
                             </LocalizationProvider>
-                        </div>
-                    </div>
-                    <div className={styles.buttonDiv}>
-                        <button>Search</button>
+                        </div> */}
                     </div>
                 </div>
             )}

@@ -14,14 +14,16 @@
     letter-spacing: 1px;
 }
 .serviceIcons {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     justify-content: space-evenly;
     margin-top: 3rem;
+    padding: 0px 15px;
 }
 .pair {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.5rem;
     align-items: center;
 }
 .pair p {
@@ -85,4 +87,40 @@
 .imgContainer:hover .imgContent {
     opacity: 1;
     top: 50%;
+}
+@media (max-width: 915px) {
+    .mainLine h1 {
+        font-size: 60px;
+    }
+}
+@media (max-width: 800px) {
+    .mainLine h1 {
+        font-size: 40px;
+    }
+    .serviceIcons {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+    .imagesGrid{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media (max-width: 540px) {
+    .mainLine h1 {
+        font-size: 25px;
+    }
+}
+
+@media(max-width:450px){
+    .serviceIcons{
+        grid-template-columns: repeat(2,1fr);
+        padding: 0;
+    }
+    .pair{
+        gap: 5px;
+    }
+    .imagesGrid{
+        grid-template-columns: 1fr;
+    }
 }

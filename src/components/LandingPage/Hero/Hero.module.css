@@ -32,3 +32,44 @@
     right: 0;
     width: 930px;
 }
+@media(max-width:996px){
+    .dogImage{
+        top:15rem;
+        right: 1rem;        
+    }
+    .mainDiv{
+        height: 105vh;
+    }
+    .colouredDiv h1{
+        font-size: 70px;
+    }
+    .dogImage{
+        width: 80%;
+    }
+}
+@media (max-width:735px){
+    .colouredDiv{
+        padding: 2rem 1rem;
+    }
+    .colouredDiv h1{
+        font-size: 60px;
+    }
+    .dogImage{
+        width: 95%;
+    }
+}
+@media (max-width:510px){
+        .colouredDiv h1{
+            font-size: 45px;
+        }
+        .colouredDiv p{
+            font-size: 16px;
+        }
+        .mainDiv{
+            height: fit-content;
+        }
+        .colouredDiv{
+            height: fit-content;
+            padding-bottom: 60%;
+        }
+}
