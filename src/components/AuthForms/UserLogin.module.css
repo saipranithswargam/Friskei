@@ -1,38 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&family=Space+Grotesk&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-.main{
+.main {
     width: 100vw;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.loginCard{
+.loginCard {
     height: 70vh;
     width: 40vw;
     box-shadow: 1px 1px 12px 0 rgba(0, 0, 0, 0.323);
     border-radius: 10px;
 }
-.loginCard h1{
+.loginCard h1 {
     text-align: center;
     color: #035772;
     margin-top: 1rem;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     margin-bottom: 1rem;
 }
-.loginCard p{
+.loginCard p {
     text-align: center;
     margin: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     margin-bottom: 1rem;
 }
-.registerDiv a{
+.registerDiv a {
     display: inline-block;
     text-align: center;
     margin: 0 auto;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
-.main form{
+.main form {
     display: flex;
     flex-direction: column;
     width: 50%;
@@ -40,29 +40,65 @@
     margin-top: 3.4rem;
     gap: 1rem;
 }
-.loginForm input{
-   padding: 0.7rem 1.3rem;
-   border-radius: 12px;
-   border: none;
-   background-color: #f0f4f5;
-   font-family: 'Poppins', sans-serif;
+.loginForm input {
+    padding: 0.7rem 1.3rem;
+    border-radius: 12px;
+    border: none;
+    background-color: #f0f4f5;
+    font-family: "Poppins", sans-serif;
 }
-.loginForm button{
+.loginForm button {
     width: 50%;
     margin: 0 auto;
     padding: 0.7rem 1.3rem;
     background-color: #035772;
     border: none;
     color: white;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     border-radius: 9px;
 }
-.loginForm button:hover{
+.loginForm button:hover {
     border: 1px solid #035772;
     color: #035772;
     background-color: transparent;
 }
-.loginForm input:active,.loginForm input:focus{
+.loginForm input:active,
+.loginForm input:focus {
     border: none !important;
     outline: none;
+}
+@media (max-width: 1200px) {
+    .loginCard {
+        width: 50vw;
+    }
+}
+@media (max-width: 850px) {
+    .loginCard {
+        width: 65vw;
+    }
+}
+@media (max-width: 620px) {
+    .loginCard {
+        width: 80vw;
+    }
+}
+
+@media (max-width: 500px) {
+    .loginCard {
+        width: 90vw;
+    }
+    .main form {
+        width: 80%;
+    }
+}
+@media (max-width: 350px) {
+    .loginCard p {
+        font-size: 10px;
+    }
+    .loginCard h1{
+        font-size: 20px;
+    }
+    .loginForm input{
+        font-size: 16px;
+    }
 }

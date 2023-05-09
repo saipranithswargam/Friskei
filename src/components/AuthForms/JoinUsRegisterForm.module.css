@@ -9,7 +9,7 @@
 .registerCard {
     height: fit-content;
     width: 50vw;
-    margin-top: 3rem;
+    margin:3rem 0;
     box-shadow: 1px 1px 12px 0 rgba(0, 0, 0, 0.323);
     border-radius: 10px;
 }
@@ -20,27 +20,53 @@
     font-family: "Poppins", sans-serif;
     margin-bottom: 1rem;
 }
-.userRegsiterForm{
+.userRegsiterForm {
     display: flex;
     flex-direction: column;
     width: 50%;
     margin: 2rem auto;
     gap: 1rem;
 }
-.userRegsiterForm input{
+.userRegsiterForm input {
     padding: 1rem 2rem;
 }
 
-.userRegsiterForm .button{
+.userRegsiterForm .button {
     width: 50%;
     margin: 0 auto;
     background-color: #035772;
     border: none;
     color: white;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
-.button:hover{
+.button:hover {
     border: 1px solid #035772 !important;
     color: #035772;
     background-color: transparent !important;
+}
+@media (max-width: 1200px) {
+    .registerCard {
+        width: 60vw;
+    }
+}
+@media (max-width: 850px) {
+    .registerCard {
+        width: 75vw;
+    }
+}
+@media(max-width:600px){
+    .registerCard{
+        width: 85vw;
+    }
+    .userRegsiterForm{
+        width: 70%;
+    }
+}
+@media(max-width:420px){
+    .registerCard{
+        width: 90vw;
+    }
+    .userRegsiterForm{
+        width: 85%;
+    }
 }

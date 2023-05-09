@@ -44,3 +44,21 @@
     color: #035772;
     background-color: transparent !important;
 }
+@media(max-width:1020px){
+    .registerCard{
+        width: 65vw;
+    }
+}
+@media(max-width:780px){
+    .registerCard{
+        width: 85vw;
+    }
+}
+@media(max-width:525px){
+    .registerCard{
+        width: 95vw;
+    }
+    .userRegsiterForm{
+        width: 85%;
+    }
+}

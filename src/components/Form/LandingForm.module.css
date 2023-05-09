@@ -121,7 +121,7 @@
 .size {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     justify-content: center;
     align-items: center;
@@ -184,7 +184,7 @@
 
 .options2 {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     align-items: center;
     justify-content: space-evenly;
     gap: 1rem;
@@ -228,8 +228,32 @@
 
 .active {
     border: 2px solid #404347;
+    width: 100%;
+    border-radius: 9px;
+    padding: 8px;
 }
-
+.active p {
+    text-align: center;
+}
+.active:hover {
+    cursor: pointer;
+}
+.activeSize {
+    width: 100%;
+    border: 2px solid #404347;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 1rem 1rem;
+}
+.activeSize p {
+    text-align: center;
+}
+.activeSize:hover {
+    cursor: pointer;
+}
 @media (max-width: 1134px) {
     .container {
         width: 80vw;
@@ -247,11 +271,11 @@
     }
 }
 
-@media(max-width:567px){
-    .size{
-        grid-template-columns: repeat(2,1fr);
+@media (max-width: 567px) {
+    .size {
+        grid-template-columns: repeat(2, 1fr);
     }
-    .container{
+    .container {
         height: fit-content;
     }
 }
@@ -260,8 +284,8 @@
     .options {
         grid-template-columns: repeat(2, 1fr);
     }
-    .options2{
-        grid-template-columns: repeat(2,1fr);
+    .options2 {
+        grid-template-columns: repeat(2, 1fr);
     }
     .lower {
         padding: 15px 5px;

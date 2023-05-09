@@ -6,7 +6,7 @@ const ForgotPassword = () => {
             <div className={styles.forgotPasswordCard}>
                 <h1>Forgot Password</h1>
                 <form className={styles.forgotPasswordForm}>
-                    <input type="text" placeholder="Mobile No. /Email Id" />
+                    <input type="text" placeholder="Email Id" />
                     <button type="submit">Login</button>
                 </form>
             </div>

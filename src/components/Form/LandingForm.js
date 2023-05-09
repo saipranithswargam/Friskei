@@ -5,18 +5,31 @@ import HouseSitting from "../../assets/images/HouseSitting.svg";
 import DropInVisits from "../../assets/images/DropInVisits.svg";
 import DogDayCare from "../../assets/images/DogDaycare.svg";
 import DogWalking from "../../assets/images/DogWalking.svg";
-import Arrow from "../../assets/images/Arrow.svg";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+// import Arrow from "../../assets/images/Arrow.svg";
+// import { LocalizationProvider } from "@mui/x-date-pickers";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 const LandingForm = () => {
     const [selectedCat, setSelectedCat] = React.useState(false);
     const [selectedDog, setSelectedDog] = React.useState(true);
     const [chosenPara, setChosenPara] = React.useState("Boarding near");
-    const [datePlaceholder, setDatePlaceholder] = React.useState({
-        first: "Drop off",
-        second: "Pick up",
-    });
+    const [activeBoarding, setActiveBoarding] = React.useState(true);
+    const [activeHouseSitting, setActiveHouseSitting] = React.useState(false);
+    const [activeDropIn, setActiveDropIn] = React.useState(false);
+    const [activeDayCare, setActiveDayCare] = React.useState(false);
+    const [activeWalking, setActiveWalking] = React.useState(false);
+    const [small, setSmall] = React.useState(true);
+    const [medium, setMedium] = React.useState(false);
+    const [large, setLarge] = React.useState(false);
+    const [giant, setGiant] = React.useState(false);
+    const [serviceType, setServiceType] = React.useState("boarding");
+    const [size, setSize] = React.useState("small");
+    const [location, setLocation] = React.useState("");
+
+    const locationHandler = (event) => {
+        setLocation(event.target.value);
+    };
+
     const dogClickHandler = () => {
         setSelectedDog((prevValue) => {
             return !prevValue;
@@ -30,27 +43,97 @@ const LandingForm = () => {
 
     const boadingClickHandler = (event) => {
         setChosenPara("Boarding near");
-        setDatePlaceholder({ first: "Drop off", second: "Pick up" });
+        setActiveBoarding(true);
+        setActiveDayCare(false);
+        setActiveDropIn(false);
+        setActiveHouseSitting(false);
+        setActiveWalking(false);
+        setServiceType("boarding");
     };
 
     const houseSittingClickHandler = () => {
         setChosenPara("House Sitting near");
-        setDatePlaceholder({ first: "Start date", second: "End date" });
+        setActiveHouseSitting(true);
+        setActiveBoarding(false);
+        setActiveDayCare(false);
+        setActiveDropIn(false);
+        setActiveWalking(false);
+        setServiceType("houseSitting");
     };
 
     const dropInVisitsClickHandler = () => {
         setChosenPara("Drop-In Visits near");
-        setDatePlaceholder({ first: "Start date", second: "End date" });
+        setActiveDropIn(true);
+        setActiveHouseSitting(false);
+        setActiveBoarding(false);
+        setActiveDayCare(false);
+        setActiveWalking(false);
+        setServiceType("dropIn");
     };
 
     const dogDayCareClickHandler = () => {
         setChosenPara("Doggy Day Care near");
-        setDatePlaceholder({ first: "Start date", second: "End date" });
+        setActiveDayCare(true);
+        setActiveDropIn(false);
+        setActiveHouseSitting(false);
+        setActiveBoarding(false);
+        setActiveWalking(false);
+        setServiceType("dogDaycare");
     };
 
     const dogWalkingClickHandler = () => {
         setChosenPara("Dog Walking near");
-        setDatePlaceholder({ first: "Start date", second: "End date" });
+        setActiveWalking(true);
+        setActiveDayCare(false);
+        setActiveDropIn(false);
+        setActiveHouseSitting(false);
+        setActiveBoarding(false);
+        setServiceType("dogWalking");
+    };
+    const smallSizeHandler = () => {
+        setSmall(true);
+        setMedium(false);
+        setLarge(false);
+        setGiant(false);
+        setSize("small");
+    };
+    const mediumSizeHandler = () => {
+        setSmall(false);
+        setMedium(true);
+        setLarge(false);
+        setGiant(false);
+        setSize("medium");
+    };
+    const largeSizeHandler = () => {
+        setSmall(false);
+        setMedium(false);
+        setLarge(true);
+        setGiant(false);
+        setSize("large");
+    };
+    const giantSizeHandler = () => {
+        setSmall(false);
+        setMedium(false);
+        setLarge(false);
+        setGiant(true);
+        setSize("giant");
+    };
+
+    let activeBoardingStyles = activeBoarding ? styles.active : styles.Boarding;
+    let activeHouseSittingStyles = activeHouseSitting
+        ? styles.active
+        : styles.HouseSitting;
+    let activeDayCareStyles = activeDayCare ? styles.active : styles.DogDayCare;
+    let activeWalkingStyles = activeWalking ? styles.active : styles.DogWalking;
+    let activeDropInStyles = activeDropIn ? styles.active : styles.DropInVisits;
+
+    let activeSmallStyles = small ? styles.activeSize : styles.small;
+    let activeMediumStyles = medium ? styles.activeSize : styles.medium;
+    let activeLargeStyles = large ? styles.activeSize : styles.large;
+    let activeGiantStyles = giant ? styles.activeSize : styles.Giant;
+
+    const submitHandler = () => {
+        console.log(size, serviceType, location);
     };
     return (
         <div className={styles.container}>
@@ -73,17 +156,9 @@ const LandingForm = () => {
             </div>
             {(!selectedCat || selectedDog) && (
                 <div className={styles.lower}>
-                    {/* <div className={styles.outerSentance}>
-                        <p>For When You're Away</p>
-                        <p>For When You're At Work</p>
-                    </div> */}
                     <div className={styles.options}>
                         <div
-                            className={`${styles.Boarding} ${
-                                setChosenPara === "Boarding near"
-                                    ? styles.active
-                                    : ""
-                            } `}
+                            className={activeBoardingStyles}
                             onClick={boadingClickHandler}
                         >
                             <div className={styles.imageDiv}>
@@ -92,12 +167,7 @@ const LandingForm = () => {
                             <p>Boarding</p>
                         </div>
                         <div
-                            className={[
-                                styles.HouseSitting,
-                                setChosenPara === "House Sitting near"
-                                    ? styles.active
-                                    : "",
-                            ].join(" ")}
+                            className={activeHouseSittingStyles}
                             onClick={houseSittingClickHandler}
                         >
                             <div className={styles.imageDiv}>
@@ -106,11 +176,7 @@ const LandingForm = () => {
                             <p>HouseSitting</p>
                         </div>
                         <div
-                            className={`${styles.DropInVisits} ${
-                                setChosenPara === "Drop-In Visits near"
-                                    ? styles.active
-                                    : ""
-                            } `}
+                            className={activeDropInStyles}
                             onClick={dropInVisitsClickHandler}
                         >
                             <div className={styles.imageDiv}>
@@ -119,11 +185,7 @@ const LandingForm = () => {
                             <p>Drop-In Visits</p>
                         </div>
                         <div
-                            className={`${styles.DogDayCare} ${
-                                setChosenPara === "Doggy Day Care near"
-                                    ? styles.active
-                                    : ""
-                            } `}
+                            className={activeDayCareStyles}
                             onClick={dogDayCareClickHandler}
                         >
                             <div className={styles.imageDiv}>
@@ -132,11 +194,7 @@ const LandingForm = () => {
                             <p>Doggo Day Care</p>
                         </div>
                         <div
-                            className={`${styles.DogWalking} ${
-                                setChosenPara === "Dog Walking near"
-                                    ? styles.active
-                                    : ""
-                            }`}
+                            className={activeWalkingStyles}
                             onClick={dogWalkingClickHandler}
                         >
                             <div className={styles.imageDiv}>
@@ -149,19 +207,31 @@ const LandingForm = () => {
                         <div className={styles.sizeOuter}>
                             <p>My Dog Size</p>
                             <div className={styles.size}>
-                                <div className={styles.small}>
+                                <div
+                                    className={activeSmallStyles}
+                                    onClick={smallSizeHandler}
+                                >
                                     <p>Small</p>
                                     <p>0 - 15 lbs</p>
                                 </div>
-                                <div className={styles.medium}>
+                                <div
+                                    className={activeMediumStyles}
+                                    onClick={mediumSizeHandler}
+                                >
                                     <p>Medium</p>
                                     <p>16 - 40 lbs</p>
                                 </div>
-                                <div className={styles.large}>
+                                <div
+                                    className={activeLargeStyles}
+                                    onClick={largeSizeHandler}
+                                >
                                     <p>Large</p>
                                     <p>41 - 100 lbs</p>
                                 </div>
-                                <div className={styles.Giant}>
+                                <div
+                                    className={activeGiantStyles}
+                                    onClick={giantSizeHandler}
+                                >
                                     <p>Giant</p>
                                     <p>101+ lbs</p>
                                 </div>
@@ -192,10 +262,11 @@ const LandingForm = () => {
                                     padding: "16.5px 0 16.5px 18px",
                                     width: "100%",
                                 }}
+                                onChange={locationHandler}
                             />
                         </div>
                         <div className={styles.button}>
-                            <button>Search</button>
+                            <button onClick={submitHandler}>Search</button>
                         </div>
                     </div>
                 </div>

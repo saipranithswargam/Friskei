@@ -30,37 +30,39 @@ const UserLogin = () => {
         console.log(response);
     };
     return (
-        <div className={styles.main}>
-            <div className={styles.loginCard}>
-                <h1>Login to Continue</h1>
-                <form className={styles.loginForm}>
-                    <input
-                        type="text"
-                        placeholder="Mobile No. /Email Id"
-                        value={email}
-                        onChange={emailChangeHandler}
-                    />
-                    <input
-                        type="password"
-                        placeholder="password"
-                        value={password}
-                        onChange={passwordChangeHandler}
-                    />
-                    <button type="submit" onClick={submitHandler}>
-                        Login
-                    </button>
-                </form>
-                <p>
-                    <Link to="/forgotPassword">Forgot Password</Link>
-                </p>
-                <p>Don't have an account with us ?</p>
-                <div className={styles.registerDiv}>
+        <>
+            <div className={styles.main}>
+                <div className={styles.loginCard}>
+                    <h1>Login to Continue</h1>
+                    <form className={styles.loginForm}>
+                        <input
+                            type="text"
+                            placeholder="Mobile No. /Email Id"
+                            value={email}
+                            onChange={emailChangeHandler}
+                        />
+                        <input
+                            type="password"
+                            placeholder="password"
+                            value={password}
+                            onChange={passwordChangeHandler}
+                        />
+                        <button type="submit" onClick={submitHandler}>
+                            Login
+                        </button>
+                    </form>
                     <p>
-                        <Link to="/register">Click here to Register</Link>
+                        <Link to="/forgotPassword">Forgot Password</Link>
                     </p>
+                    <p>Don't have an account with us ?</p>
+                    <div className={styles.registerDiv}>
+                        <p>
+                            <Link to="/register">Click here to Register</Link>
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
