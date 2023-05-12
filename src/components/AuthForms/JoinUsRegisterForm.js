@@ -62,9 +62,10 @@ const JoinUsRegisterForm = (props) => {
             headers: {
                 "Content-Type": "application/json",
             },
-        }).then(response=> {
-            if(response.ok){
-            navigate(`/joinus/register/${params.joinAs}/serviceDetails`);
+        }).then((response) => {
+            if (response.ok) {
+                navigate(`/joinus/register/${params.joinAs}/serviceDetails`);
+                console.log(response.token);
             }
         });
     };

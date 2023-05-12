@@ -71,7 +71,8 @@
 .HouseSitting,
 .DropInVisits,
 .DogDayCare,
-.DogWalking {
+.DogWalking,
+.breeding {
     width: 100%;
     border-radius: 9px;
     border: 2px solid rgb(208, 205, 205);
@@ -81,7 +82,8 @@
 .HouseSitting p,
 .DropInVisits p,
 .DogDayCare p,
-.DogWalking p {
+.DogWalking p,
+.breeding p {
     text-align: center;
 }
 
@@ -89,7 +91,8 @@
 .HouseSitting:hover,
 .DropInVisits:hover,
 .DogDayCare:hover,
-.DogWalking:hover {
+.DogWalking:hover,
+.breeding:hover {
     border: 2px solid #404347;
     cursor: pointer;
 }
