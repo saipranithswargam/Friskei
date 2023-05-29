@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./UserLogin.module.css";
 import { Link } from "react-router-dom";
+import Header from "../Header/Header";
 const UserLogin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,27 +18,36 @@ const UserLogin = () => {
             password: password,
         };
         console.log(Data);
-        const response = await fetch(
-            "https://friskei-backend.onrender.com/users/login",
-            {
-                method: "POST",
-                body: JSON.stringify(Data),
-                headers: {
-                    "Content-Type": "application/json",
-                },
+        fetch("https://friskei-backend.onrender.com/users/login", {
+            method: "POST",
+            body: JSON.stringify(Data),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((result) => {
+                    localStorage.setItem(
+                        "freskei",
+                        JSON.stringify({
+                            login: true,
+                            token: result.token,
+                        })
+                    );
+                });
             }
-        );
-        console.log(response);
+        });
     };
     return (
         <>
+            <Header />
             <div className={styles.main}>
                 <div className={styles.loginCard}>
                     <h1>Login to Continue</h1>
                     <form className={styles.loginForm}>
                         <input
                             type="text"
-                            placeholder="Mobile No. /Email Id"
+                            placeholder="Email Id"
                             value={email}
                             onChange={emailChangeHandler}
                         />

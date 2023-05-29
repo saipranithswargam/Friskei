@@ -9,6 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
+import Header from "../Header/Header";
 const UserRegsiter = () => {
     const navigate = useNavigate();
     const [name, setName] = React.useState("");
@@ -45,7 +46,7 @@ const UserRegsiter = () => {
             gender: gender,
             password: password,
             mobileNum: data.phone,
-            city: city,
+            city: city.toLowerCase(),
         };
         fetch("https://friskei-backend.onrender.com/users/register", {
             method: "POST",
@@ -61,114 +62,119 @@ const UserRegsiter = () => {
     };
 
     return (
-        <div className={styles.main}>
-            <div className={styles.registerCard}>
-                <h1>Register with us !</h1>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className={styles.userRegsiterForm}
-                >
-                    <TextField
-                        label="Full Name"
-                        sx={{
-                            "& label.Mui-focused": {
-                                color: "#035772",
-                            },
+        <>
+            <Header />
+            <div className={styles.main}>
+                <div className={styles.registerCard}>
+                    <h1>Register with us !</h1>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className={styles.userRegsiterForm}
+                    >
+                        <TextField
+                            label="Full Name"
+                            sx={{
+                                "& label.Mui-focused": {
+                                    color: "#035772",
+                                },
 
-                            "&.Mui-focused fieldset'": {
-                                borderColor: "#035772",
-                            },
-                        }}
-                        onChange={nameChangeHandler}
-                        value={name}
-                    />
-                    <Controller
-                        control={control}
-                        render={({ field, fieldState }) => (
-                            <MuiTelInput
-                                {...field}
-                                defaultCountry="IN"
-                                helperText={
-                                    fieldState.invalid ? "Tel is invalid" : ""
-                                }
-                                error={fieldState.invalid}
-                            />
-                        )}
-                        name="phone"
-                    />
-                    <TextField
-                        label="Email Address"
-                        sx={{
-                            "& label.Mui-focused": {
-                                color: "#035772",
-                            },
+                                "&.Mui-focused fieldset'": {
+                                    borderColor: "#035772",
+                                },
+                            }}
+                            onChange={nameChangeHandler}
+                            value={name}
+                        />
+                        <Controller
+                            control={control}
+                            render={({ field, fieldState }) => (
+                                <MuiTelInput
+                                    {...field}
+                                    defaultCountry="IN"
+                                    helperText={
+                                        fieldState.invalid
+                                            ? "Tel is invalid"
+                                            : ""
+                                    }
+                                    error={fieldState.invalid}
+                                />
+                            )}
+                            name="phone"
+                        />
+                        <TextField
+                            label="Email Address"
+                            sx={{
+                                "& label.Mui-focused": {
+                                    color: "#035772",
+                                },
 
-                            "&.Mui-focused fieldset'": {
-                                borderColor: "#035772",
-                            },
-                        }}
-                        value={email}
-                        onChange={emailChangeHandler}
-                    />
-                    <TextField
-                        label="Create Password"
-                        sx={{
-                            "& label.Mui-focused": {
-                                color: "#035772",
-                            },
+                                "&.Mui-focused fieldset'": {
+                                    borderColor: "#035772",
+                                },
+                            }}
+                            value={email}
+                            onChange={emailChangeHandler}
+                        />
+                        <TextField
+                            label="Create Password"
+                            sx={{
+                                "& label.Mui-focused": {
+                                    color: "#035772",
+                                },
 
-                            "&.Mui-focused fieldset'": {
-                                borderColor: "#035772",
-                            },
-                        }}
-                        onChange={passwordChangeHandler}
-                        value={password}
-                    />
-                    <Box sx={{ minWidth: 120 }}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">
-                                Gender
-                            </InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={gender}
-                                label="Gender"
-                                onChange={genderChangeHandler}
+                                "&.Mui-focused fieldset'": {
+                                    borderColor: "#035772",
+                                },
+                            }}
+                            onChange={passwordChangeHandler}
+                            value={password}
+                        />
+                        <Box sx={{ minWidth: 120 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">
+                                    Gender
+                                </InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={gender}
+                                    label="Gender"
+                                    onChange={genderChangeHandler}
+                                >
+                                    <MenuItem value={"Male"}>Male</MenuItem>
+                                    <MenuItem value={"Female"}>Female</MenuItem>
+                                    <MenuItem value={"Other"}>Other</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                        <TextField
+                            label="City"
+                            sx={{
+                                "& label.Mui-focused": {
+                                    color: "#035772",
+                                },
+
+                                "&.Mui-focused fieldset'": {
+                                    borderColor: "#035772",
+                                },
+                            }}
+                            onChange={cityChangeHandler}
+                            value={city}
+                        />
+                        <Box sx={{ textAlign: "center" }}>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ mt: 2 }}
+                                className={styles.button}
                             >
-                                <MenuItem value={"Male"}>Male</MenuItem>
-                                <MenuItem value={"Female"}>Female</MenuItem>
-                                <MenuItem value={"Other"}>Other</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Box>
-                    <TextField
-                        label="City"
-                        sx={{
-                            "& label.Mui-focused": {
-                                color: "#035772",
-                            },
-
-                            "&.Mui-focused fieldset'": {
-                                borderColor: "#035772",
-                            },
-                        }}
-                        onChange={cityChangeHandler}
-                        value={city}
-                    />
-                    <Box sx={{ textAlign: "center" }}>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ mt: 2 }}
-                            className={styles.button}
-                        >
-                            Create an account
-                        </Button>
-                    </Box>
-                </form>
+                                Create an account
+                            </Button>
+                        </Box>
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 export default UserRegsiter;

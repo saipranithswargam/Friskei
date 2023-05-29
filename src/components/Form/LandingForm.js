@@ -6,26 +6,25 @@ import DropInVisits from "../../assets/images/DropInVisits.svg";
 import DogDayCare from "../../assets/images/DogDaycare.svg";
 import DogWalking from "../../assets/images/DogWalking.svg";
 import Heart from "../../assets/images/heart.png";
-// import Arrow from "../../assets/images/Arrow.svg";
-// import { LocalizationProvider } from "@mui/x-date-pickers";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import Adopt from "../../assets/images/petAdoption.png";
+import { useNavigate } from "react-router-dom";
+import Loading from "../Spinner/Spinner";
 const LandingForm = () => {
+    const navigate = useNavigate();
     const [selectedCat, setSelectedCat] = React.useState(false);
     const [selectedDog, setSelectedDog] = React.useState(true);
     const [selectOther, setSelectOther] = React.useState(false);
-    // const [chosenPara, setChosenPara] = React.useState("Boarding near");
+    const [locType, setLocType] = React.useState("city");
+    const [loading, setLoading] = React.useState(false);
+    const [latitude, setLatitude] = React.useState("");
+    const [longitude, setLongitude] = React.useState("");
     const [activeBoarding, setActiveBoarding] = React.useState(true);
     const [activeHouseSitting, setActiveHouseSitting] = React.useState(false);
     const [activeDropIn, setActiveDropIn] = React.useState(false);
     const [activeDayCare, setActiveDayCare] = React.useState(false);
     const [activeWalking, setActiveWalking] = React.useState(false);
     const [activeBreeding, setActiveBreeding] = React.useState(false);
-    // const [small, setSmall] = React.useState(true);
-    // const [medium, setMedium] = React.useState(false);
-    // const [large, setLarge] = React.useState(false);
-    // const [giant, setGiant] = React.useState(false);
-    // const [size, setSize] = React.useState("small");
+    const [activeAdopt, setActiveAdopt] = React.useState(false);
     const [serviceType, setServiceType] = React.useState("boarding");
     const [location, setLocation] = React.useState("");
 
@@ -44,64 +43,81 @@ const LandingForm = () => {
         setSelectedDog(false);
     };
 
+    const adoptionClickHandler = (event) => {
+        setActiveBoarding(false);
+        setActiveDayCare(false);
+        setActiveDropIn(false);
+        setActiveHouseSitting(false);
+        setActiveWalking(false);
+        setActiveBreeding(false);
+        setActiveAdopt(true);
+        setServiceType("petAdoption");
+    };
+
     const groomingClickHandler = (event) => {
+        setActiveAdopt(false);
         setActiveBoarding(true);
         setActiveDayCare(false);
         setActiveDropIn(false);
         setActiveHouseSitting(false);
         setActiveWalking(false);
         setActiveBreeding(false);
-        setServiceType("grroming");
+        setServiceType("petGrooming");
     };
 
     const trainingClickHandler = () => {
+        setActiveAdopt(false);
         setActiveHouseSitting(true);
         setActiveBoarding(false);
         setActiveDayCare(false);
         setActiveDropIn(false);
         setActiveWalking(false);
         setActiveBreeding(false);
-        setServiceType("training");
+        setServiceType("petTraining");
     };
 
     const walkingClickHandler = () => {
+        setActiveAdopt(false);
         setActiveDropIn(true);
         setActiveHouseSitting(false);
         setActiveBoarding(false);
         setActiveDayCare(false);
         setActiveWalking(false);
         setActiveBreeding(false);
-        setServiceType("walking");
+        setServiceType("petWalking");
     };
 
     const vetClickHandler = () => {
+        setActiveAdopt(false);
         setActiveDayCare(true);
         setActiveDropIn(false);
         setActiveHouseSitting(false);
         setActiveBoarding(false);
         setActiveWalking(false);
         setActiveBreeding(false);
-        setServiceType("vet");
+        setServiceType("petVet");
     };
 
     const daycareClickHandler = () => {
+        setActiveAdopt(false);
         setActiveWalking(true);
         setActiveDayCare(false);
         setActiveDropIn(false);
         setActiveHouseSitting(false);
         setActiveBoarding(false);
         setActiveBreeding(false);
-        setServiceType("daycare");
+        setServiceType("petCare");
     };
 
     const breedingClickHandler = () => {
+        setActiveAdopt(false);
         setActiveWalking(false);
         setActiveDayCare(false);
         setActiveDropIn(false);
         setActiveHouseSitting(false);
         setActiveBoarding(false);
         setActiveBreeding(true);
-        setServiceType("breeding");
+        setServiceType("petBreeding");
     };
 
     const otherClickHandler = () => {
@@ -109,153 +125,228 @@ const LandingForm = () => {
         setSelectedDog(false);
         setSelectedCat(false);
     };
-    // const smallSizeHandler = () => {
-    //     setSmall(true);
-    //     setMedium(false);
-    //     setLarge(false);
-    //     setGiant(false);
-    //     setSize("small");
-    // };
-    // const mediumSizeHandler = () => {
-    //     setSmall(false);
-    //     setMedium(true);
-    //     setLarge(false);
-    //     setGiant(false);
-    //     setSize("medium");
-    // };
-    // const largeSizeHandler = () => {
-    //     setSmall(false);
-    //     setMedium(false);
-    //     setLarge(true);
-    //     setGiant(false);
-    //     setSize("large");
-    // };
-    // const giantSizeHandler = () => {
-    //     setSmall(false);
-    //     setMedium(false);
-    //     setLarge(false);
-    //     setGiant(true);
-    //     setSize("giant");
-    // };
 
+    const currLocClickHandler = () => {
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0,
+        };
+        const sucess = (pos) => {
+            setLocType("geolocation");
+            setLatitude(pos.coords.latitude);
+            setLongitude(pos.coords.longitude);
+        };
+        const error = (err) => {
+            setLocType("city");
+            console.log(err);
+        };
+        navigator.geolocation.getCurrentPosition(sucess, error, options);
+    };
+    const cityClickHandler = () => {
+        setLocType("city");
+    };
     let activeGroomingStyles = activeBoarding ? styles.active : styles.Boarding;
     let activeTrainingStyles = activeHouseSitting
         ? styles.active
         : styles.HouseSitting;
     let activeVetStyles = activeDayCare ? styles.active : styles.DogDayCare;
     let activeDaycareStyles = activeWalking ? styles.active : styles.DogWalking;
-    let activeWalkingStyles = activeDropIn ? styles.active : styles.DropInVisits;
+    let activeWalkingStyles = activeDropIn
+        ? styles.active
+        : styles.DropInVisits;
     let activeBreedingStyles = activeBreeding ? styles.active : styles.breeding;
-    // let activeSmallStyles = small ? styles.activeSize : styles.small;
-    // let activeMediumStyles = medium ? styles.activeSize : styles.medium;
-    // let activeLargeStyles = large ? styles.activeSize : styles.large;
-    // let activeGiantStyles = giant ? styles.activeSize : styles.Giant;
+    let activePetAdoptStyles = activeAdopt ? styles.active : styles.adopt;
 
     const submitHandler = () => {
-        console.log(serviceType, location);
+        let petType = "";
+        if (selectedCat) {
+            petType = "cat";
+        }
+        if (selectOther) {
+            petType = "other";
+        }
+        if (selectedDog) {
+            petType = "dog";
+        }
+        console.log(serviceType, location, petType);
+        // let lowerLocation = location.toLowerCase();
+        setLoading(true);
+        if (locType === "city") {
+            fetch(
+                `https://friskei-backend.onrender.com/search/${serviceType}/${petType}/${location}`,
+                {
+                    method: "get",
+                }
+            ).then((response) => {
+                response.json().then((data) => {
+                    navigate("/search", { state: data });
+                });
+            });
+        }
+        if (locType === "geolocation") {
+            fetch(
+                `https://friskei-backend.onrender.com/search/${serviceType}/${petType}/${location}`,
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        latitude: latitude,
+                        longitude: longitude,
+                        radius: 5,
+                    }),
+                }
+            ).then((response) => {
+                response.json().then((data) => {
+                    navigate("/search", { state: data });
+                });
+            });
+        }
     };
     return (
-        <div className={styles.container}>
-            <div className={styles.upper}>
-                <span className={styles.option}>
-                    I'm looking for service for my:
-                </span>
-                <input
-                    type="checkbox"
-                    onChange={dogClickHandler}
-                    checked={selectedDog}
-                />
-                <span className={styles.dog}>Dog</span>
-                <input
-                    type="checkbox"
-                    onChange={catClickHandler}
-                    checked={selectedCat}
-                />
-                <span className={styles.cat}>Cat</span>
-                <input
-                    type="checkbox"
-                    onChange={otherClickHandler}
-                    checked={selectOther}
-                />
-                <span className={styles.cat}>Other</span>
-            </div>
-            <div className={styles.lower}>
-                <div className={styles.options}>
-                    <div
-                        className={activeGroomingStyles}
-                        onClick={groomingClickHandler}
-                    >
-                        <div className={styles.imageDiv}>
-                            <img alt="" src={Boarding} />
-                        </div>
-                        <p>Grooming</p>
-                    </div>
-                    <div
-                        className={activeTrainingStyles}
-                        onClick={trainingClickHandler}
-                    >
-                        <div className={styles.imageDiv}>
-                            <img alt="" src={HouseSitting} />
-                        </div>
-                        <p>Training</p>
-                    </div>
-                    <div
-                        className={activeWalkingStyles}
-                        onClick={walkingClickHandler}
-                    >
-                        <div className={styles.imageDiv}>
-                            <img alt="" src={DropInVisits} />
-                        </div>
-                        <p>Walking</p>
-                    </div>
-                    <div
-                        className={activeVetStyles}
-                        onClick={vetClickHandler}
-                    >
-                        <div className={styles.imageDiv}>
-                            <img alt="" src={DogDayCare} />
-                        </div>
-                        <p>Vet</p>
-                    </div>
-                    <div
-                        className={activeDaycareStyles}
-                        onClick={daycareClickHandler}
-                    >
-                        <div className={styles.imageDiv}>
-                            <img alt="" src={DogWalking} />
-                        </div>
-                        <p>DayCare</p>
-                    </div>
-                    <div
-                        className={activeBreedingStyles}
-                        onClick={breedingClickHandler}
-                    >
-                        <div className={styles.imageDiv}>
-                            <img alt="" src={Heart} />
-                        </div>
-                        <p>Breeding</p>
-                    </div>
-                </div>
-
-                <div className={styles.sizeSearch}>
-                    <div className={styles.zipPicker}>
-                        <p>Service Location</p>
+        <>
+            {!loading && (
+                <div className={styles.container}>
+                    <div className={styles.upper}>
+                        <span className={styles.option}>
+                            I'm looking for service for my:
+                        </span>
                         <input
-                            type="text"
-                            placeholder="City"
-                            style={{
-                                padding: "16.5px 0 16.5px 18px",
-                                width: "100%",
-                            }}
-                            onChange={locationHandler}
+                            type="checkbox"
+                            onChange={dogClickHandler}
+                            checked={selectedDog}
+                        />
+                        <span className={styles.dog}>Dog</span>
+                        <input
+                            type="checkbox"
+                            onChange={catClickHandler}
+                            checked={selectedCat}
+                        />
+                        <span className={styles.cat}>Cat</span>
+                        <input
+                            type="checkbox"
+                            onChange={otherClickHandler}
+                            checked={selectOther}
+                        />
+                        <span className={styles.cat}>Other</span>
+                        <div style={{ marginRight: "auto" }}></div>
+                        <span className={styles.option}>Search by :</span>
+                        <span className={styles.dog}>Current Location</span>
+                        <input
+                            type="checkbox"
+                            onChange={currLocClickHandler}
+                            checked={locType === "geolocation"}
+                        />
+                        <span className={styles.cat}>City</span>
+                        <input
+                            type="checkbox"
+                            onChange={cityClickHandler}
+                            checked={locType === "city"}
                         />
                     </div>
-                    <div className={styles.button}>
-                        <button onClick={submitHandler}>Search</button>
+                    <div className={styles.lower}>
+                        <div className={styles.options}>
+                            <div
+                                className={activeGroomingStyles}
+                                onClick={groomingClickHandler}
+                            >
+                                <div className={styles.imageDiv}>
+                                    <img alt="" src={Boarding} />
+                                </div>
+                                <p>Grooming</p>
+                            </div>
+                            <div
+                                className={activeTrainingStyles}
+                                onClick={trainingClickHandler}
+                            >
+                                <div className={styles.imageDiv}>
+                                    <img alt="" src={HouseSitting} />
+                                </div>
+                                <p>Training</p>
+                            </div>
+                            <div
+                                className={activeWalkingStyles}
+                                onClick={walkingClickHandler}
+                            >
+                                <div className={styles.imageDiv}>
+                                    <img alt="" src={DropInVisits} />
+                                </div>
+                                <p>Walking</p>
+                            </div>
+                            <div
+                                className={activeVetStyles}
+                                onClick={vetClickHandler}
+                            >
+                                <div className={styles.imageDiv}>
+                                    <img alt="" src={DogDayCare} />
+                                </div>
+                                <p>Vet</p>
+                            </div>
+                            <div
+                                className={activeDaycareStyles}
+                                onClick={daycareClickHandler}
+                            >
+                                <div className={styles.imageDiv}>
+                                    <img alt="" src={DogWalking} />
+                                </div>
+                                <p>DayCare</p>
+                            </div>
+                            <div
+                                className={activeBreedingStyles}
+                                onClick={breedingClickHandler}
+                            >
+                                <div className={styles.imageDiv}>
+                                    <img alt="" src={Heart} />
+                                </div>
+                                <p>Breeding</p>
+                            </div>
+                            <div
+                                className={activePetAdoptStyles}
+                                onClick={adoptionClickHandler}
+                            >
+                                <div className={styles.imageDiv}>
+                                    <img alt="" src={Adopt} />
+                                </div>
+                                <p>Pet Adoption</p>
+                            </div>
+                        </div>
+                        {locType === "city" && (
+                            <div className={styles.sizeSearch}>
+                                <div className={styles.zipPicker}>
+                                    <p>Service Location</p>
+                                    <input
+                                        type="text"
+                                        placeholder="City"
+                                        style={{
+                                            padding: "16.5px 0 16.5px 18px",
+                                            width: "100%",
+                                        }}
+                                        onChange={locationHandler}
+                                    />
+                                </div>
+                                <div className={styles.button}>
+                                    <button onClick={submitHandler}>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                        {locType === "geolocation" && (
+                            <div className={styles.sizeSearch}>
+                                <div
+                                    className={styles.button}
+                                    style={{ margin: "0 auto" }}
+                                >
+                                    <button onClick={submitHandler}>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
-            </div>
-        </div>
+            )}
+            {loading && <Loading />}
+        </>
     );
 };
 

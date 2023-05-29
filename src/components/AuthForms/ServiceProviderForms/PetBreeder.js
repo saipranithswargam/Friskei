@@ -9,19 +9,55 @@ import MultipleSelectCheckmarks from "./MultiselectDropdown";
 import TextField from "@mui/material/TextField";
 const PetBreeder = () => {
     const [type, setType] = React.useState("Cat");
-    const [breed, setBreed] = React.useState("");
+    const [note, setNote] = React.useState("");
+    const [price, setPrice] = React.useState("");
+    const [priceTicker, setPriceTicker] = React.useState("");
     const handlePetChange = (event) => {
         setType(event.target.value);
     };
-    const handleBreedChange = (event) => {
-        setBreed(event.target.value);
+    const handlerTickerChange = (event) => {
+        setPriceTicker(event.target.value);
+    };
+    const handlerPriceChange = (event) => {
+        setPrice(event.target.price);
+    };
+    const handleNoteChange = (event) => {
+        setNote(event.target.value);
+    };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log("test");
+        const data = {
+            type: type,
+            price: price,
+            note: note,
+            service:"petBreeding"
+        };
+        const cookie_token = JSON.parse(localStorage.getItem("freskei"));
+        console.log(cookie_token);
+        fetch("https://friskei-backend.onrender.com/providers/details", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + cookie_token.token,
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    console.log("account created sucessfully !");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
     return (
         <>
             <div className={styles.main}>
                 <div className={styles.formDiv}>
                     <h1>Service Details</h1>
-                    <form className={styles.form}>
+                    <form className={styles.form} onSubmit={handleSubmit}>
                         <div className={styles.input}>
                             <label>Type of Pet ?</label>
                             <Box sx={{ minWidth: 120 }}>
@@ -36,64 +72,24 @@ const PetBreeder = () => {
                                         label="type"
                                         onChange={handlePetChange}
                                     >
-                                        <MenuItem value={"Cat"}>Cat</MenuItem>
-                                        <MenuItem value={"Dog"}>Dog</MenuItem>
+                                        <MenuItem value={"cat"}>Cat</MenuItem>
+                                        <MenuItem value={"dog"}>Dog</MenuItem>
+                                        <MenuItem value={"other"}>
+                                            Other
+                                        </MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>
                         </div>
-                        {/* <div className={styles.input}>
-                            <label>
-                                {`How many ${type} do you need walked ?`}
-                            </label>
-                            <input
-                                type="number"
-                                defaultValue={1}
-                                min={1}
-                                max={8}
-                            />
-                        </div> */}
-                        {/* <div className={styles.input}>
-                            <label>{`Breed of the ${type} ?`}</label>
-                            <Box sx={{ minWidth: 120 }}>
-                                <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">
-                                        Breed
-                                    </InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={breed}
-                                        label="Breed"
-                                        onChange={handleBreedChange}
-                                    >
-                                        <MenuItem value={"Cat"}>
-                                            List of dog breeds
-                                        </MenuItem>
-                                        <MenuItem value={"Dog"}>
-                                            List of cat breeds
-                                        </MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Box>
-                        </div> */}
-                        {/* <div className={styles.input}>
-                            <label>Size of the Dog ?</label>
-                            <MultipleSelectCheckmarks
-                                variantName={variantName}
-                                handleChange={handleChange}
-                                variants={variants}
-                            />
-                        </div> */}
                         <div className={styles.input}>
-                            <label>Price Per Hour ?</label>
+                            <label>Price</label>
                             <div className={styles.select}>
-                                <select>
+                                <select onChange={handlerTickerChange}>
                                     <option>USD</option>
                                     <option>INR</option>
                                     <option>SEK</option>
                                 </select>
-                                <input></input>
+                                <input onChange={handlerPriceChange}></input>
                             </div>
                         </div>
                         <div className={styles.input}>
@@ -109,6 +105,7 @@ const PetBreeder = () => {
                                         borderColor: "#035772",
                                     },
                                 }}
+                                onChange={handleNoteChange}
                             />
                         </div>
                         <Box sx={{ textAlign: "center" }}>
@@ -116,6 +113,7 @@ const PetBreeder = () => {
                                 variant="contained"
                                 sx={{ mt: 2 }}
                                 className={styles.button}
+                                type="submit"
                             >
                                 Submit
                             </Button>

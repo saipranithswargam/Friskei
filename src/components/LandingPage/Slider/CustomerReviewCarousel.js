@@ -28,7 +28,7 @@ const CustomerReviewCarousel = () => {
                     <h1>See All Our Glamorous</h1>
                     <h1>Customers</h1>
                     <div className={classes.buttonDiv}>
-                        <a href="www.instagram.com">
+                        <a href="https://www.instagram.com/">
                             <button>Follow Us</button>
                         </a>
                     </div>

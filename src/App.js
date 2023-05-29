@@ -16,6 +16,7 @@ import ForgotPassword from "./components/AuthForms/ForgotPassword";
 import JoinUsPage from "./components/JoinUs/JoinUs";
 import JoinUsRegsiterForm from "./components/AuthForms/JoinUsRegisterForm";
 import JoinUsServiceDetails from "./components/AuthForms/JoinUsServiceDetails";
+import Search from "./components/SearchResults/Search";
 function App() {
     const style = {
         margin: 0,
@@ -57,6 +58,7 @@ function App() {
                 />
                 <Route element={<UserLogin />} path="/login" />
                 <Route element={<UserRegsiter />} path="/register" />
+                <Route element={<Search />} path="/search" />
                 <Route
                     element={
                         <>

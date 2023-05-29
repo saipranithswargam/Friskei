@@ -1,0 +1,81 @@
+.main {
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    padding: 20px 4%;
+}
+
+.filter {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.results {
+    width: 70%;
+    display: grid;
+    padding: 0 5px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.resultCard {
+    height: fit-content;
+    padding: 5px;
+    border: 1px solid rgba(14, 4, 5, 0.2);
+    border-radius: 4px;
+}
+.imageDiv img {
+    width: 100%;
+}
+
+.category h4{
+    text-align: center;
+    background-color: aliceblue;
+}
+.buttonDiv button{
+    border: 1px solid grey;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.buttonDiv button:hover{
+    background-color: rgba(240, 248, 255, 0.5);
+}
+.location h4{
+    text-align: center;
+    margin-top: 10px;
+    background-color: aliceblue;
+}
+
+.location input{
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 0.5rem;
+}
+.slider{
+    display: inline-block;
+    margin: 0 auto;
+}
+.price h4{
+    text-align: center;
+    background-color: aliceblue;
+}
+.submitDiv{
+    margin-top: 1rem;
+    text-align: center;
+}
+.submitDiv button{
+    width: 90%;
+    padding: 1rem;
+    border: none;
+    outline: none;
+    display: inline-block;
+    background-color: aliceblue;
+    border:1px solid rgba(0, 0, 0, 0.5);
+    font-weight: 700;
+}
