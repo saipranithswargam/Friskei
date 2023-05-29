@@ -43,6 +43,11 @@ const cards = [
         link: "/joinus/register/petbreeder",
         alt: "breeder",
     },
+    {
+        name: "Join as PetAdoption",
+        src : Grooming,
+        link : "/joinus/register/petadoption"
+    }
 ];
 const JoinUsPage = () => {
     return (

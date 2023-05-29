@@ -5,6 +5,7 @@ import PetTrainer from "./ServiceProviderForms/PetTrainer";
 import Vet from "./ServiceProviderForms/Vet";
 import DayCarer from "./ServiceProviderForms/DayCarer";
 import PetBreeder from "./ServiceProviderForms/PetBreeder";
+import PetAdoption from "./ServiceProviderForms/PetAdoption";
 const JoinUsRegister = () => {
     const params = useParams();
     console.log(params);
@@ -16,6 +17,7 @@ const JoinUsRegister = () => {
             {params.joinAs === "vet" ? <Vet /> : <></>}
             {params.joinAs === "daycarer" ? <DayCarer /> : <></>}
             {params.joinAs === "petbreeder" ? <PetBreeder /> : <></>}
+            {params.joinAs === "petadoption" ? <PetAdoption /> : <></>}
         </>
     );
 };
