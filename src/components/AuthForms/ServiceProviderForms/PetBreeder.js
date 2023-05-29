@@ -29,9 +29,9 @@ const PetBreeder = () => {
         console.log("test");
         const data = {
             type: type,
-            price: price,
+            price: priceTicker + " " + price,
             note: note,
-            service:"petBreeding"
+            service: "petBreeding",
         };
         const cookie_token = JSON.parse(localStorage.getItem("freskei"));
         console.log(cookie_token);

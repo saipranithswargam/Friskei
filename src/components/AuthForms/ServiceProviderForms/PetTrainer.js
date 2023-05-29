@@ -29,7 +29,7 @@ const PetTrainer = () => {
         console.log("test");
         const data = {
             type: type,
-            price: `${priceTicker} ${price}`,
+            price: priceTicker + " " + price,
             note: note,
             service:"petTraining",
         };

@@ -28,7 +28,7 @@ const PetAdoption = () => {
         event.preventDefault();
         const data = {
             type: type,
-            price: price,
+            price: priceTicker + " " + price,
             note: note,
             service: "petAdoption",
         };
