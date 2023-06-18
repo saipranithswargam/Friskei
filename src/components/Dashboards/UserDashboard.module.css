@@ -50,6 +50,14 @@
 }
 .right {
     width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ntg{
+    text-align: center;
+    margin-top: 16px;
+    color: rgba(0, 0, 0, 0.67);
 }
 .settingsPanel {
     width: 70%;

@@ -1,6 +1,7 @@
 import styles from "./UserDashboard.module.css";
 import Header from "../Header/Header";
 import Avatar from "../../assets/images/Avatar.png";
+import NoMsg from "../../assets/images/NoMessages.webp";
 import { useState } from "react";
 const UserDashboard = () => {
     const [settings, setSettings] = useState(false);
@@ -90,7 +91,14 @@ const UserDashboard = () => {
                     )}
                 </div>
                 {!settings && (
-                    <div className={styles.right} key={"backProfile"}></div>
+                    <div className={styles.right} key={"backProfile"}>
+                        <div>
+                            <img src={NoMsg} alt="nomsg" />
+                            <div className={styles.ntg}>
+                                <p>Services are Yet To Be Taken To Rate</p>
+                            </div>
+                        </div>
+                    </div>
                 )}
                 {settings && (
                     <div className={styles.settingsPanel} key={"EditProfile"}>

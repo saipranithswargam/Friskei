@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import Avatar from "../../assets/images/Avatar.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NoMsg from "../../assets/images/NoMessages.webp";
 const ProviderDashboard = () => {
     const navigate = useNavigate();
     const [settings, setSettings] = useState(false);
@@ -135,7 +136,14 @@ const ProviderDashboard = () => {
                     )}
                 </div>
                 {!settings && !viewServices && (
-                    <div className={styles.right} key={"backProfile"}></div>
+                    <div className={styles.right} key={"backProfile"}>
+                        <div>
+                            <img src={NoMsg} alt="nomsg" />
+                            <div className={styles.ntg}>
+                                <p>NO Notifications</p>
+                            </div>
+                        </div>
+                    </div>
                 )}
                 {settings && !viewServices && (
                     <div className={styles.settingsPanel} key={"EditProfile"}>

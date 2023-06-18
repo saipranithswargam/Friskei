@@ -10,6 +10,8 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    border: 1px solid rgba(112, 128, 144, 0.442);
+    padding: 1rem;
 }
 
 .results {
@@ -18,6 +20,9 @@
     padding: 0 5px;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+    border: 1px solid rgba(112, 128, 144, 0.442);
+    padding: 1rem;
+    border-left: none;
 }
 .resultCard {
     height: fit-content;
@@ -29,11 +34,13 @@
     width: 100%;
 }
 
-.category h4{
-    text-align: center;
-    background-color: aliceblue;
+.category h4 {
+    margin-left: 10px;
+    margin-bottom: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.705);
 }
-.buttonDiv button{
+.buttonDiv button {
     border: 1px solid grey;
     outline: none;
     background-color: transparent;
@@ -41,41 +48,37 @@
     margin-bottom: 10px;
     font-weight: 700;
 }
-
-.buttonDiv button:hover{
-    background-color: rgba(240, 248, 255, 0.5);
-}
-.location h4{
-    text-align: center;
-    margin-top: 10px;
-    background-color: aliceblue;
+.location h4 {
+    margin-left: 10px;
+    margin-bottom: 16px;
+    color: rgba(0, 0, 0, 0.705);
 }
 
-.location input{
+.location input {
     display: inline-block;
     width: 100%;
     padding: 12px;
     margin-bottom: 0.5rem;
 }
-.slider{
+.slider {
     display: inline-block;
     margin: 0 auto;
 }
-.price h4{
-    text-align: center;
-    background-color: aliceblue;
+.price h4 {
+    margin-left: 10px;
+    margin-bottom: 16px;
+    color: rgba(0, 0, 0, 0.705);
 }
-.submitDiv{
+.submitDiv {
     margin-top: 1rem;
-    text-align: center;
 }
-.submitDiv button{
+.submitDiv button {
     width: 90%;
     padding: 1rem;
     border: none;
     outline: none;
     display: inline-block;
-    background-color: aliceblue;
-    border:1px solid rgba(0, 0, 0, 0.5);
-    font-weight: 700;
+    font-weight: 500;
+    background-color: #002f34;
+    color: white;
 }

@@ -2,12 +2,22 @@ import styles from "./Search.module.css";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Header from "../Header/Header";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 const Search = () => {
-    // const state = [{id:01,}]
-    // const { state } = useLocation();
-
+    const [category, setCategory] = useState("PetGroomer");
+    const [petType, setPetType] = useState("Cat");
+    const handleCategoryChange = (event) => {
+        setCategory(event.target.value);
+    };
+    const handlePetChange = (event) => {
+        setPetType(event.target.value);
+    };
     function valuetext(value) {
         console.log(value);
     }
@@ -17,16 +27,61 @@ const Search = () => {
             <div className={styles.main}>
                 <div className={styles.filter}>
                     <div className={styles.category}>
-                        <h4>category</h4>
-                        <div className={styles.buttonDiv}>
-                            <button>Dog</button>
-                        </div>
-                        <div className={styles.buttonDiv}>
-                            <button>Cat</button>
-                        </div>
-                        <div className={styles.buttonDiv}>
-                            <button>Other</button>
-                        </div>
+                        <h4>Category</h4>
+                        <Box sx={{ minWidth: 120 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">
+                                    category
+                                </InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={category}
+                                    label="category"
+                                    onChange={handleCategoryChange}
+                                >
+                                    <MenuItem value={"petGroomer"}>
+                                        Pet Groomer
+                                    </MenuItem>
+                                    <MenuItem value={"petWalker"}>
+                                        Pet Walker
+                                    </MenuItem>
+                                    <MenuItem value={"petTrainer"}>
+                                        Pet Trainer
+                                    </MenuItem>
+                                    <MenuItem value={"petVet"}>
+                                        Pet Vet
+                                    </MenuItem>
+                                    <MenuItem value={"PetCarer"}>
+                                        Pet Carer
+                                    </MenuItem>
+                                    <MenuItem value={"petBreeder"}>
+                                        Pet Breeder
+                                    </MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    </div>
+                    <div className={styles.category}>
+                        <h4>Pet Type</h4>
+                        <Box sx={{ minWidth: 120 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">
+                                    Pet
+                                </InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    label="category"
+                                    value={petType}
+                                    onChange={handlePetChange}
+                                >
+                                    <MenuItem value={"Cat"}>Cat</MenuItem>
+                                    <MenuItem value={"Dog"}>Dog</MenuItem>
+                                    <MenuItem value={"Other"}>Other</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
                     </div>
                     <div className={styles.location}>
                         <h4>Location</h4>

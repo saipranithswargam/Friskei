@@ -73,6 +73,7 @@ const DayCarer = () => {
                                     >
                                         <MenuItem value={"Cat"}>Cat</MenuItem>
                                         <MenuItem value={"Dog"}>Dog</MenuItem>
+                                        <MenuItem value={"Other"}>Other</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>
