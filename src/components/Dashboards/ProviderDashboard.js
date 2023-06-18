@@ -167,7 +167,7 @@ const ProviderDashboard = () => {
                                     />
                                 </div>
                                 <div className={styles.sectionHeading}>
-                                    Account Informationf
+                                    Account Information
                                 </div>
                                 <div className={styles.info}>
                                     <div className={styles.infoDiv}>
@@ -225,7 +225,11 @@ const ProviderDashboard = () => {
                                         <label>Change Password</label>
                                         <input
                                             type="password"
-                                            placeholder="Change Password"
+                                            placeholder="Current Password"
+                                        />
+                                        <input
+                                            type="password"
+                                            placeholder="New Password"
                                         />
                                     </div>
                                 </div>

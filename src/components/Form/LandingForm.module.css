@@ -63,7 +63,7 @@
 .options {
     display: grid;
     align-items: center;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     justify-content: space-evenly;
     gap: 1rem;
 }

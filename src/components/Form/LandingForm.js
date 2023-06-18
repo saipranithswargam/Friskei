@@ -301,7 +301,7 @@ const LandingForm = () => {
                                 </div>
                                 <p>Breeding</p>
                             </div>
-                            <div
+                            {/* <div
                                 className={activePetAdoptStyles}
                                 onClick={adoptionClickHandler}
                             >
@@ -309,7 +309,7 @@ const LandingForm = () => {
                                     <img alt="" src={Adopt} />
                                 </div>
                                 <p>Pet Adoption</p>
-                            </div>
+                            </div> */}
                         </div>
                         {locType === "city" && (
                             <div className={styles.sizeSearch}>
