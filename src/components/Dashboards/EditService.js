@@ -1,4 +1,4 @@
-import styles from "./PetGroomer.module.css";
+import styles from "./EditService.module.css";
 import * as React from "react";
 import { Box, Button } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
@@ -6,7 +6,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
-const PetGroomer = () => {
+
+const EditService = () => {
     const [type, setType] = React.useState("Cat");
     const [note, setNote] = React.useState("");
     const [price, setPrice] = React.useState("");
@@ -30,7 +31,7 @@ const PetGroomer = () => {
             type: type,
             price: priceTicker + " " + price,
             note: note,
-            service:"petGrooming",
+            service: "petCare",
         };
         const cookie_token = JSON.parse(localStorage.getItem("freskei"));
         fetch("https://friskei-backend.onrender.com/providers/details", {
@@ -77,20 +78,25 @@ const PetGroomer = () => {
                             </Box>
                         </div>
                         <div className={styles.input}>
-                            <label>Price?</label>
-                            <div className={styles.select} onChange={handlerTickerChange}>
+                            <label>Price ?</label>
+                            <div
+                                className={styles.select}
+                                onChange={handlerTickerChange}
+                            >
                                 <select>
                                     <option>USD</option>
                                     <option>INR</option>
                                     <option>SEK</option>
                                 </select>
-                                <input onChange={handlerPriceChange}></input>
+                                <input
+                                    onChange={handlerPriceChange}
+                                    value={"5"}
+                                ></input>
                             </div>
                         </div>
                         <div className={styles.input}>
                             <label>Note</label>
                             <TextField
-                                onChange={handleNoteChange}
                                 label="Pet Breed, Allergies"
                                 sx={{
                                     "& label.Mui-focused": {
@@ -101,6 +107,8 @@ const PetGroomer = () => {
                                         borderColor: "#035772",
                                     },
                                 }}
+                                onChange={handleNoteChange}
+                                value={"Allergic to Dog"}
                             />
                         </div>
                         <Box sx={{ textAlign: "center" }}>
@@ -110,7 +118,7 @@ const PetGroomer = () => {
                                 className={styles.button}
                                 type="submit"
                             >
-                                Submit
+                                Save Edited
                             </Button>
                         </Box>
                     </form>
@@ -120,4 +128,4 @@ const PetGroomer = () => {
     );
 };
 
-export default PetGroomer;
+export default EditService;

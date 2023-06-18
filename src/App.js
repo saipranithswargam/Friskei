@@ -17,6 +17,10 @@ import JoinUsPage from "./components/JoinUs/JoinUs";
 import JoinUsRegsiterForm from "./components/AuthForms/JoinUsRegisterForm";
 import JoinUsServiceDetails from "./components/AuthForms/JoinUsServiceDetails";
 import Search from "./components/SearchResults/Search";
+import UserDashboard from "./components/Dashboards/UserDashboard";
+import ProviderLogin from "./components/AuthForms/ProviderLogin";
+import ProviderDashboard from "./components/Dashboards/ProviderDashboard";
+import EditService from "./components/Dashboards/EditService";
 function App() {
     const style = {
         margin: 0,
@@ -77,6 +81,13 @@ function App() {
                     element={<JoinUsServiceDetails />}
                     path="/joinus/register/:joinAs/serviceDetails"
                 />
+                <Route element={<UserDashboard />} path="/userdashboard" />
+                <Route
+                    element={<ProviderDashboard />}
+                    path="/providerdashboard"
+                />
+                <Route element={<ProviderLogin />} path="/providerlogin" />
+                <Route element={<EditService />} path="/editservice/:id" />
             </Routes>
         </Fragment>
     );

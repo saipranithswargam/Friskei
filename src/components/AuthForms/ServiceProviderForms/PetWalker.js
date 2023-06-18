@@ -5,7 +5,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import styles from "./PetWalker.module.css";
-import MultipleSelectCheckmarks from "./MultiselectDropdown";
 import TextField from "@mui/material/TextField";
 const variants = [
     {

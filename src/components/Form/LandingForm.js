@@ -133,6 +133,8 @@ const LandingForm = () => {
             maximumAge: 0,
         };
         const sucess = (pos) => {
+            console.log(pos.coords.longitude);
+            console.log(pos.coords.latitude);
             setLocType("geolocation");
             setLatitude(pos.coords.latitude);
             setLongitude(pos.coords.longitude);

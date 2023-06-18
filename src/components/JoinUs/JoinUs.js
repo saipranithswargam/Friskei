@@ -5,7 +5,7 @@ import DayCarer from "../../assets/images/DayCarer.webp";
 import DogWalker from "../../assets/images/DogWalker.webp";
 import PetTrainer from "../../assets/images/PetTrainer.webp";
 import Vet from "../../assets/images/VeternaryDoc.webp";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const cards = [
     {
         name: "Join as PetGroomer",
@@ -45,15 +45,26 @@ const cards = [
     },
     {
         name: "Join as PetAdoption",
-        src : Grooming,
-        link : "/joinus/register/petadoption"
-    }
+        src: Grooming,
+        link: "/joinus/register/petadoption",
+    },
 ];
 const JoinUsPage = () => {
+    const navigate = useNavigate();
+    const loginClickHandler = () => {
+        //render login page
+        navigate("/providerlogin");
+    };
     return (
         <>
             <div className={styles.upper}>
-                <h1>Join Friskei Today</h1>
+                <div>
+                    <h1>Join Friskei Today </h1>
+                    <div className={styles.buttonDiv}>
+                        <label>Already part of Friskei ?</label>
+                        <button onClick={loginClickHandler}>Login</button>
+                    </div>
+                </div>
                 <img
                     alt="dog and cat"
                     src="https://static.wixstatic.com/media/84770f_cc7fbf222d044cf09028f921a0cfe36e~mv2.png/v1/fill/w_1163,h_699,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/shutterstock_184908566%20copy.png"
@@ -61,7 +72,11 @@ const JoinUsPage = () => {
             </div>
             <div className={styles.lower}>
                 {cards.map((doc) => (
-                    <Link to={doc.link} className={styles.cardLink} key={doc.alt}>
+                    <Link
+                        to={doc.link}
+                        className={styles.cardLink}
+                        key={doc.alt}
+                    >
                         <div className={styles.card}>
                             <h4>{doc.name}</h4>
                             <div className={styles.imageDiv}>
