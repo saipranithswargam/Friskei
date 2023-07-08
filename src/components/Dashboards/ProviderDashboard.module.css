@@ -54,7 +54,7 @@
     justify-content: center;
     align-items: center;
 }
-.ntg{
+.ntg {
     text-align: center;
     margin-top: 16px;
     color: rgba(0, 0, 0, 0.67);
@@ -188,6 +188,11 @@ th {
 }
 .Value {
     color: rgba(0, 0, 0, 0.755);
+}
+.serviceEditButton {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 .serviceEditButton button {
     height: 40px;

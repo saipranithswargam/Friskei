@@ -6,33 +6,14 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import styles from "./PetWalker.module.css";
 import TextField from "@mui/material/TextField";
-const variants = [
-    {
-        id: 3,
-        name: "1-5kg",
-    },
-    {
-        id: 1,
-        name: "5-10kg",
-    },
-    {
-        id: 2,
-        name: "10-20kg",
-    },
-    {
-        id: 12,
-        name: "20-40kg",
-    },
-    {
-        id: 11,
-        name: "40+kg",
-    },
-];
+import AuthContext from "../../../store/auth-context";
+import { useContext } from "react";
 const PetWalker = () => {
+    const authCtx = useContext(AuthContext);
     const [type, setType] = React.useState("Cat");
     const [note, setNote] = React.useState("");
     const [price, setPrice] = React.useState("");
-    const [priceTicker, setPriceTicker] = React.useState("");
+    const [priceTicker, setPriceTicker] = React.useState("USD");
     const handlePetChange = (event) => {
         setType(event.target.value);
     };
@@ -40,7 +21,7 @@ const PetWalker = () => {
         setPriceTicker(event.target.value);
     };
     const handlerPriceChange = (event) => {
-        setPrice(event.target.price);
+        setPrice(event.target.value);
     };
     const handleNoteChange = (event) => {
         setNote(event.target.value);
@@ -50,16 +31,15 @@ const PetWalker = () => {
         console.log("test");
         const data = {
             type: type,
-            price: priceTicker + " " + price,
+            price: priceTicker + price,
             note: note,
-            service:"petWalking"
+            service: "petWalking",
         };
-        const cookie_token = JSON.parse(localStorage.getItem("freskei"));
         fetch("https://friskei-backend.onrender.com/providers/details", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + cookie_token.token,
+                Authorization: "Bearer " + authCtx.token,
             },
             body: JSON.stringify(data),
         })
@@ -101,12 +81,18 @@ const PetWalker = () => {
                         <div className={styles.input}>
                             <label>Price Per Hour ?</label>
                             <div className={styles.select}>
-                                <select onChange={handlerTickerChange}>
+                                <select
+                                    onChange={handlerTickerChange}
+                                    value={priceTicker}
+                                >
                                     <option>USD</option>
                                     <option>INR</option>
                                     <option>SEK</option>
                                 </select>
-                                <input onChange={handlerPriceChange}></input>
+                                <input
+                                    onChange={handlerPriceChange}
+                                    value={price}
+                                ></input>
                             </div>
                         </div>
                         <div className={styles.input}>

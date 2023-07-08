@@ -3,13 +3,32 @@ import Navbar from "react-bootstrap/Navbar";
 import styles from "./Header.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link, useLocation } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import Paw from "../../assets/images/Paw.svg";
+import AuthContext from "../../store/auth-context";
+import { useContext } from "react";
 const Header = () => {
+    const authCtx = useContext(AuthContext);
     const location = useLocation();
     const [url, setUrl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const logoutHandler = () => {
+        authCtx.logout();
+    };
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const open = Boolean(anchorEl);
+    const id = open ? "simple-popover" : undefined;
     useEffect(() => {
         setUrl(location.pathname);
     }, [location]);
@@ -24,10 +43,7 @@ const Header = () => {
                 >
                     <Navbar.Brand as={Link} to="/" className={styles.navBrand}>
                         Friskei
-                        <img
-                            src={Paw}
-                            alt="icon"
-                        />
+                        <img src={Paw} alt="icon" />
                     </Navbar.Brand>
                     <Navbar.Toggle
                         aria-controls={`offcanvasNavbar-expand-${expand}`}
@@ -78,7 +94,7 @@ const Header = () => {
                                 >
                                     Join Us
                                 </Nav.Link>
-                                <Nav.Link
+                                {/* <Nav.Link
                                     as={Link}
                                     to="/petblog"
                                     className={`${styles.navLink} + ${
@@ -86,7 +102,7 @@ const Header = () => {
                                     }`}
                                 >
                                     Pet Blog
-                                </Nav.Link>
+                                </Nav.Link> */}
                                 <Nav.Link
                                     as={Link}
                                     to="/aboutus"
@@ -105,16 +121,101 @@ const Header = () => {
                                 >
                                     Contact
                                 </Nav.Link>
-                                <Nav.Link
-                                    as={Link}
-                                    to="/login"
-                                    className={`${styles.navLink} + ${
-                                        url === "/login" ? styles.active : ""
-                                    }`}
-                                >
-                                    <AccountCircleIcon sx={{ fontSize: 28 }} />{" "}
-                                    Login
-                                </Nav.Link>
+                                {authCtx.isLoggedIn && (
+                                    <div>
+                                        <Button
+                                            aria-describedby={id}
+                                            variant="contained"
+                                            onClick={handleClick}
+                                            className={styles.userIcon}
+                                        >
+                                            User
+                                        </Button>
+                                        <Popover
+                                            id={id}
+                                            open={open}
+                                            anchorEl={anchorEl}
+                                            onClose={handleClose}
+                                            anchorOrigin={{
+                                                vertical: "bottom",
+                                                horizontal: "left",
+                                            }}
+                                        >
+                                            <Typography
+                                                className={styles.test}
+                                                sx={{ padding: "1rem 6rem" }}
+                                            >
+                                                <Nav.Link
+                                                    as={Link}
+                                                    to="/userdashboard"
+                                                    className={
+                                                        styles.dropdownLink
+                                                    }
+                                                >
+                                                    Profile
+                                                </Nav.Link>
+                                            </Typography>
+                                            <Typography
+                                                className={styles.test}
+                                                sx={{ padding: "1rem 6rem" }}
+                                            >
+                                                <button
+                                                    className={
+                                                        styles.logoutButton
+                                                    }
+                                                    onClick={logoutHandler}
+                                                >
+                                                    Logout
+                                                </button>
+                                            </Typography>
+                                        </Popover>
+                                    </div>
+                                )}
+                                {!authCtx.isLoggedIn && (
+                                    <div>
+                                        <Button
+                                            aria-describedby={id}
+                                            variant="contained"
+                                            onClick={handleClick}
+                                            className={styles.userIcon}
+                                        >
+                                            <AccountCircleIcon
+                                                sx={{ fontSize: 28 }}
+                                            />{" "}
+                                            Login
+                                        </Button>
+                                        <Popover
+                                            id={id}
+                                            open={open}
+                                            anchorEl={anchorEl}
+                                            onClose={handleClose}
+                                            anchorOrigin={{
+                                                vertical: "bottom",
+                                                horizontal: "left",
+                                            }}
+                                        >
+                                            <Typography
+                                                sx={{ padding: "1rem 6rem" }}
+                                                className={styles.test}
+                                            >
+                                                <Nav.Link as={Link} to="/login">
+                                                    User Login
+                                                </Nav.Link>
+                                            </Typography>
+                                            <Typography
+                                                sx={{ padding: "1rem 6rem" }}
+                                                className={styles.test}
+                                            >
+                                                <Nav.Link
+                                                    as={Link}
+                                                    to="/providerlogin"
+                                                >
+                                                    Provider Login
+                                                </Nav.Link>
+                                            </Typography>
+                                        </Popover>
+                                    </div>
+                                )}
                             </Nav>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>

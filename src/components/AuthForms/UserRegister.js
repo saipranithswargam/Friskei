@@ -39,13 +39,14 @@ const UserRegsiter = () => {
     });
 
     const onSubmit = (data) => {
-        localStorage.setItem("loggedIn", true);
+        let phone = data.phone.replaceAll(/\s/g, "");
+        console.log(phone);
         const Data = {
             name: name,
             email: email,
             gender: gender,
             password: password,
-            mobileNum: data.phone,
+            mobileNum: phone,
             city: city.toLowerCase(),
         };
         fetch("https://friskei-backend.onrender.com/users/register", {

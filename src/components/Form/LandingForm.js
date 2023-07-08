@@ -6,10 +6,12 @@ import DropInVisits from "../../assets/images/DropInVisits.svg";
 import DogDayCare from "../../assets/images/DogDaycare.svg";
 import DogWalking from "../../assets/images/DogWalking.svg";
 import Heart from "../../assets/images/heart.png";
-import Adopt from "../../assets/images/petAdoption.png";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Spinner/Spinner";
+import { useContext } from "react";
+import AuthContext from "../../store/auth-context";
 const LandingForm = () => {
+    const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
     const [selectedCat, setSelectedCat] = React.useState(false);
     const [selectedDog, setSelectedDog] = React.useState(true);
@@ -158,9 +160,11 @@ const LandingForm = () => {
         ? styles.active
         : styles.DropInVisits;
     let activeBreedingStyles = activeBreeding ? styles.active : styles.breeding;
-    let activePetAdoptStyles = activeAdopt ? styles.active : styles.adopt;
 
     const submitHandler = () => {
+        if (!authCtx.isLoggedIn) {
+            navigate("/login");
+        }
         let petType = "";
         if (selectedCat) {
             petType = "cat";

@@ -2,8 +2,13 @@ import styles from "./UserDashboard.module.css";
 import Header from "../Header/Header";
 import Avatar from "../../assets/images/Avatar.png";
 import NoMsg from "../../assets/images/NoMessages.webp";
-import { useState } from "react";
+import AuthContext from "../../store/auth-context";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { useState, useEffect } from "react";
 const UserDashboard = () => {
+    const navigate = useNavigate();
+    const authCtx = useContext(AuthContext);
     const [settings, setSettings] = useState(false);
     const changeUiHandler = () => {
         setSettings(true);
@@ -14,6 +19,24 @@ const UserDashboard = () => {
     const saveChangesHandler = () => {
         console.log("here goes post request to backend");
     };
+    console.log(authCtx.token);
+    useEffect(() => {
+        fetch(`https://friskei-backend.onrender.com/users/profile`, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + authCtx.token,
+            },
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((data) => {
+                    console.log(data);
+                });
+            } else {
+                navigate("/login");
+            }
+        });
+    }, [authCtx.token, navigate]);
     return (
         <>
             <Header />

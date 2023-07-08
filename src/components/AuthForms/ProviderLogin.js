@@ -2,7 +2,10 @@ import { useState } from "react";
 import styles from "./Provider.module.css";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
+import AuthContext from "../../store/auth-context";
+import { useContext } from "react";
 const ProviderLogin = () => {
+    const authCtx = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const emailChangeHandler = (event) => {
@@ -14,11 +17,10 @@ const ProviderLogin = () => {
     const submitHandler = async (event) => {
         event.preventDefault();
         const Data = {
-            mobileNum: email,
+            email: email,
             password: password,
         };
-        console.log(Data);
-        fetch("https://friskei-backend.onrender.com/users/login", {
+        fetch("https://friskei-backend.onrender.com/providers/login", {
             method: "POST",
             body: JSON.stringify(Data),
             headers: {
@@ -26,16 +28,14 @@ const ProviderLogin = () => {
             },
         }).then((response) => {
             if (response.ok) {
-                response.json().then((result) => {
-                    localStorage.setItem(
-                        "freskei",
-                        JSON.stringify({
-                            login: true,
-                            token: result.token,
-                        })
+                response.json().then((data) => {
+                    const expirationTime = new Date(
+                        new Date().getTime() + (+data.expiresIn * 1000)
                     );
+                    authCtx.login(data.idToken, expirationTime.toISOString());
                 });
             }
+            console.log("logged in sucessfully");
         });
     };
     return (

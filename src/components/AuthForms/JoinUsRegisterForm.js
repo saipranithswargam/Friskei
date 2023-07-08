@@ -11,7 +11,10 @@ import TextField from "@mui/material/TextField";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "../Spinner/Spinner";
 import Header from "../Header/Header";
+import AuthContext from "../../store/auth-context";
+import { useContext } from "react";
 const JoinUsRegisterForm = (props) => {
+    const authCtx = useContext(AuthContext);
     const params = useParams();
     const navigate = useNavigate();
     const [name, setName] = React.useState("");
@@ -55,12 +58,14 @@ const JoinUsRegisterForm = (props) => {
             maximumAge: 0,
         };
         const sucess = (pos) => {
+            let phone = data.phone.replaceAll(/\s/g, "");
+            console.log(phone);
             const Data = {
                 name: name,
                 email: email,
                 gender: gender,
                 password: password,
-                mobileNum: data.phone,
+                mobileNum: phone,
                 city: city.toLowerCase(),
                 petParent: petParent,
                 latitude: pos.coords.latitude,
@@ -75,15 +80,11 @@ const JoinUsRegisterForm = (props) => {
                 body: JSON.stringify(Data),
             }).then((response) => {
                 if (response.ok) {
-                    response.json().then((result) => {
-                        localStorage.setItem(
-                            "freskei",
-                            JSON.stringify({
-                                login: true,
-                                token: result.token,
-                            })
+                    response.json().then((data) => {
+                        const expirationTime = new Date(
+                            new Date().getTime() + (+data.expiresIn * 1000)
                         );
-                        console.log(result.token);
+                        authCtx.login(data.token, expirationTime.toISOString());
                     });
                     setLoading(false);
                     navigate(

@@ -21,6 +21,8 @@ import UserDashboard from "./components/Dashboards/UserDashboard";
 import ProviderLogin from "./components/AuthForms/ProviderLogin";
 import ProviderDashboard from "./components/Dashboards/ProviderDashboard";
 import EditService from "./components/Dashboards/EditService";
+import AboutUs from "./components/AboutUs/AboutUs";
+import ContactUs from "./components/ContactUs/ContactUs";
 function App() {
     const style = {
         margin: 0,
@@ -62,6 +64,8 @@ function App() {
                 />
                 <Route element={<UserLogin />} path="/login" />
                 <Route element={<UserRegsiter />} path="/register" />
+                <Route element={<AboutUs />} path="/aboutus" />
+                <Route element={<ContactUs />} path="/contact"/>
                 <Route element={<Search />} path="/search" />
                 <Route
                     element={

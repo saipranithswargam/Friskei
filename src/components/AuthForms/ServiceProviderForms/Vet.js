@@ -6,11 +6,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import AuthContext from "../../../store/auth-context";
+import { useContext } from "react";
 const Vet = () => {
+    const authCtx = useContext(AuthContext);
     const [type, setType] = React.useState("Cat");
     const [note, setNote] = React.useState("");
     const [price, setPrice] = React.useState("");
-    const [priceTicker, setPriceTicker] = React.useState("");
+    const [priceTicker, setPriceTicker] = React.useState("USD");
     const handlePetChange = (event) => {
         setType(event.target.value);
     };
@@ -18,7 +21,7 @@ const Vet = () => {
         setPriceTicker(event.target.value);
     };
     const handlerPriceChange = (event) => {
-        setPrice(event.target.price);
+        setPrice(event.target.value);
     };
     const handleNoteChange = (event) => {
         setNote(event.target.value);
@@ -28,16 +31,15 @@ const Vet = () => {
         console.log("test");
         const data = {
             type: type,
-            price: priceTicker + " " + price,
+            price: priceTicker + price,
             note: note,
-            service:"petVet",
+            service: "petVet",
         };
-        const cookie_token = JSON.parse(localStorage.getItem("freskei"));
         fetch("https://friskei-backend.onrender.com/providers/details", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: "Bearer " + cookie_token.token,
+                Authorization: "Bearer " + authCtx.token,
             },
             body: JSON.stringify(data),
         })
@@ -80,12 +82,18 @@ const Vet = () => {
                         <div className={styles.input}>
                             <label>Price Per Hour ?</label>
                             <div className={styles.select}>
-                                <select onChange={handlerTickerChange}>
+                                <select
+                                    onChange={handlerTickerChange}
+                                    value={priceTicker}
+                                >
                                     <option>USD</option>
                                     <option>INR</option>
                                     <option>SEK</option>
                                 </select>
-                                <input onChange={handlerPriceChange}></input>
+                                <input
+                                    onChange={handlerPriceChange}
+                                    value={price}
+                                ></input>
                             </div>
                         </div>
                         <div className={styles.input}>

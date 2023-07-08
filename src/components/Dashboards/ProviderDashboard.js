@@ -272,6 +272,7 @@ const ProviderDashboard = () => {
                                     <button onClick={routeEditHandler}>
                                         Edit Service
                                     </button>
+                                    <button>Delete Service</button>
                                 </div>
                             </div>
                         </div>

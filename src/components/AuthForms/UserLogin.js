@@ -1,21 +1,25 @@
-import { useState } from "react";
+import { useRef, useState, useContext } from "react";
 import styles from "./UserLogin.module.css";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
+import AuthContext from "../../store/auth-context";
+import Loading from "../Spinner/Spinner";
+import { useNavigate } from "react-router-dom";
 const UserLogin = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const emailChangeHandler = (event) => {
-        setEmail(event.target.value);
-    };
-    const passwordChangeHandler = (event) => {
-        setPassword(event.target.value);
-    };
-    const submitHandler = async (event) => {
+    const navigate = useNavigate();
+    const emailInputRef = useRef();
+    const passwordInputRef = useRef();
+
+    const authCtx = useContext(AuthContext);
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const submitHandler = (event) => {
+        setIsLoading(true);
         event.preventDefault();
         const Data = {
-            mobileNum: email,
-            password: password,
+            email: emailInputRef.current.value,
+            password: passwordInputRef.current.value,
         };
         console.log(Data);
         fetch("https://friskei-backend.onrender.com/users/login", {
@@ -25,53 +29,57 @@ const UserLogin = () => {
                 "Content-Type": "application/json",
             },
         }).then((response) => {
+            setIsLoading(false);
             if (response.ok) {
                 response.json().then((result) => {
-                    localStorage.setItem(
-                        "freskei",
-                        JSON.stringify({
-                            login: true,
-                            token: result.token,
-                        })
+                    const expirationTime = new Date(
+                        new Date().getTime() + 1.8e7
                     );
+                    authCtx.login(result.token, expirationTime.toISOString());
+                    navigate("/");
                 });
+                console.log("logged in sucessfully");
             }
         });
     };
     return (
         <>
             <Header />
-            <div className={styles.main}>
-                <div className={styles.loginCard}>
-                    <h1>Login to Continue</h1>
-                    <form className={styles.loginForm}>
-                        <input
-                            type="text"
-                            placeholder="Email Id"
-                            value={email}
-                            onChange={emailChangeHandler}
-                        />
-                        <input
-                            type="password"
-                            placeholder="password"
-                            value={password}
-                            onChange={passwordChangeHandler}
-                        />
-                        <button type="submit" onClick={submitHandler}>
-                            Login
-                        </button>
-                    </form>
-                    <p>
-                        <Link to="/forgotPassword">Forgot Password</Link>
-                    </p>
-                    <p>Don't have an account with us ?</p>
-                    <div className={styles.registerDiv}>
+            {isLoading && <Loading />}
+            {!isLoading && (
+                <div className={styles.main}>
+                    <div className={styles.loginCard}>
+                        <h1>Login to Continue</h1>
+                        <form
+                            className={styles.loginForm}
+                            onSubmit={submitHandler}
+                        >
+                            <input
+                                type="text"
+                                placeholder="Email Id"
+                                ref={emailInputRef}
+                            />
+                            <input
+                                type="password"
+                                placeholder="password"
+                                ref={passwordInputRef}
+                            />
+                            <button type="submit">Login</button>
+                        </form>
                         <p>
-                            <Link to="/register">Click here to Register</Link>
+                            <Link to="/forgotPassword">Forgot Password</Link>
                         </p>
+                        <p>Don't have an account with us ?</p>
+                        <div className={styles.registerDiv}>
+                            <p>
+                                <Link to="/register">
+                                    Click here to Register
+                                </Link>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </>
     );
 };

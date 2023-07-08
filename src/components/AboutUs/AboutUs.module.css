@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@700&family=Space+Grotesk&display=swap");
+.main {
+}
+.heading h1 {
+    font-family: "Edu NSW ACT Foundation", cursive;
+    color: #386876;
+    padding-top: 2rem;
+}
+.contentWrapper {
+    width: 80%;
+    margin: 0 auto;
+}
+.content {
+    top: -180px;
+    position: relative;
+    background-color: white;
+}
+.bgImage {
+    height: 400px;
+    background-image: url("https://www.rover.com/static/dist/fbcb6a90063d8d5685d5.jpg");
+    background-repeat: no-repeat;
+    background-position: center 20%;
+    background-size: cover !important;
+}
+.leftblock {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+}
+.leftblock p {
+    font-family: "Poppins", sans-serif !important;
+    line-height: 1.8;
+    color: #044c64bd;
+}
+.endingLine h3 {
+    margin-top: 2rem;
+    font-family: "Edu NSW ACT Foundation", cursive;
+    color: #386876;
+    text-align: center;
+    margin-bottom: 3rem;
+}

@@ -5,7 +5,7 @@ import DayCarer from "../../assets/images/DayCarer.webp";
 import DogWalker from "../../assets/images/DogWalker.webp";
 import PetTrainer from "../../assets/images/PetTrainer.webp";
 import Vet from "../../assets/images/VeternaryDoc.webp";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const cards = [
     {
         name: "Join as PetGroomer",
@@ -43,27 +43,18 @@ const cards = [
         link: "/joinus/register/petbreeder",
         alt: "breeder",
     },
-    {
-        name: "Join as PetAdoption",
-        src: Grooming,
-        link: "/joinus/register/petadoption",
-    },
+    // {
+    //     name: "Join as PetAdoption",
+    //     src: Grooming,
+    //     link: "/joinus/register/petadoption",
+    // },
 ];
 const JoinUsPage = () => {
-    const navigate = useNavigate();
-    const loginClickHandler = () => {
-        //render login page
-        navigate("/providerlogin");
-    };
     return (
         <>
             <div className={styles.upper}>
                 <div>
                     <h1>Join Friskei Today </h1>
-                    <div className={styles.buttonDiv}>
-                        <label>Already part of Friskei ?</label>
-                        <button onClick={loginClickHandler}>Login</button>
-                    </div>
                 </div>
                 <img
                     alt="dog and cat"
