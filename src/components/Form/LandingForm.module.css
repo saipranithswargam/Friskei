@@ -11,7 +11,7 @@
     padding: 1rem 1rem;
     border-top-right-radius: 9px;
     border-top-left-radius: 9px;
-    background-color: #f4f5f6;
+    background-color: #d1000a;
 }
 .upper input {
     height: 24px;
@@ -21,19 +21,20 @@
 }
 
 .upper input[type="checkbox"]:checked {
-    background-color: #404347 !important;
-    color: #404347;
-    accent-color: #404347;
+    background-color: #d1000a !important;
+    color: #d1000a;
+    accent-color: #d1000a;
+    outline: 1px solid rgba(255, 255, 255, 0.592);
 }
 .upper .option {
     font-size: 14px;
     font-family: "Poppins", sans-serif;
     font-weight: 500;
-    color: #404347;
+    color: white;
 }
 .lower {
     padding: 8px 24px 16px;
-    border: 1px solid rgb(192, 192, 192);
+    border: 1px solid #d1000a;
     border-top: none;
     border-radius: 10px;
     border-top-right-radius: 0;
@@ -46,13 +47,13 @@
 .outerSentance p {
     font-size: 14px;
     font-family: "Poppins", sans-serif;
-    color: #404347;
+    color: white;
 }
 .dog,
 .cat {
     font-size: 14px;
     font-family: "Poppins", sans-serif;
-    color: #404347;
+    color: white;
 }
 .imageDiv {
     text-align: center;
@@ -73,7 +74,7 @@
 .DogDayCare,
 .DogWalking,
 .breeding,
-.adopt{
+.adopt {
     width: 100%;
     border-radius: 9px;
     border: 2px solid rgb(208, 205, 205);
@@ -95,8 +96,8 @@
 .DogDayCare:hover,
 .DogWalking:hover,
 .breeding:hover,
-.adopt:hover{
-    border: 2px solid #404347;
+.adopt:hover {
+    border: 2px solid #d1000a;
     cursor: pointer;
 }
 
@@ -145,7 +146,7 @@
 .large,
 .Giant {
     width: 100%;
-    border: 2px solid rgb(208, 205, 205);
+    border: 2px solid #d1000a;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -166,7 +167,7 @@
 .medium:hover,
 .large:hover,
 .Giant:hover {
-    border: 2px solid #404347;
+    border: 2px solid #d1000a;
     cursor: pointer;
 }
 .button {
@@ -183,7 +184,7 @@
     font-weight: 700;
     font-family: "Poppins", sans-serif;
     border: none;
-    background-color: #2e67d1;
+    background-color: #d1000a;
     color: white;
     border-radius: 90px;
 }
@@ -201,7 +202,7 @@
 .DropInVisits2 {
     width: 100%;
     border-radius: 9px;
-    border: 2px solid rgb(208, 205, 205);
+    border: 2px solid #d1000a;
     padding: 8px;
     display: flex;
     justify-content: center;
@@ -211,7 +212,7 @@
 .Boarding2:hover,
 .HouseSitting2:hover,
 .DropInVisits2:hover {
-    border: 2px solid #404347;
+    border: 2px solid #d1000a;
     cursor: pointer;
 }
 
@@ -233,7 +234,7 @@
 }
 
 .active {
-    border: 2px solid #404347;
+    border: 2px solid #d1000a;
     width: 100%;
     border-radius: 9px;
     padding: 8px;

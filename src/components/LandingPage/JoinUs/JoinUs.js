@@ -5,24 +5,47 @@ import JoinUsGrooming from "../../../assets/images/JoinUsGrooming.webp";
 import JoinUsTraining from "../../../assets/images/JoinUsTraining.webp";
 import JoinUsTwoDogs from "../../../assets/images/JoinUsTwoDogs.webp";
 import JoinUsVet from "../../../assets/images/JoinUsVet.webp";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const JoinUs = () => {
+    const navigate = useNavigate();
     return (
         <div className={styles.main}>
             <div className={styles.mainLines}>
-                <h1>Join Us.... Become a Friskee</h1>
+                <h1>Join the Petlevert Community:</h1>
+                <h1>Where Pet Lovers Unite!</h1>
             </div>
             <div className={styles.description}>
                 <p>
-                    Provide a general description of the items below and
-                    introduce the
+                    At PetLevert, we are committed to providing exceptional
+                    services and
                 </p>
                 <p>
-                    services you offer. Click on the text box to edit the
-                    content.
+                    fostering a community of pet enthusiasts. Join us today and
+                    let us be your
                 </p>
+                <p>go-to destination for all things pet-related.</p>
             </div>
-            <div className={styles.imagesDiv}>
+            <div className={styles.buttonDiv}>
+                <button
+                    onClick={() => {
+                        navigate("/joinus");
+                    }}
+                >
+                    <div className={styles.insideButton}>
+                        <span>JOIN US</span>
+                        <svg
+                            data-bbox="9 70.9 181 59"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 200 200"
+                        >
+                            <g>
+                                <path d="M159 70.9l-2.2 2.4L183.6 99H9v3h174.6l-26.2 25.3 2.1 2.6 30.5-29.3-31-29.7z"></path>
+                            </g>
+                        </svg>
+                    </div>
+                </button>
+            </div>
+            {/* <div className={styles.imagesDiv}>
                 <Link
                     to="/joinus/register/petgroomer"
                     className={styles.remove}
@@ -86,7 +109,7 @@ const JoinUs = () => {
                         <p>Trainer</p>
                     </div>
                 </Link>
-            </div>
+            </div> */}
         </div>
     );
 };

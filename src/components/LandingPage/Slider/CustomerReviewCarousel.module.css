@@ -14,7 +14,7 @@
     margin-top: 2px;
     height: fit-content;
     width: 100vw;
-    background-color: #035772;
+    background-image: url("https://static.wixstatic.com/media/11062b_b111f266bcec4c54bb9fcd2d7d4e4a8f~mv2.jpg/v1/fill/w_1225,h_641,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/11062b_b111f266bcec4c54bb9fcd2d7d4e4a8f~mv2.jpg");
     padding-bottom: 3rem;
 }
 
@@ -25,7 +25,7 @@
 .content h1 {
     text-align: center;
     font-size: 70px;
-    color: #f6f9f5;
+    color: #D1000a;
     font-family: 'Space Grotesk', sans-serif;
 }
 
@@ -38,14 +38,16 @@
     padding: 0.5rem 1.5rem;
     border-radius: 20px;
     border: none;
-    color: #035772;
+    color:#D1000a;
+    background-color: white;
+    border: 1px solid slategray;
 
 }
 
 .buttonDiv button:hover{
     color: white;
-    background-color: transparent;
-    border: 1px solid white;
+    background-color: #D1000a;
+    border:none;
 }
 @media(max-width:450px){
     .content h1{

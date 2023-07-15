@@ -26,11 +26,13 @@
 }
 .navLink {
     padding: 0.5rem 1rem;
-    color: #035772 !important;
+    color: #d1000a !important;
     font-family: "Poppins", sans-serif !important;
+    border-radius: 50px;
+    width: 5.7rem;
 }
 .userIcon {
-    color: #035772 !important;
+    color: #d1000a !important;
     font-family: "Poppins", sans-serif !important;
     font-weight: 700 !important;
     width: 5rem;
@@ -39,19 +41,13 @@
     background-color: transparent !important;
     box-shadow: none !important;
 }
-.userIcon:hover {
-    cursor: pointer;
-    color: #fff !important;
-    background-color: #035772 !important;
-}
 .navLink:global(.active) {
-    border-radius: 10px;
-    background-color: #035772;
+    border-radius: 50px;
+    background-color: #d1000a;
     color: #fff !important;
 }
 .navLink:hover {
-    background-color: #035772;
-    border-radius: 10px;
+    background-color: #d1000a;
     color: white !important;
 }
 .logoutButton {
@@ -73,7 +69,7 @@
     font-family: "Edu NSW ACT Foundation", cursive;
     font-size: 38px !important;
     font-weight: 400 !important;
-    color: #386876 !important;
+    color: #d1000a !important;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,9 +79,8 @@
     width: 23px;
 }
 .active {
-    background-color: #035772;
+    background-color: #d1000a;
     color: #f8f9fa !important;
-    border-radius: 10px;
 }
 
 /*media quries*/

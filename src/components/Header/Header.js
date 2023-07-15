@@ -42,7 +42,7 @@ const Header = () => {
                     className={`${styles.nav}`}
                 >
                     <Navbar.Brand as={Link} to="/" className={styles.navBrand}>
-                        Friskei
+                        PETLEVERT
                         <img src={Paw} alt="icon" />
                     </Navbar.Brand>
                     <Navbar.Toggle

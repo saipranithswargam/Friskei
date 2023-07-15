@@ -13,7 +13,7 @@ import { Route, Routes } from "react-router-dom";
 import UserLogin from "./components/AuthForms/UserLogin";
 import UserRegsiter from "./components/AuthForms/UserRegister";
 import ForgotPassword from "./components/AuthForms/ForgotPassword";
-import JoinUsPage from "./components/JoinUs/JoinUs";
+import ServicesMain from "./components/Services/Services";
 import JoinUsRegsiterForm from "./components/AuthForms/JoinUsRegisterForm";
 import JoinUsServiceDetails from "./components/AuthForms/JoinUsServiceDetails";
 import Search from "./components/SearchResults/Search";
@@ -23,6 +23,7 @@ import ProviderDashboard from "./components/Dashboards/ProviderDashboard";
 import EditService from "./components/Dashboards/EditService";
 import AboutUs from "./components/AboutUs/AboutUs";
 import ContactUs from "./components/ContactUs/ContactUs";
+import JoinUsMain from "./components/JoinUs/JoinUs";
 function App() {
     const style = {
         margin: 0,
@@ -65,13 +66,21 @@ function App() {
                 <Route element={<UserLogin />} path="/login" />
                 <Route element={<UserRegsiter />} path="/register" />
                 <Route element={<AboutUs />} path="/aboutus" />
-                <Route element={<ContactUs />} path="/contact"/>
+                <Route element={<ContactUs />} path="/contact" />
                 <Route element={<Search />} path="/search" />
                 <Route
                     element={
                         <>
                             <Header />
-                            <JoinUsPage />
+                            <ServicesMain />
+                        </>
+                    }
+                    path="/services"
+                />
+                <Route
+                    element={
+                        <>
+                            <JoinUsMain />
                         </>
                     }
                     path="/joinus"

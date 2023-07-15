@@ -162,9 +162,9 @@ const LandingForm = () => {
     let activeBreedingStyles = activeBreeding ? styles.active : styles.breeding;
 
     const submitHandler = () => {
-        if (!authCtx.isLoggedIn) {
-            navigate("/login");
-        }
+        // if (!authCtx.isLoggedIn) {
+        //     navigate("/login");
+        // }
         let petType = "";
         if (selectedCat) {
             petType = "cat";
@@ -221,19 +221,14 @@ const LandingForm = () => {
                             onChange={dogClickHandler}
                             checked={selectedDog}
                         />
-                        <span className={styles.dog}>Dog</span>
+                        <span className={styles.dog}>Woofie (Dogs)</span>
                         <input
                             type="checkbox"
                             onChange={catClickHandler}
                             checked={selectedCat}
                         />
-                        <span className={styles.cat}>Cat</span>
-                        <input
-                            type="checkbox"
-                            onChange={otherClickHandler}
-                            checked={selectOther}
-                        />
-                        <span className={styles.cat}>Other</span>
+                        <span className={styles.cat}>Whiskers (Cats)</span>
+
                         <div style={{ marginRight: "auto" }}></div>
                         <span className={styles.option}>Search by :</span>
                         <span className={styles.dog}>Current Location</span>

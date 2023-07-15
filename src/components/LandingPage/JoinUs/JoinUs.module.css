@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;700;800;900&display=swap");
 .main {
     height: fit-content;
     padding-bottom: 2rem;
@@ -8,15 +9,16 @@
 .mainLines h1 {
     text-align: center;
     font-size: 56px;
-    color: #035772;
+    color: #d1000a;
     font-family: "Space Grotesk", sans-serif;
+    margin: 0 auto;
 }
 .description p {
     text-align: center;
-    margin: 0;
+    margin-top: 0.5rem;
     font-size: 18px;
     font-family: "Poppins", sans-serif;
-    color: #035772;
+    color: #d1000a;
 }
 .description {
     margin-top: 1rem;
@@ -25,8 +27,8 @@
     margin-top: 2.5rem;
     display: grid;
     padding: 0 1rem;
-    gap:10px;
-    grid-template-columns: repeat(6,1fr);
+    gap: 10px;
+    grid-template-columns: repeat(6, 1fr);
     justify-content: space-evenly;
     text-align: center;
 }
@@ -43,31 +45,61 @@
     border-radius: 100px;
     margin-bottom: 0.7rem;
 }
-.remove{
+.remove {
     text-decoration: none;
 }
-@media(max-width:800px){
-    .mainLines h1{
+.buttonDiv {
+    margin-top: 2rem;
+    text-align: center;
+}
+.buttonDiv button {
+    width: 17rem;
+    border-radius: 50px;
+    border: 1px solid #460003;
+    background: #ffffff;
+}
+
+.insideButton {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 1rem;
+    justify-content: center;
+    width: 100%;
+}
+.insideButton svg {
+    height: 65px;
+    width: 37px;
+}
+.insideButton span {
+    letter-spacing: 0.25em;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    color: #d1000a;
+    font-size: 23px;
+}
+@media (max-width: 800px) {
+    .mainLines h1 {
         font-size: 40px;
     }
-    .imagesDiv{
-        grid-template-columns: repeat(3,1fr);
+    .imagesDiv {
+        grid-template-columns: repeat(3, 1fr);
         justify-content: center;
         align-items: center;
     }
-    .Img{
+    .Img {
         text-align: center;
     }
-    .description p{
+    .description p {
         font-size: 15px;
     }
 }
-@media (max-width:400px){
-    .imagesDiv{
-        grid-template-columns: repeat(2,1fr);
+@media (max-width: 400px) {
+    .imagesDiv {
+        grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
     }
-    .mainLines h1{
+    .mainLines h1 {
         font-size: 30px;
     }
 }
