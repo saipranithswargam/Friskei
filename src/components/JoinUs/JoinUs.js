@@ -3,7 +3,7 @@ import styles from "./JoinUs.module.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import InputLabel from "@mui/material/InputLabel";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { Controller, useForm } from "react-hook-form";
 import FormControl from "@mui/material/FormControl";

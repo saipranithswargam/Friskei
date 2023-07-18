@@ -9,7 +9,7 @@ const Hero = () => {
                     <div className={styles.contentDiv}>
                         <h1>The Quality Care </h1>
                         <h1>Your Pet Deserves</h1>
-                        <p>For a pawfect look and feel</p>
+                        <p>Nurturing your Pet's Health, Happiness, and Well-Being with Petlevert</p>
                     </div>
                 </div>
                 <img

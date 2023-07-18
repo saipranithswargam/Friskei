@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+.main {
+    background-color: rgb(232, 230, 230);
+    padding: 3% 5%;
+}
+.upperDiv {
+    color: #d1000a;
+}
+.upperDiv h1 {
+    font-size: 70px;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 400;
+}
+.upperDiv p {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+.mainLine {
+    width: 80%;
+}
+.form {
+    margin-top: 3rem;
+}
+.name {
+    margin-top: 4rem;
+    display: flex;
+    gap: 5rem;
+    width: 100%;
+    position: relative;
+}
+.namePart {
+    display: flex;
+    flex-direction: column;
+}
+.namePart label,
+.email label,
+.message label {
+    font-family: "Poppins", sans-serif;
+    margin-bottom: 1rem;
+}
+.namePart input,
+.email input {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #d1000a;
+    background-color: transparent;
+}
+.email {
+    margin-top: 4rem;
+    display: flex;
+    gap: 5rem;
+    width: 100%;
+    position: relative;
+}
+
+.message {
+    margin-top: 4rem;
+}
+.message textarea {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #d1000a;
+    background-color: transparent;
+    width: 75%;
+}
+.buttonDiv{
+    margin-top: 3rem;
+}
+.buttonDiv button{
+        background-color: #d1000a;
+        padding: 0.7% 3%;
+        border: none;
+        outline: none;
+        color: white;
+        font-family: "Poppins", sans-serif;
+        border-radius: 50px;
+}
