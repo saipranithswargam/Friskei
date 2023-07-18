@@ -4,39 +4,50 @@
 }
 .heading h1 {
     font-family: "Edu NSW ACT Foundation", cursive;
-    color: #386876;
     padding-top: 2rem;
+    color: #d1000a;
+}
+.heading h3 {
+    font-family: "Edu NSW ACT Foundation", cursive;
+    padding-top: 2rem;
+    color: #d1000a;
+    margin-top: 1rem;
 }
 .contentWrapper {
     width: 80%;
     margin: 0 auto;
 }
 .content {
-    top: -180px;
+    top: -60px;
     position: relative;
     background-color: white;
 }
 .bgImage {
     height: 400px;
-    background-image: url("https://www.rover.com/static/dist/fbcb6a90063d8d5685d5.jpg");
+    background-image: url("../../assets/images/AboutUSHero.jpg");
     background-repeat: no-repeat;
-    background-position: center 20%;
+    background-position: center 32%;
     background-size: cover !important;
 }
 .leftblock {
     width: 80%;
     margin: 0 auto;
-    margin-top: 1.5rem;
+    margin-top: 2.3rem;
 }
 .leftblock p {
     font-family: "Poppins", sans-serif !important;
-    line-height: 1.8;
-    color: #044c64bd;
+    line-height: 2;
+    color: #d1000a;
 }
 .endingLine h3 {
     margin-top: 2rem;
     font-family: "Edu NSW ACT Foundation", cursive;
-    color: #386876;
+    color: #d1000a;
     text-align: center;
     margin-bottom: 3rem;
+}
+
+p span{
+    font-size: larger;
+    font-weight: 600;
 }

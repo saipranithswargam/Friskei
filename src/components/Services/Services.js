@@ -50,42 +50,59 @@ const cards = [
         alt: "breeder",
         des: "Our exclusive pet breeding services offer personalized care and attention to ensure your pet's health and happiness.",
     },
-    // {
-    //     name: "Join as PetAdoption",
-    //     src: Grooming,
-    //     link: "/joinus/register/petadoption",
-    // },
 ];
 const JoinUsPage = () => {
     return (
         <>
-            <div className={styles.upper}>
-                <div>
-                    <h1>Join Friskei Today </h1>
-                </div>
-                <img
-                    alt="dog and cat"
-                    src="https://static.wixstatic.com/media/84770f_cc7fbf222d044cf09028f921a0cfe36e~mv2.png/v1/fill/w_1163,h_699,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/shutterstock_184908566%20copy.png"
-                ></img>
-            </div>
-            <div className={styles.lower}>
-                {cards.map((doc) => (
-                    <Link
-                        to={doc.link}
-                        className={styles.cardLink}
-                        key={doc.alt}
-                    >
-                        <div className={styles.card}>
-                            <h4>{doc.name}</h4>
-                            <div className={styles.imageDiv}>
-                                <img src={doc.src} alt={doc.alt} />
-                            </div>
-                            <div className={styles.desDiv}>
-                                <p>{doc.des}</p>
-                            </div>
+            <div className={styles.main}>
+                <div className={styles.upper}>
+                    <div className={styles.image}>
+                        <img
+                            src="https://static.wixstatic.com/media/0c7a60_874bde463b50435bb1a47bc8af9a3de1~mv2.jpg/v1/fill/w_674,h_491,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/0c7a60_874bde463b50435bb1a47bc8af9a3de1~mv2.jpg"
+                            alt="dogg"
+                        />
+                    </div>
+                    <div className={styles.contentDiv}>
+                        <div className={styles.content}>
+                            <h1>What We Offer</h1>
+                            <p>
+                                Welcome to our exclusive pet care services! Our
+                                services include personalized care plans
+                                tailored to meet your pet's unique needs, from
+                                daily walks to customized feeding schedules. We
+                                also offer professional grooming services to
+                                keep your pet looking and feeling their best.
+                                Our team of experienced and certified pet care
+                                professionals are passionate about animals and
+                                dedicated to providing a safe and comfortable
+                                environment for your pet. Contact us today to
+                                learn more about our exclusive pet care services
+                                and how we can help your pet live their happiest
+                                and healthiest life.
+                            </p>
                         </div>
-                    </Link>
-                ))}
+                    </div>
+                </div>
+                <div className={styles.lower}>
+                    {cards.map((doc) => (
+                        <Link
+                            to={doc.link}
+                            className={styles.cardLink}
+                            key={doc.alt}
+                        >
+                            <div className={styles.card}>
+                                <h4>{doc.name}</h4>
+                                <hr />
+                                <div className={styles.imageDiv}>
+                                    <img src={doc.src} alt={doc.alt} />
+                                </div>
+                                <div className={styles.desDiv}>
+                                    <p>{doc.des}</p>
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
             </div>
             <Footer />
         </>

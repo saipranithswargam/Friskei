@@ -26,7 +26,7 @@ const CustomerReviewCarousel = () => {
                 </div>
                 <div className={classes.productGalleryContainer}>
                     <div className={classes.galleryContainer}>
-                        <SliderComp>
+                        {/* <SliderComp>
                             <div className={classes.galleryImage}>
                                 <img src={Service__1} alt="Service__1" />
                             </div>
@@ -51,7 +51,7 @@ const CustomerReviewCarousel = () => {
                             <div className={classes.galleryImage}>
                                 <img src={Service__8} alt="Service__8"></img>
                             </div>
-                        </SliderComp>
+                        </SliderComp> */}
                     </div>
                 </div>
             </div>

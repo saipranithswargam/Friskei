@@ -36,6 +36,9 @@
     width: 50%;
     grid-template-columns: 1fr;
 }
+.form{
+    margin-bottom: -20rem;
+}
 .image {
     grid-area: 1 / 1 / 2 / 2;
     justify-self: start;
@@ -61,4 +64,25 @@
     justify-self: start;
     align-self: start;
     padding: 5% 2%;
+}
+.checkPara span{
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 14px; 
+}
+.buttonDiv{
+    width: 100%;
+    text-align: center;
+}
+.buttonDiv button{
+    width: 80%;
+    margin-top: 2rem;
+    border:none;
+    background-color: #d1000a;
+    color: white;
+    padding : 3% 4%; 
+}
+.buttonDiv button:hover{
+    background-color: white;
+    color: #d1000a;
+    border: 1px solid #d1000a;
 }

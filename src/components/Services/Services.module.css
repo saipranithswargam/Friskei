@@ -1,18 +1,53 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500&display=swap");
+.main {
+    background-color: rgb(232, 230, 230);
+}
 .upper {
-    height: 90vh;
-    width: 100vw;
-    background-color: #4d8495;
-    padding: 2rem;
-    padding-top: 3rem;
+    position: static;
+    display: grid;
+    height: auto;
+    width: 100%;
+    grid-template-rows: 1fr;
+    grid-template-columns: 100%;
+    padding: 5% 4%;
+    margin-bottom: -33%;
+}
+.image {
     display: flex;
+    position: relative;
+    width: 100%;
+}
+.image img {
+    width: 60%;
+    height: 63%;
+    object-fit: cover;
+}
+.contentDiv {
+    position: relative;
+    right: 0;
+    display: flex;
+    bottom: 90%;
+    right: 8%;
+}
+.content {
+    width: 38rem;
+    margin-left: auto;
+    background-color: white;
+    justify-self: end;
+    padding: 5% 4%;
 }
 .upper h1 {
-    font-size: 85px;
-    color: #f6f9f5;
+    font-size: 56px;
+    color: #d1000a;
     margin: 0;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 400;
+}
+.content p {
+    line-height: 1.8em;
+    color: #d1000a;
+    font-family: "Poppins", sans-serif;
 }
 .desDiv {
     margin: 0 auto;
@@ -39,12 +74,22 @@
     margin-bottom: 1rem;
     box-shadow: 1px 1px 12px 0 rgba(0, 0, 0, 0.303);
 }
+.card hr {
+    width: 90%;
+    margin: 10px auto;
+    border: none;
+    height: 1.5px;
+    color: black !important;
+    background-color: black !important;
+}
 .card h4 {
     text-align: center;
     color: #d1000a;
+    margin-bottom: 0;
 }
 .card img {
     width: 400px;
+    margin-top: 1rem;
 }
 .imageDiv {
     text-align: center;

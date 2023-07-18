@@ -310,13 +310,18 @@ const JoinUs = () => {
                                     <FormControlLabel
                                         control={<Checkbox />}
                                         label="I agree to the terms &amp; conditions"
+                                        className={styles.checkPara}
                                     />
                                     <FormControlLabel
                                         control={<Checkbox />}
                                         label="I want to subscribe to the newsletter."
+                                        className={styles.checkPara}
                                     />
                                 </FormGroup>
                             </Box>
+                            <div className={styles.buttonDiv}>
+                                <button>Sign Up</button>
+                            </div>
                         </form>
                     </div>
                 </div>
