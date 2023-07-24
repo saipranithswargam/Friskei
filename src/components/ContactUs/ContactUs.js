@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import { Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
+import Footer from "../Footer/Footer";
 const ContactUs = () => {
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");
@@ -56,6 +57,20 @@ const ContactUs = () => {
                     </form>
                 </div>
             </div>
+            <div className={styles.mapouter}>
+                <div className={styles.gmap_canvas}>
+                    <iframe
+                        title="map"
+                        className={styles.gmap_iframe}
+                        width="100%"
+                        frameborder="0"
+                        marginheight="0"
+                        marginwidth="0"
+                        src="https://maps.google.com/maps?width=1280&amp;height=652&amp;hl=en&amp;q=Vancouver, British Columbia, Canada&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                    ></iframe>
+                </div>
+            </div>
+            <Footer />
         </>
     );
 };

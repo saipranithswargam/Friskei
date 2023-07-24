@@ -65,15 +65,32 @@
     background-color: transparent;
     width: 75%;
 }
-.buttonDiv{
+.buttonDiv {
     margin-top: 3rem;
 }
-.buttonDiv button{
-        background-color: #d1000a;
-        padding: 0.7% 3%;
-        border: none;
-        outline: none;
-        color: white;
-        font-family: "Poppins", sans-serif;
-        border-radius: 50px;
+.buttonDiv button {
+    background-color: #d1000a;
+    padding: 0.7% 3%;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    border-radius: 50px;
+}
+
+/*map styles*/
+.mapouter {
+    position: relative;
+    text-align: right;
+    width: 100%;
+    height: 100vh;
+}
+.gmap_canvas {
+    overflow: hidden;
+    background: none !important;
+    width: 100%;
+    height: 100vh;
+}
+.gmap_iframe {
+    height: 100vh !important;
 }
