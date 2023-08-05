@@ -1,76 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap');
-.mainDiv{
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap");
+.mainDiv {
     width: 100vw;
     position: relative;
     height: 100vh;
 }
-.colouredDiv{
+.colouredDiv {
     width: 100vw;
     height: 90vh;
-    background-image: url(https://static.wixstatic.com/media/11062b_2509315cd670492f98d8d1244797d91b~mv2.jpg/v1/fill/w_1225,h_678,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/11062b_2509315cd670492f98d8d1244797d91b~mv2.jpg);
+    background-image: url("https://static.wixstatic.com/media/11062b_2509315cd670492f98d8d1244797d91b~mv2.jpg/v1/fill/w_1225,h_678,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/11062b_2509315cd670492f98d8d1244797d91b~mv2.jpg");
     padding: 4rem;
     padding-top: 3rem;
     background-repeat: repeat-x;
 }
-.colouredDiv h1{
+.colouredDiv h1 {
     font-size: 85px;
     color: #f6f9f5;
     margin: 0;
     line-height: 0.9;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-weight: 400;
 }
-.colouredDiv p{
+.colouredDiv p {
     color: #f6f9f5;
     margin-top: 1rem;
     font-size: 24px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
 }
-.dogImage{
+.dogImage {
     position: absolute;
-    top: 11rem;
+    /* top: 11rem; */
+    top: 5rem;
     right: 0;
-    width: 930px;
+    width: 607px;
+    height: 555px;
+    /* width: 930px; */
 }
-@media(max-width:996px){
-    .dogImage{
-        top:15rem;
-        right: 1rem;        
+@media (max-width: 996px) {
+    .dogImage {
+        top: 15rem;
+        right: 1rem;
     }
-    .mainDiv{
+    .mainDiv {
         height: 105vh;
     }
-    .colouredDiv h1{
+    .colouredDiv h1 {
         font-size: 70px;
     }
-    .dogImage{
+    .dogImage {
         width: 80%;
     }
 }
-@media (max-width:735px){
-    .colouredDiv{
+@media (max-width: 735px) {
+    .colouredDiv {
         padding: 2rem 1rem;
     }
-    .colouredDiv h1{
+    .colouredDiv h1 {
         font-size: 60px;
     }
-    .dogImage{
+    .dogImage {
         width: 95%;
     }
 }
-@media (max-width:510px){
-        .colouredDiv h1{
-            font-size: 45px;
-        }
-        .colouredDiv p{
-            font-size: 16px;
-        }
-        .mainDiv{
-            height: fit-content;
-        }
-        .colouredDiv{
-            height: fit-content;
-            padding-bottom: 60%;
-        }
+@media (max-width: 510px) {
+    .colouredDiv h1 {
+        font-size: 45px;
+    }
+    .colouredDiv p {
+        font-size: 16px;
+    }
+    .mainDiv {
+        height: fit-content;
+    }
+    .colouredDiv {
+        height: fit-content;
+        padding-bottom: 60%;
+    }
 }

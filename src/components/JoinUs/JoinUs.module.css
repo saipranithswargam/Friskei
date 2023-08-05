@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700&display=swap");
 .main {
     display: flex;
     position: relative;
@@ -24,9 +24,9 @@
     font-weight: 500;
     margin-top: 3rem;
 }
-.formHeading{
+.formHeading {
     font-size: 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     color: #d1000a;
     font-weight: 600;
 }
@@ -36,7 +36,7 @@
     width: 50%;
     grid-template-columns: 1fr;
 }
-.form{
+.form {
     margin-bottom: -20rem;
 }
 .image {
@@ -59,30 +59,49 @@
     margin: 0 auto;
     background-color: white;
     grid-area: 1 / 1 / 2 / 2;
-    left:9%;
+    left: 9%;
     bottom: 45%;
     justify-self: start;
     align-self: start;
     padding: 5% 2%;
 }
-.checkPara span{
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 14px; 
+.checkPara span {
+    font-family: "Montserrat", sans-serif !important;
+    font-size: 14px;
 }
-.buttonDiv{
+.buttonDiv {
     width: 100%;
     text-align: center;
 }
-.buttonDiv button{
+.buttonDiv button {
     width: 80%;
     margin-top: 2rem;
-    border:none;
+    border: none;
     background-color: #d1000a;
     color: white;
-    padding : 3% 4%; 
+    padding: 3% 4%;
 }
-.buttonDiv button:hover{
+.buttonDiv button:hover {
     background-color: white;
     color: #d1000a;
     border: 1px solid #d1000a;
+}
+.buttonsGroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.Button {
+    width: 5rem;
+    padding: 0.3rem;
+    border: none;
+}
+.activeSignUp {
+    width: 5rem;
+    padding: 0.3rem;
+    background-color: #d1000a;
+    outline: none;
+    color: white;
+    border: none;
 }

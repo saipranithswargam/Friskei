@@ -2,6 +2,7 @@ import styles from "./CustomerReview.module.css";
 import DogReview from "../../../assets/images/dogReview.webp";
 import DogReview2 from "../../../assets/images/dogReview2.webp";
 import DogReview3 from "../../../assets/images/dogReview3.webp";
+
 const CustomerReview = () => {
     return (
         <div className={styles.main}>

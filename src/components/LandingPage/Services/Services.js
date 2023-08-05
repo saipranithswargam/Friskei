@@ -6,8 +6,8 @@ import Heart from "../../../assets/images/Heart.svg";
 import Training from "../../../assets/images/Training.svg";
 import Vet from "../../../assets/images/Vet.svg";
 import Walking from "../../../assets/images/Walking.svg";
-import Grooming2 from "../../../assets/images/catWash.webp";
-import Training2 from "../../../assets/images/Training.webp";
+import Grooming2 from "./catGroom.jpg";
+import Training2 from "./Training.jpg";
 import Walking2 from "../../../assets/images/Walking.webp";
 import Vet2 from "../../../assets/images/Vet.webp";
 import DayCare from "../../../assets/images/DayCare.webp";
@@ -79,13 +79,19 @@ const Services = () => {
                 </div>
                 <div className={styles.imagesGrid}>
                     <div className={styles.imgContainer}>
-                        <img src={Grooming2} alt="training2" />
+                        <img
+                            src={Grooming2}
+                            alt="training2"
+                        />
                         <div className={styles.imgContent}>
                             <h3>Grooming</h3>
                         </div>
                     </div>
                     <div className={styles.imgContainer}>
-                        <img src={Training2} alt="training2" />
+                        <img
+                            src="https://static.wixstatic.com/media/0c7a60_0c2eec593a4846a380bbeebdb82352f7~mv2.jpg/v1/fill/w_259,h_146,q_90/0c7a60_0c2eec593a4846a380bbeebdb82352f7~mv2.webp"
+                            alt="training2"
+                        />
                         <div className={styles.imgContent}>
                             <h3>Training</h3>
                         </div>

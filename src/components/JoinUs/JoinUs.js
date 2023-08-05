@@ -20,7 +20,9 @@ const JoinUs = () => {
     const [password, setPassword] = React.useState("");
     const [city, setCity] = React.useState("");
     const [petParent, setPetParent] = React.useState("");
-    const typeChangeHandler = (event) => {
+    const [userSignUp, setUserSignUp] = React.useState(true);
+    const [providerSignUp, setProviderSignUp] = React.useState(false);
+    const   typeChangeHandler = (event) => {
         setType(event.target.value);
     };
     const petParentChangeHandler = (event) => {
@@ -94,6 +96,10 @@ const JoinUs = () => {
         // };
         // navigator.geolocation.getCurrentPosition(sucess, error, options);
     };
+    let userSignUpStyles = userSignUp ? styles.activeSignUp : styles.Button;
+    let providerSignUpStyles = providerSignUp
+        ? styles.activeSignUp
+        : styles.Button;
     return (
         <>
             <Header />
@@ -124,7 +130,26 @@ const JoinUs = () => {
                                     Let's Get Started
                                 </p>
                             </Box>
-
+                            <Box className={styles.buttonsGroup}>
+                                <button
+                                    className={userSignUpStyles}
+                                    onClick={() => {
+                                        setUserSignUp(true);
+                                        setProviderSignUp(false);
+                                    }}
+                                >
+                                    User
+                                </button>
+                                <button
+                                    className={providerSignUpStyles}
+                                    onClick={() => {
+                                        setProviderSignUp(true);
+                                        setUserSignUp(false);
+                                    }}
+                                >
+                                    Provider
+                                </button>
+                            </Box>
                             <Box
                                 sx={{
                                     minWidth: "100%",

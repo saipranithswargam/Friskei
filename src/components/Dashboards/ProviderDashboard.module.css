@@ -1,207 +1,228 @@
-.image img {
-    height: 120px;
-    width: 120px;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500&display=swap");
+.upper {
+    width: 70%;
+    margin: 0 auto;
+    padding: 3rem 5rem;
+    padding-top: 6rem;
+    background-color: rgb(139, 0, 7);
+    margin-top: 1rem;
 }
-.left .image {
+.upper .info {
+    display: flex;
+    gap: 2rem;
+}
+.info .symbol {
+    font-size: 36px !important;
+    width: 110px !important;
+    height: 110px !important;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 100%;
+    color: slategray;
+    background-color: #d8d8d8;
 }
-.main {
-    display: flex;
-    padding: 3rem 6rem;
-}
-.left {
-    max-width: 25%;
-    flex: 0 0 25%;
-    padding: 3rem 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    border: 1px solid rgba(112, 128, 144, 0.445);
-}
-.name h1 {
-    font-size: 20px;
-}
-.name {
-    padding: 20px 0;
-    width: 90%;
-    font-weight: 700;
-}
-.member {
-    display: flex;
-}
-.member p {
-    font-size: 12px;
-    color: #002f34;
-    margin-left: 5px;
-}
-.pet svg {
-    width: 16px;
-    height: 16px;
-}
-.pet {
-    display: flex;
-}
-.pet p {
-    font-size: 12px;
-    color: #002f34;
-    margin-left: 5px;
-}
-.right {
-    width: 70%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.ntg {
-    text-align: center;
-    margin-top: 16px;
-    color: rgba(0, 0, 0, 0.67);
-}
-.settingsPanel {
-    width: 70%;
-}
-.settingsPanel .heading {
-    padding: 16px 24px;
-    border-bottom: 1px solid rgba(14, 4, 5, 0.2);
-}
-.innerPanel {
-    border: 1px solid rgba(14, 4, 5, 0.2);
-}
-.outerDiv {
-    padding: 16px 24px 0;
-}
-.sectionHeading {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 700;
-    color: rgba(0, 47, 52, 1);
-    padding: 8px 0;
-}
-.info {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-.info input {
-    width: 90%;
-    font-size: 16px;
-    height: 48px;
-    box-sizing: border-box;
-    outline: none;
-    padding: 0 12px;
-}
-.infoDiv {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-.infoDiv label {
-    padding: 0 12px;
-    color: rgba(0, 47, 52, 0.808);
-}
-.infoDiv button {
-    width: 90%;
-    outline: none;
-    border: none;
-    border-radius: 4px;
-    height: 48px;
+.info h5 {
+    margin-top: auto;
+    margin-bottom: 2.5rem;
+    font-size: 28px;
     color: white;
-    background-color: #002f34;
+}
+.lower {
+    width: 70%;
+    margin: 0 auto;
+}
+.buttonsDiv {
+    padding-left: 2rem;
+}
+.buttonsDiv button {
+    padding: 0.5rem;
+    border: none;
+    outline: none;
+    background-color: white;
+    font-family: "Poppins", sans-serif;
+}
+.buttonsDiv button:hover {
+    color: #d1000a;
+}
+.activeButton {
+    color: #d1000a;
+}
+.buttonsDiv button:first-child {
+    border-right: 1px solid #d1000a;
+}
+.profile {
+    width: 70%;
+    margin: 0 auto;
+}
+.profile .upperHeading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+}
+.upperHeading h1 {
+    font-size: 26px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+}
+.upperHeading button {
+    border: 1px solid #d1000a;
+    background-color: white;
+    padding: 0.3rem 0.8rem;
+    color: #d1000a;
+}
+.profileManagement {
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 4rem;
+}
+.InputDiv {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    gap: 0.5rem;
+}
+.InputDiv input {
+    padding: 0.5rem 0.3rem;
+    outline: none;
+    border: 1px solid #d1000a;
+}
+.InputDiv select {
+    padding: 0.5rem 0.3rem;
+    outline: none;
+    border: 1px solid #d1000a;
+}
+.InputDiv select:disabled {
+    border: 1px solid slategray;
+}
+.InputDiv input:disabled,
+.currentPassword input:disabled {
+    border: 1px solid slategray;
+}
+.InputGroup {
+    display: flex;
+    gap: 15%;
+    justify-content: center;
+    padding: 1.3rem 0;
+}
+.bottomButtonsDiv {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 3rem;
+    margin-top: 2rem;
+}
+.bottomButtonsDiv button {
+    border: 1px solid #d1000a;
+    background-color: white;
+    color: #d1000a;
+    padding: 0.5rem 1rem;
+}
+.bottomButtonsDiv h1 {
+    width: 100%;
+    font-size: 26px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+}
+.currentPassword {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1rem;
+    gap: 0.2rem;
+}
+.currentPassword input {
+    width: 40%;
+    padding: 0.5rem 0.3rem;
+    outline: none;
+    border: 1px solid #d1000a;
+}
+.review {
+    min-height: 70vh;
+    width: 70%;
+    margin: 0 auto;
+}
+.review .heading {
+    margin: 0 auto;
+    display: flex;
+    padding: 1rem 3rem;
 }
 .heading h1 {
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: 700;
+    font-size: 26px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
 }
-.button {
-    width: 90%;
-}
-.button button {
-    width: 100%;
-    outline: none;
-    border: none;
-    border-radius: 4px;
-    height: 48px;
-    background-color: #002f34;
-    margin-bottom: 10px;
-}
-.changesSave {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 0px;
-}
-.changesSave button {
-    outline: none;
-    border: none;
-    border-radius: 4px;
-    height: 48px;
-    width: 120px;
-    color: white;
-    background-color: #002f34;
-}
-.inButton span {
-    font-size: 16px;
-    font-weight: 700px;
-    color: white;
-}
-.inButton svg {
-    fill: white;
-}
-.viewServices {
-    width: 70%;
-    padding: 16px;
-}
-.container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
-}
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td,
-th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-.tableInput {
-    border: none;
-    outline: none;
-    background-color: none;
-}
-.serviceCard {
-    box-shadow: 1px 1px 12px 0 rgba(0, 0, 0, 0.303);
-    padding: 10px;
-    border-radius: 5px;
-}
-.serviceCard h5 {
-    text-align: center;
-}
-.Value {
-    color: rgba(0, 0, 0, 0.755);
-}
-.serviceEditButton {
+.servicesList {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    padding: 1rem 3rem;
+    gap: 1rem;
 }
-.serviceEditButton button {
-    height: 40px;
-    width: 160px;
-    outline: none;
-    border: none;
+.serviceAddCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40vh;
+    border: 1px solid slategray;
+}
+.serviceAddCard:hover {
+    cursor: pointer;
+}
+.formModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.formDiv {
+    width: 60vw;
+    min-height: 60vh;
+    background-color: white;
+    border-radius: 7px;
+    padding: 3rem 1rem;
+}
+.formDiv h4 {
+    text-align: center;
+}
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    gap: 0.4rem;
     margin-top: 1rem;
-    background-color: #002f34;
-    border-radius: 5px;
+}
+.inputGroup select,
+.inputGroup input {
+    padding: 1rem;
+}
+.select {
+    display: flex;
+}
+.select input {
+    width: 100%;
+}
+.submitButton {
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+.submitButton button {
+    padding: 0.6rem;
+    width: 100%;
+    border: 1px solid slategray;
+}
+.closeModalButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
     color: white;
-    font-weight: 500;
+    background-color: transparent;
+    border: none;
 }

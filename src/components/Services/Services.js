@@ -9,42 +9,42 @@ import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 const cards = [
     {
-        name: "Join as PetGroomer",
+        name: "Pet Grooming",
         src: Grooming,
         link: "/joinus/register/petgroomer",
         alt: "groomer",
         des: "Pamper your furry friend with our exclusive pet grooming services. We offer personalized care for a happy and healthy pet",
     },
     {
-        name: "Join as PetWalker",
+        name: "Pet Walking",
         src: DogWalker,
         link: "/joinus/register/petwalker",
         alt: "petwalker",
         des: "Looking for exclusive pet walking services? Our professional team offers customized, personalized walks to meet your furry friend's every need.",
     },
     {
-        name: "Join as PetTrainer",
+        name: "Pet Training",
         src: PetTrainer,
         link: "/joinus/register/pettrainer",
         alt: "pettrainer",
         des: "Our exclusive pet training services offer personalized attention and proven methods to help your furry friend reach their full potential.",
     },
     {
-        name: "Join as Vet",
+        name: "Veterinary Care",
         src: Vet,
         link: "/joinus/register/vet",
         alt: "vet",
         des: "Our exclusive vet care services offer personalized care, emergency services, and state-of-the-art equipment for your furry friend.",
     },
     {
-        name: "Join as DayCarer",
+        name: "Daycare Facilities",
         src: DayCarer,
         link: "/joinus/register/daycarer",
         alt: "daycare",
         des: "Our exclusive services provide top-quality, personalized care to your day care facility. Trust us to nurture your pet's development.",
     },
     {
-        name: "Join as PetBreeder",
+        name: "Pet Breeding",
         src: Breeder,
         link: "/joinus/register/petbreeder",
         alt: "breeder",

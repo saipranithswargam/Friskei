@@ -4,7 +4,7 @@
 .main {
     height: fit-content;
     width: 100vw;
-    background-image: url("https://static.wixstatic.com/media/11062b_4274f29b5edf4597b205de6e4e41bffc~mv2.jpg/v1/fill/w_1225,h_720,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/11062b_4274f29b5edf4597b205de6e4e41bffc~mv2.jpg");
+    background-image: url("../../../../public/images/LandingBottom.jpg");
     backdrop-filter: blur(100%);
 }
 

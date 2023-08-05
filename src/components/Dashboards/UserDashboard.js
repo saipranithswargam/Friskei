@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import Footer from "../Footer/Footer";
+import { Box } from "@mui/material";
+import TextField from "@mui/material/TextField";
 const UserDashboard = () => {
     const EditPencil = (
         <svg
@@ -23,6 +25,7 @@ const UserDashboard = () => {
     const [profileActive, setProfileActive] = useState(true);
     const [reviewActive, setReviewActive] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
+    const [editPassword, setEditPassword] = useState(false);
     const profileClickHandler = () => {
         setProfileActive(true);
         setReviewActive(false);
@@ -98,13 +101,99 @@ const UserDashboard = () => {
                     <div className={styles.profile}>
                         <div className={styles.upperHeading}>
                             <h1>Profile</h1>
-                            <button>{EditPencil} Edit Profile</button>
+                            {!editProfile && (
+                                <button onClick={editClickHandler}>
+                                    {EditPencil} Edit Profile
+                                </button>
+                            )}
+                            {editProfile && (
+                                <div className={styles.buttonsDiv}>
+                                    <button>Discard</button>
+                                    <button>Update Info</button>
+                                </div>
+                            )}
+                        </div>
+                        <div className={styles.profileManagement}>
+                            <div className={styles.InputGroup}>
+                                <div className={styles.InputDiv}>
+                                    <label>Name</label>
+                                    <input
+                                        value="Madhav Bhallamudi"
+                                        disabled={!editProfile}
+                                    />
+                                </div>
+                                <div className={styles.InputDiv}>
+                                    <label>Email</label>
+                                    <input
+                                        value="Madhav@gmail.com"
+                                        disabled={!editProfile}
+                                    />
+                                </div>
+                            </div>
+                            <div className={styles.InputGroup}>
+                                <div className={styles.InputDiv}>
+                                    <label>MobileNumber</label>
+                                    <input
+                                        value="+918885816487"
+                                        disabled={!editProfile}
+                                    />
+                                </div>
+                                <div className={styles.InputDiv}>
+                                    <label>City</label>
+                                    <input
+                                        value="Hyderabad"
+                                        disabled={!editProfile}
+                                    />
+                                </div>
+                            </div>
+                            <div className={styles.InputGroup}>
+                                <div className={styles.InputDiv}>
+                                    <label>Gender</label>
+                                    <input
+                                        disabled={!editProfile}
+                                        value="Male"
+                                    />
+                                </div>
+                                <div className={styles.InputDiv}>
+                                    <label>Pet Parent</label>
+                                    <select disabled={!editProfile}>
+                                        <option value="Yes">YES</option>
+                                        <option value="No">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className={styles.currentPassword}>
+                                <label>Current Password</label>
+                                <input disabled={!editProfile} />
+                            </div>
+                            <div className={styles.InputGroup}>
+                                <div className={styles.InputDiv}>
+                                    <label>New password</label>
+                                    <input disabled={!editProfile} />
+                                </div>
+                                <div className={styles.InputDiv}>
+                                    <label>Confirm New Password</label>
+                                    <input disabled={!editProfile} />
+                                </div>
+                            </div>
+                            {editProfile && (
+                                <div className={styles.bottomButtonsDiv}>
+                                    {editProfile && (
+                                        <div className={styles.buttonsDiv}>
+                                            <button>Discard</button>
+                                            <button>Update Info</button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
-                {reviewActive && <div className={styles.review}></div>}
+                {reviewActive && <div className={styles.review}>
+                    
+                </div>}
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </>
     );
 };
