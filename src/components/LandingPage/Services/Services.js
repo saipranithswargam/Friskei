@@ -9,10 +9,13 @@ import Walking from "../../../assets/images/Walking.svg";
 import Grooming2 from "./catGroom.jpg";
 import Training2 from "./Training.jpg";
 import Walking2 from "../../../assets/images/Walking.webp";
-import Vet2 from "../../../assets/images/Vet.webp";
-import DayCare from "../../../assets/images/DayCare.webp";
+    import DayCare from "../../../assets/images/DayCare.webp";
 import Breeding from "../../../assets/images/Breeding.webp";
-import CatsInBasket from "./Cats-in-a-basket_edited.jpg"
+import CatsInBasket from "./Cats-in-a-basket_edited.jpg";
+import DogWalk from "./DogWalk.jpg";
+import CutePuppy from "./SweetPuppy.jpg";
+import DogJump from "./DogJumping.jpg";
+import Vet2 from "./service_vet.jpg";
 const Services = () => {
     return (
         <Fragment>
@@ -90,7 +93,7 @@ const Services = () => {
                     </div>
                     <div className={styles.imgContainer}>
                         <img
-                            src={CatsInBasket}
+                            src={DogJump}
                             alt="cats in basket"
                         />
                         <div className={styles.imgContent}>
@@ -98,7 +101,7 @@ const Services = () => {
                         </div>
                     </div>
                     <div className={styles.imgContainer}>
-                        <img src={Walking2} alt="training2" />
+                        <img src={DogWalk} alt="training2" />
                         <div className={styles.imgContent}>
                             <h3>Walking</h3>
                         </div>
@@ -110,13 +113,13 @@ const Services = () => {
                         </div>
                     </div>
                     <div className={styles.imgContainer}>
-                        <img src={DayCare} alt="training2" />
+                        <img src={CatsInBasket} alt="training2" />
                         <div className={styles.imgContent}>
                             <h3>DayCare</h3>
                         </div>
                     </div>
                     <div className={styles.imgContainer}>
-                        <img src={Breeding} alt="training2" />
+                        <img src={CutePuppy} alt="training2" />
                         <div className={styles.imgContent}>
                             <h3>Breeding</h3>
                         </div>
