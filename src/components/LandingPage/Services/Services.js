@@ -12,6 +12,7 @@ import Walking2 from "../../../assets/images/Walking.webp";
 import Vet2 from "../../../assets/images/Vet.webp";
 import DayCare from "../../../assets/images/DayCare.webp";
 import Breeding from "../../../assets/images/Breeding.webp";
+import CatsInBasket from "./Cats-in-a-basket_edited.jpg"
 const Services = () => {
     return (
         <Fragment>
@@ -89,8 +90,8 @@ const Services = () => {
                     </div>
                     <div className={styles.imgContainer}>
                         <img
-                            src="https://static.wixstatic.com/media/0c7a60_0c2eec593a4846a380bbeebdb82352f7~mv2.jpg/v1/fill/w_259,h_146,q_90/0c7a60_0c2eec593a4846a380bbeebdb82352f7~mv2.webp"
-                            alt="training2"
+                            src={CatsInBasket}
+                            alt="cats in basket"
                         />
                         <div className={styles.imgContent}>
                             <h3>Training</h3>
