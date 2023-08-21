@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link, useLocation } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
-import Paw from "../../assets/images/Paw.svg";
+import Logo from "./logo.svg";
 import AuthContext from "../../store/auth-context";
 import { useContext } from "react";
 const Header = () => {
@@ -42,8 +42,24 @@ const Header = () => {
                     className={`${styles.nav}`}
                 >
                     <Navbar.Brand as={Link} to="/" className={styles.navBrand}>
-                        PETLEVERT
-                        <img src={Paw} alt="icon" />
+                        <img src={Logo} alt="icon" style={{scale:"1.4"}} />
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                lineHeight: "1",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <p style={{ margin: "0", fontSize: "2.4rem" }}>
+                                PETLEVERT
+                            </p>
+                            <span
+                                style={{ fontSize: "0.9rem", color: "black" }}
+                            >
+                                Connecting Pets And People
+                            </span>
+                        </div>
                     </Navbar.Brand>
                     <Navbar.Toggle
                         aria-controls={`offcanvasNavbar-expand-${expand}`}

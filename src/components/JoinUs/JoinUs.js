@@ -3,7 +3,7 @@ import styles from "./JoinUs.module.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import InputLabel from "@mui/material/InputLabel";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { Controller, useForm } from "react-hook-form";
 import FormControl from "@mui/material/FormControl";
@@ -13,6 +13,7 @@ import TextField from "@mui/material/TextField";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import axiosInstance from "../../api/axiosInstance";
 const JoinUs = () => {
     const [name, setName] = React.useState("");
     const [type, setType] = React.useState("");
@@ -22,7 +23,7 @@ const JoinUs = () => {
     const [petParent, setPetParent] = React.useState("");
     const [userSignUp, setUserSignUp] = React.useState(true);
     const [providerSignUp, setProviderSignUp] = React.useState(false);
-    const   typeChangeHandler = (event) => {
+    const typeChangeHandler = (event) => {
         setType(event.target.value);
     };
     const petParentChangeHandler = (event) => {
@@ -45,57 +46,70 @@ const JoinUs = () => {
             phone: "",
         },
     });
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         const options = {
             enableHighAccuracy: true,
             timeout: 5000,
             maximumAge: 0,
         };
-        // const sucess = (pos) => {
-        //     let phone = data.phone.replaceAll(/\s/g, "");
-        //     console.log(phone);
-        //     const Data = {
-        //         name: name,
-        //         email: email,
-        //         gender: gender,
-        //         password: password,
-        //         mobileNum: phone,
-        //         city: city.toLowerCase(),
-        //         petParent: petParent,
-        //         latitude: pos.coords.latitude,
-        //         longitude: pos.coords.longitude,
-        //     };
-        //     setLoading(true);
-        //     fetch("https://friskei-backend.onrender.com/providers/register", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify(Data),
-        //     }).then((response) => {
-        //         if (response.ok) {
-        //             response.json().then((data) => {
-        //                 const expirationTime = new Date(
-        //                     new Date().getTime() + +data.expiresIn * 1000
-        //                 );
-        //                 authCtx.login(data.token, expirationTime.toISOString());
-        //             });
-        //             setLoading(false);
-        //             navigate(
-        //                 `/joinus/register/${params.joinAs}/serviceDetails`
+        console.log("logging");
+        const sucess = async (pos) => {
+            let phone = data.phone.replaceAll(/\s/g, "");
+            const Data = {
+                name: name,
+                email: email,
+                password: password,
+                mobileNum: phone,
+                city: city.toLowerCase(),
+                petParent: petParent,
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+            };
+        };
+        try {
+            const response = await axiosInstance.post("/users/register", {
+                name: name,
+                email: email,
+                password: password,
+                // mobileNum: phone,
+                city: city.toLowerCase(),
+                petParent: petParent,
+                // latitude: pos.coords.latitude,
+                // longitude: pos.coords.longitude,
+            });
+            console.log(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+        // fetch("https://friskei-backend.onrender.com/providers/register", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(Data),
+        // }).then((response) => {
+        //     if (response.ok) {
+        //         response.json().then((data) => {
+        //             const expirationTime = new Date(
+        //                 new Date().getTime() + +data.expiresIn * 1000
         //             );
-        //         } else {
-        //             setLoading(false);
-        //         }
-        //     });
-        // };
-        // const error = (err) => {
-        //     alert("Cannot Register Without Location Access !");
-        //     navigate("/joinus");
-        //     console.log(err);
-        // };
-        // navigator.geolocation.getCurrentPosition(sucess, error, options);
+        //             authCtx.login(data.token, expirationTime.toISOString());
+        //         });
+        //         setLoading(false);
+        //         navigate(
+        //             `/joinus/register/${params.joinAs}/serviceDetails`
+        //         );
+        //     } else {
+        //         setLoading(false);
+        //     }
+        // });
     };
+    // const error = (err) => {
+    //     alert("Cannot Register Without Location Access !");
+    //     navigate("/joinus");
+    //     console.log(err);
+    // };
+    // navigator.geolocation.getCurrentPosition(sucess, error, options);
     let userSignUpStyles = userSignUp ? styles.activeSignUp : styles.Button;
     let providerSignUpStyles = providerSignUp
         ? styles.activeSignUp
@@ -344,9 +358,16 @@ const JoinUs = () => {
                                     />
                                 </FormGroup>
                             </Box>
-                            <div className={styles.buttonDiv}>
-                                <button>Sign Up</button>
-                            </div>
+                            <Box sx={{ textAlign: "center" }}>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    sx={{ mt: 2 }}
+                                    className={styles.button}
+                                >
+                                    Create an account
+                                </Button>
+                            </Box>
                         </form>
                     </div>
                 </div>

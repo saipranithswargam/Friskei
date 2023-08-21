@@ -1,10 +1,10 @@
 import styles from "./Services.module.css";
-import Grooming from "../../assets/images/PetGrooming.webp";
-import Breeder from "../../assets/images/Breeder.webp";
-import DayCarer from "../../assets/images/DayCarer.webp";
-import DogWalker from "../../assets/images/DogWalker.webp";
-import PetTrainer from "../../assets/images/PetTrainer.webp";
-import Vet from "../../assets/images/VeternaryDoc.webp";
+import Grooming from "./CatGroom.jpg";
+import DayCarer from "./Daycare.jpg";
+import DogWalk from "./DogWalk.jpg";
+import DogJump from "./DogJumping.jpg";
+import Vet from "./Vet.jpg";
+import Breeder from "./Cats-in-a-basket_edited.jpg";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 const cards = [
@@ -17,14 +17,14 @@ const cards = [
     },
     {
         name: "Pet Walking",
-        src: DogWalker,
+        src: DogWalk,
         link: "/joinus/register/petwalker",
         alt: "petwalker",
         des: "Looking for exclusive pet walking services? Our professional team offers customized, personalized walks to meet your furry friend's every need.",
     },
     {
         name: "Pet Training",
-        src: PetTrainer,
+        src: DogJump,
         link: "/joinus/register/pettrainer",
         alt: "pettrainer",
         des: "Our exclusive pet training services offer personalized attention and proven methods to help your furry friend reach their full potential.",

@@ -16,7 +16,7 @@
 }
 .loginCard h1 {
     text-align: center;
-    color: #035772;
+    color: #d1000a;
     margin-top: 1rem;
     font-family: "Poppins", sans-serif;
     margin-bottom: 1rem;
@@ -52,15 +52,15 @@
     width: 50%;
     margin: 0 auto;
     padding: 0.7rem 1.3rem;
-    background-color: #035772;
+    background-color: #d1000a;
     border: none;
     color: white;
     font-family: "Poppins", sans-serif;
     border-radius: 9px;
 }
 .loginForm button:hover {
-    border: 1px solid #035772;
-    color: #035772;
+    border: 1px solid #d1000a;
+    color: #d1000a;
     background-color: transparent;
 }
 .loginForm input:active,
@@ -96,10 +96,10 @@
     .loginCard p {
         font-size: 10px;
     }
-    .loginCard h1{
+    .loginCard h1 {
         font-size: 20px;
     }
-    .loginForm input{
+    .loginForm input {
         font-size: 16px;
     }
 }

@@ -1,30 +1,10 @@
-import React from "react";
-import Header from "./components/Header/Header";
-import Hero from "./components/LandingPage/Hero/Hero";
-import { Fragment } from "react";
-import Fab from "@mui/material/Fab";
-import Services from "./components/LandingPage/Services/Services";
-import JoinUs from "./components/LandingPage/JoinUs/JoinUs";
-import CustomerReview from "./components/LandingPage/CustomerReview/CustomerReview";
-import CustomerReviewCarousel from "./components/LandingPage/Slider/CustomerReviewCarousel";
-import Footer from "./components/Footer/Footer";
-import LandingForm from "./components/Form/LandingForm";
-import { Route, Routes } from "react-router-dom";
-import UserLogin from "./components/AuthForms/UserLogin";
-import UserRegsiter from "./components/AuthForms/UserRegister";
-import ForgotPassword from "./components/AuthForms/ForgotPassword";
-import ServicesMain from "./components/Services/Services";
-import JoinUsRegsiterForm from "./components/AuthForms/JoinUsRegisterForm";
-import JoinUsServiceDetails from "./components/AuthForms/JoinUsServiceDetails";
-import Search from "./components/SearchResults/Search";
-import UserDashboard from "./components/Dashboards/UserDashboard";
-import ProviderLogin from "./components/AuthForms/ProviderLogin";
-import ProviderDashboard from "./components/Dashboards/ProviderDashboard";
-import EditService from "./components/Dashboards/EditService";
-import AboutUs from "./components/AboutUs/AboutUs";
-import ContactUs from "./components/ContactUs/ContactUs";
-import JoinUsMain from "./components/JoinUs/JoinUs";
+import React, { useState }  from "react";
+import { useEffect } from "react";
+import Navigation from "./components/Navigation";
+
+
 function App() {
+    const [screenLoading, setScreenLoading] = useState(true);
     const style = {
         margin: 0,
         top: "auto",
@@ -36,73 +16,18 @@ function App() {
         backgroundColor: "#035772",
         color: "#FFF",
     };
+
+    useEffect(() => {
+
+        setScreenLoading(false);
+    }, []);
+
     return (
-        <Fragment>
-            <Routes>
-                <Route
-                    path="/"
-                    element={
-                        <React.Fragment>
-                            <Header />
-                            <Hero />
-                            <Fab
-                                variant="extended"
-                                style={style}
-                                onClick={() => {
-                                    console.log("testing");
-                                }}
-                            >
-                                Let's Chat
-                            </Fab>
-                            <LandingForm />
-                            <Services />
-                            <JoinUs />
-                            <CustomerReview />
-                            <CustomerReviewCarousel />
-                            <Footer />
-                        </React.Fragment>
-                    }
-                />
-                <Route element={<UserLogin />} path="/login" />
-                <Route element={<UserRegsiter />} path="/register" />
-                <Route element={<AboutUs />} path="/aboutus" />
-                <Route element={<ContactUs />} path="/contact" />
-                <Route element={<Search />} path="/search" />
-                <Route
-                    element={
-                        <>
-                            <Header />
-                            <ServicesMain />
-                        </>
-                    }
-                    path="/services"
-                />
-                <Route
-                    element={
-                        <>
-                            <JoinUsMain />
-                        </>
-                    }
-                    path="/joinus"
-                />
-                <Route element={<ForgotPassword />} path="/forgotPassword" />
-                <Route
-                    element={<JoinUsRegsiterForm />}
-                    path="/joinus/register/:joinAs"
-                />
-                <Route
-                    element={<JoinUsServiceDetails />}
-                    path="/joinus/register/:joinAs/serviceDetails"
-                />
-                <Route element={<UserDashboard />} path="/userdashboard" />
-                <Route
-                    element={<ProviderDashboard />}
-                    path="/providerdashboard"
-                />
-                <Route element={<ProviderLogin />} path="/providerlogin" />
-                <Route element={<EditService />} path="/editservice/:id" />
-            </Routes>
-        </Fragment>
+        screenLoading
+        ?
+        <h1>loading</h1>
+        :
+        <Navigation />
     );
 }
 
