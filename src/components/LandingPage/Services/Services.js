@@ -7,10 +7,6 @@ import Training from "../../../assets/images/Training.svg";
 import Vet from "../../../assets/images/Vet.svg";
 import Walking from "../../../assets/images/Walking.svg";
 import Grooming2 from "./CatGroom.jpg";
-import Training2 from "./Training.jpg";
-import Walking2 from "../../../assets/images/Walking.webp";
-import DayCare from "../../../assets/images/DayCare.webp";
-import Breeding from "../../../assets/images/Breeding.webp";
 import CatsInBasket from "./Cats-in-a-basket_edited.jpg";
 import DogWalk from "./DogWalk.jpg";
 import CutePuppy from "./SweetPuppy.jpg";
@@ -83,19 +79,13 @@ const Services = () => {
                 </div>
                 <div className={styles.imagesGrid}>
                     <div className={styles.imgContainer}>
-                        <img
-                            src={Grooming2}
-                            alt="training2"
-                        />
+                        <img src={Grooming2} alt="training2" />
                         <div className={styles.imgContent}>
                             <h3>Grooming</h3>
                         </div>
                     </div>
                     <div className={styles.imgContainer}>
-                        <img
-                            src={DogJump}
-                            alt="cats in basket"
-                        />
+                        <img src={DogJump} alt="cats in basket" />
                         <div className={styles.imgContent}>
                             <h3>Training</h3>
                         </div>

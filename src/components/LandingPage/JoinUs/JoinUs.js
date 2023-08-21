@@ -1,11 +1,5 @@
 import styles from "./JoinUs.module.css";
-import JoinUsCat from "../../../assets/images/JoinUsCat.webp";
-import JoinUsDogg from "../../../assets/images/JoinUsDogg.webp";
-import JoinUsGrooming from "../../../assets/images/JoinUsGrooming.webp";
-import JoinUsTraining from "../../../assets/images/JoinUsTraining.webp";
-import JoinUsTwoDogs from "../../../assets/images/JoinUsTwoDogs.webp";
-import JoinUsVet from "../../../assets/images/JoinUsVet.webp";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const JoinUs = () => {
     const navigate = useNavigate();
     return (
