@@ -6,7 +6,7 @@ import Heart from "../../../assets/images/Heart.svg";
 import Training from "../../../assets/images/Training.svg";
 import Vet from "../../../assets/images/Vet.svg";
 import Walking from "../../../assets/images/Walking.svg";
-import Grooming2 from "./CatGroom.jpg";
+import Grooming2 from "./catGroom.jpg";
 import CatsInBasket from "./Cats-in-a-basket_edited.jpg";
 import DogWalk from "./DogWalk.jpg";
 import CutePuppy from "./SweetPuppy.jpg";
