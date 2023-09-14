@@ -13,7 +13,7 @@ const CustomerReview = () => {
             <div className={styles.review}>
                 <div className={styles.review1}>
                     <div className={styles.reviewCard}>
-                        <div className={styles.Img} >
+                        <div className={styles.Img}>
                             <img
                                 alt="dog1"
                                 src={DogReview}
@@ -22,12 +22,19 @@ const CustomerReview = () => {
                         </div>
                         <div>
                             <p>
-                                “I'm a testimonial. Click to edit me and add
-                                text that says something nice about you and your
-                                services.”
+                                “I cannot express how grateful I am for
+                                Petlevert! They matched me with the perfect pet
+                                sitter for my beloved cat, Whiskers. Lisa from
+                                Toronto, the service provider they connected me
+                                with, was exceptional. She took care of Whiskers
+                                as if he were her own and provided daily updates
+                                and photos. It gave me so much peace of mind
+                                while I was away. Petlevert truly understands
+                                the importance of quality pet care, and I highly
+                                recommend their services.”
                             </p>
                         </div>
-                        <p>Dani, Pacific Heights</p>
+                        <p>Emily Thompson, Canada</p>
                     </div>
                 </div>
                 <div className={styles.review2}>
@@ -41,12 +48,18 @@ const CustomerReview = () => {
                         </div>
                         <div>
                             <p>
-                                “I'm a testimonial. Click to edit me and add
-                                text that says something nice about you and your
-                                services.”
+                                “I was in dire need of a reliable dog walker,
+                                and Petlevert came to my rescue! They connected
+                                me with Sara, a dog walker based in Oslo. She
+                                has been absolutely fantastic with my energetic
+                                Labrador, Max. Sara ensures Max gets his daily
+                                exercise and keeps him entertained with fun
+                                activities. Thanks to Petlevert, I found the
+                                perfect match for Max's needs. I can't thank
+                                them enough for their excellent service!”
                             </p>
                         </div>
-                        <p>Dani, Pacific Heights</p>
+                        <p>Olsen, Norway</p>
                     </div>
                 </div>
                 <div className={styles.review3}>
@@ -60,12 +73,20 @@ const CustomerReview = () => {
                         </div>
                         <div>
                             <p>
-                                “I'm a testimonial. Click to edit me and add
-                                text that says something nice about you and your
-                                services.”
+                                “Petlevert has been a game-changer for me and my
+                                cat, Luna. I recently moved to Bergen and was
+                                concerned about finding a trustworthy and caring
+                                cat sitter. Thankfully, Petlevert connected me
+                                with Sofia, a fantastic pet sitter. Sofia took
+                                care of Luna during my business trips, and Luna
+                                instantly adored her. The updates and photos I
+                                received from Sofia gave me peace of mind
+                                knowing that Luna was in loving hands. I highly
+                                recommend Petlevert to all pet owners seeking
+                                reliable and loving pet services”
                             </p>
                         </div>
-                        <p>Dani, Pacific Heights</p>
+                        <p>Anna Andersson, Norway</p>
                     </div>
                 </div>
             </div>

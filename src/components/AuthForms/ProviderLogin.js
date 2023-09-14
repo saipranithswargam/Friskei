@@ -1,13 +1,17 @@
 import { useState } from "react";
 import styles from "./Provider.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import AuthContext from "../../store/auth-context";
 import { useContext } from "react";
+import axiosInstance from "../../api/axiosInstance";
+import { useAppDispatch } from "../../app/hooks";
+import { userActions } from "../../features/userSlice";
 const ProviderLogin = () => {
-    const authCtx = useContext(AuthContext);
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const dispatch = useAppDispatch();
     const emailChangeHandler = (event) => {
         setEmail(event.target.value);
     };
@@ -20,23 +24,17 @@ const ProviderLogin = () => {
             email: email,
             password: password,
         };
-        fetch("https://friskei-backend.onrender.com/providers/login", {
-            method: "POST",
-            body: JSON.stringify(Data),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((response) => {
-            if (response.ok) {
-                response.json().then((data) => {
-                    const expirationTime = new Date(
-                        new Date().getTime() + (+data.expiresIn * 1000)
-                    );
-                    authCtx.login(data.idToken, expirationTime.toISOString());
-                });
-            }
-            console.log("logged in sucessfully");
-        });
+        try {
+            const response = await axiosInstance.post("/providers/login", {
+                email: Data.email,
+                password: Data.password,
+            });
+            console.log(response.data);
+            dispatch(userActions.setState({ ...response.data }));
+            navigate("/", { replace: true });
+        } catch (err) {
+            console.log(err);
+        }
     };
     return (
         <>

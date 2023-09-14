@@ -1,5 +1,5 @@
 import styles from "./Services.module.css";
-import Grooming from "./CatGroom.jpg";
+import Grooming from "./CatGroom.jpg"
 import DayCarer from "./Daycare.jpg";
 import DogWalk from "./DogWalk.jpg";
 import DogJump from "./DogJumping.jpg";

@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz@10..48&display=swap");
+.upperContainer {
+    width: 80%;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+.upperIntro {
+    display: flex;
+    justify-content: space-between;
+}
+.imageDiv {
+    width: 25%;
+    text-align: center;
+}
+.imageDiv img {
+    border-radius: 100%;
+}
+.infoDiv {
+    width: 70%;
+    padding: 0rem 2rem;
+    font-family: "Bricolage Grotesque", sans-serif;
+}
+.infoDiv p{
+    margin-top: 0.5rem;
+}
+.buttonDiv {
+    width: 50%;
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+.buttonDiv button {
+    padding: 0.9rem 1.5rem;
+    border: none;
+    border-radius: 100px;
+    background-color: #d1000a;
+    color: white;
+}
+.pricing {
+    width: 100%;
+    padding: 2rem 0;
+    margin: 0 auto;
+    background-color: rgba(103, 106, 110, 0.133);
+}
+.pricing h1 {
+    text-align: center;
+}
+.pricing .servicePriceCard {
+    width: 30%;
+    margin: 0 auto;
+}
+.service {
+    display: flex;
+    justify-content: space-between;
+}
+.ratingDiv {
+    padding: 1.4rem;
+}
+.name_imageDiv {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+p {
+    margin: 0;
+}
+.name_imageDiv img {
+    height: 31px;
+    width: 31px;
+    border-radius: 100px;
+}
+.lowerMain {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+.ratingCard{
+    padding: 1rem;
+    margin-top: 1rem;
+}

@@ -14,6 +14,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import axiosInstance from "../../api/axiosInstance";
+import { useNavigate } from "react-router-dom";
 const JoinUs = () => {
     const [name, setName] = React.useState("");
     const [type, setType] = React.useState("");
@@ -23,6 +24,7 @@ const JoinUs = () => {
     const [petParent, setPetParent] = React.useState("");
     const [userSignUp, setUserSignUp] = React.useState(true);
     const [providerSignUp, setProviderSignUp] = React.useState(false);
+    const navigate = useNavigate();
     const typeChangeHandler = (event) => {
         setType(event.target.value);
     };
@@ -52,7 +54,6 @@ const JoinUs = () => {
             timeout: 5000,
             maximumAge: 0,
         };
-        console.log("logging");
         const sucess = async (pos) => {
             let phone = data.phone.replaceAll(/\s/g, "");
             const Data = {
@@ -65,51 +66,39 @@ const JoinUs = () => {
                 latitude: pos.coords.latitude,
                 longitude: pos.coords.longitude,
             };
+            if (userSignUp) {
+                try {
+                    const response = await axiosInstance.post(
+                        "/users/register",
+                        Data
+                    );
+                    navigate("/auth/login");
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+            if (providerSignUp) {
+                try {
+                    const response = await axiosInstance.post(
+                        "/providers/register",
+                        Data
+                    );
+                    console.log(response.data);
+                } catch (err) {
+                    console.log(err);
+                }
+            }
         };
-        try {
-            const response = await axiosInstance.post("/users/register", {
-                name: name,
-                email: email,
-                password: password,
-                // mobileNum: phone,
-                city: city.toLowerCase(),
-                petParent: petParent,
-                // latitude: pos.coords.latitude,
-                // longitude: pos.coords.longitude,
-            });
-            console.log(response.data);
-        } catch (err) {
+        const error = (err) => {
+            alert(
+                "Location access is mandatory for better service.Please provide location Access"
+            );
+            navigate("/joinus");
             console.log(err);
-        }
-        // fetch("https://friskei-backend.onrender.com/providers/register", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(Data),
-        // }).then((response) => {
-        //     if (response.ok) {
-        //         response.json().then((data) => {
-        //             const expirationTime = new Date(
-        //                 new Date().getTime() + +data.expiresIn * 1000
-        //             );
-        //             authCtx.login(data.token, expirationTime.toISOString());
-        //         });
-        //         setLoading(false);
-        //         navigate(
-        //             `/joinus/register/${params.joinAs}/serviceDetails`
-        //         );
-        //     } else {
-        //         setLoading(false);
-        //     }
-        // });
+        };
+        navigator.geolocation.getCurrentPosition(sucess, error, options);
     };
-    // const error = (err) => {
-    //     alert("Cannot Register Without Location Access !");
-    //     navigate("/joinus");
-    //     console.log(err);
-    // };
-    // navigator.geolocation.getCurrentPosition(sucess, error, options);
+
     let userSignUpStyles = userSignUp ? styles.activeSignUp : styles.Button;
     let providerSignUpStyles = providerSignUp
         ? styles.activeSignUp
@@ -362,7 +351,7 @@ const JoinUs = () => {
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    sx={{ mt: 2 }}
+                                    sx={{ mt: 2, backgroundColor: "#d1000a" }}
                                     className={styles.button}
                                 >
                                     Create an account

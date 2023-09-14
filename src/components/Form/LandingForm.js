@@ -9,9 +9,11 @@ import Heart from "../../assets/images/heart.png";
 import { useNavigate } from "react-router-dom";
 import Loading from "../Spinner/Spinner";
 import { useContext } from "react";
-import AuthContext from "../../store/auth-context";
+import axiosInstance from "../../api/axiosInstance";
+import { userActions } from "../../features/userSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 const LandingForm = () => {
-    const authCtx = useContext(AuthContext);
+    const user = useAppSelector((state) => state.user);
     const navigate = useNavigate();
     const [selectedCat, setSelectedCat] = React.useState(false);
     const [selectedDog, setSelectedDog] = React.useState(true);
@@ -29,7 +31,7 @@ const LandingForm = () => {
     const [activeAdopt, setActiveAdopt] = React.useState(false);
     const [serviceType, setServiceType] = React.useState("boarding");
     const [location, setLocation] = React.useState("");
-
+    const [cityName, setCityName] = React.useState("");
     const locationHandler = (event) => {
         setLocation(event.target.value);
     };
@@ -143,12 +145,12 @@ const LandingForm = () => {
         };
         const error = (err) => {
             setLocType("city");
-            console.log(err);
         };
         navigator.geolocation.getCurrentPosition(sucess, error, options);
     };
-    const cityClickHandler = () => {
+    const cityClickHandler = (event) => {
         setLocType("city");
+        setCityName(event.target.value);
     };
     let activeGroomingStyles = activeBoarding ? styles.active : styles.Boarding;
     let activeTrainingStyles = activeHouseSitting
@@ -162,9 +164,9 @@ const LandingForm = () => {
     let activeBreedingStyles = activeBreeding ? styles.active : styles.breeding;
 
     const submitHandler = () => {
-        // if (!authCtx.isLoggedIn) {
-        //     navigate("/login");
-        // }
+        if (!user.isLoggedIn) {
+            navigate("/login");
+        }
         let petType = "";
         if (selectedCat) {
             petType = "cat";
@@ -179,33 +181,28 @@ const LandingForm = () => {
         // let lowerLocation = location.toLowerCase();
         setLoading(true);
         if (locType === "city") {
-            fetch(
-                `https://friskei-backend.onrender.com/search/${serviceType}/${petType}/${location}`,
-                {
-                    method: "get",
-                }
-            ).then((response) => {
-                response.json().then((data) => {
-                    navigate("/search", { state: data });
+            console.log(cityName);
+            axiosInstance
+                .get(`/search/city/${cityName}/${serviceType}`)
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((err) => {
+                    console.log(err);
                 });
-            });
         }
         if (locType === "geolocation") {
-            fetch(
-                `https://friskei-backend.onrender.com/search/${serviceType}/${petType}/${location}`,
-                {
-                    method: "POST",
-                    body: JSON.stringify({
-                        latitude: latitude,
-                        longitude: longitude,
-                        radius: 5,
-                    }),
-                }
-            ).then((response) => {
-                response.json().then((data) => {
-                    navigate("/search", { state: data });
+            axiosInstance
+                .get(`/search/location/${serviceType}/${longitude}/${latitude}`)
+                .then((response) => {
+                    if (response.status === 200) {
+                        console.log(response.data);
+                        navigate("/search", { state: response.data });
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
                 });
-            });
         }
     };
     return (

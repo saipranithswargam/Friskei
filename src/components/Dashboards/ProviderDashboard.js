@@ -1,12 +1,64 @@
 import React from "react";
 import styles from "./ProviderDashboard.module.css";
 import Header from "../Header/Header";
-import AuthContext from "../../store/auth-context";
+import axiosInstance from "../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import Footer from "../Footer/Footer";
+import { userActions } from "../../features/userSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { toast } from "react-toastify";
+import parsePhoneNumber from "libphonenumber-js";
+import ProfileImageUpdate from "./UpdateImage";
 const ProviderDashboard = () => {
+    const user = useAppSelector((state) => state.user);
+    const currencyOptions = [
+        "USD",
+        "INR",
+        "SEK",
+        "EUR",
+        "GBP",
+        "JPY",
+        "AUD",
+        "CAD",
+    ];
+    const [formData, setFormData] = useState({
+        serviceType: "PetGrooming",
+        price: "",
+        note: "",
+        petType: "Cat",
+        currency: "USD",
+    });
+    const [editProfileData, setEditProfileData] = useState({
+        name: user.name,
+        mobileNumber: user.mobileNumber,
+        email: user.email,
+        city: user.city,
+        petParent: user.petParent,
+        currentPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+    });
+    const resetFormData = () => {
+        setEditProfileData({
+            name: user.name,
+            mobileNumber: user.mobileNumber,
+            email: user.email,
+            city: user.city,
+            petParent: user.petParent,
+            currentPassword: "",
+            newPassword: "",
+            confirmNewPassword: "",
+        });
+        setEditProfile(false);
+    };
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+        axiosInstance.post("/providers/details", formData).then((response) => {
+            console.log(response.data);
+        });
+    };
     const EditPencil = (
         <svg
             viewBox="0 0 24 24"
@@ -44,8 +96,6 @@ const ProviderDashboard = () => {
     const [reviewActive, setReviewActive] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [priceTicker, setPriceTicker] = React.useState("");
-    const [price, setPrice] = React.useState("");
     const profileClickHandler = () => {
         setProfileActive(true);
         setReviewActive(false);
@@ -60,53 +110,68 @@ const ProviderDashboard = () => {
     const showModalClickHandler = () => {
         setShowModal(true);
     };
-    const handlerTickerChange = (event) => {
-        setPriceTicker(event.target.value);
-    };
-    const handlerPriceChange = (event) => {
-        setPrice(event.target.price);
-    };
     const navigate = useNavigate();
-    const authCtx = useContext(AuthContext);
     const [settings, setSettings] = useState(false);
     const backChangeHandler = () => {
         setSettings(false);
     };
-    const saveChangesHandler = () => {
-        console.log("here goes post request to backend");
-    };
-    console.log(authCtx.token);
-    // useEffect(() => {
-    //     fetch(`https://friskei-backend.onrender.com/users/profile`, {
-    //         method: "get",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             Authorization: "Bearer " + authCtx.token,
-    //         },
-    //     }).then((response) => {
-    //         if (response.ok) {
-    //             response.json().then((data) => {
-    //                 console.log(data);
-    //             });
-    //         } else {
-    //             navigate("/login");
-    //         }
-    //     });
-    // }, [authCtx.token, navigate]);
+    const validatePhoneNumber = () => {
+        try {
+            const phoneNumberObj = parsePhoneNumber(
+                editProfileData.mobileNumber
+            );
 
+            const isValid = phoneNumberObj.isValid();
+
+            return isValid; // Return true if valid, false if not.
+        } catch (error) {
+            return false; // Return false in case of an error.
+        }
+    };
+    const saveChangesHandler = () => {
+        if (!validatePhoneNumber()) {
+            console.log("phoneNumber is invalid please try again !");
+            toast.error("Please enter a valid phone number.", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 3000,
+            });
+            resetFormData();
+            return;
+        }
+        const updatedData = {
+            name: editProfileData.name,
+            mobileNumber: editProfileData.mobileNumber,
+            email: editProfileData.email,
+            city: editProfileData.city,
+            petParent: editProfileData.petParent,
+            currentPassword: editProfileData.currentPassword,
+            newPassword: editProfileData.newPassword,
+            confirmNewPassword: editProfileData.confirmNewPassword,
+        };
+        axiosInstance
+            .post("/users/updateInfo", updatedData)
+            .then((response) => {
+                console.log("Update Info Success:", response.data);
+            })
+            .catch((error) => {
+                console.error("Update Info Error:", error);
+            });
+    };
+    useEffect(() => {}, []);
     let activeProfileStyles = profileActive
         ? styles.activeButton
         : styles.button;
     let activeReviewStyles = reviewActive ? styles.activeButton : styles.button;
-
     return (
         <>
             <Header />
             <div className={styles.main}>
                 <div className={styles.upper}>
                     <div className={styles.info}>
-                        <div className={styles.symbol}>M</div>
-                        <h5>Madhav Bhallamudi</h5>
+                        <div className={styles.symbol}>
+                            <ProfileImageUpdate />
+                        </div>
+                        <h5>{user.name}</h5>
                     </div>
                 </div>
                 <div className={styles.lower}>
@@ -136,8 +201,12 @@ const ProviderDashboard = () => {
                             )}
                             {editProfile && (
                                 <div className={styles.buttonsDiv}>
-                                    <button>Discard</button>
-                                    <button>Update Info</button>
+                                    <button onClick={resetFormData}>
+                                        Discard
+                                    </button>
+                                    <button onClick={saveChangesHandler}>
+                                        Update Info
+                                    </button>
                                 </div>
                             )}
                         </div>
@@ -146,15 +215,28 @@ const ProviderDashboard = () => {
                                 <div className={styles.InputDiv}>
                                     <label>Name</label>
                                     <input
-                                        value="Madhav Bhallamudi"
+                                        value={editProfileData.name}
+                                        onChange={(e) =>
+                                            setEditProfileData({
+                                                ...editProfileData,
+                                                name: e.target.value,
+                                            })
+                                        }
                                         disabled={!editProfile}
                                     />
                                 </div>
                                 <div className={styles.InputDiv}>
                                     <label>Email</label>
                                     <input
-                                        value="Madhav@gmail.com"
+                                        type="email"
+                                        value={editProfileData.email}
                                         disabled={!editProfile}
+                                        onChange={(e) =>
+                                            setEditProfileData({
+                                                ...editProfileData,
+                                                email: e.target.value,
+                                            })
+                                        }
                                     />
                                 </div>
                             </div>
@@ -162,29 +244,43 @@ const ProviderDashboard = () => {
                                 <div className={styles.InputDiv}>
                                     <label>MobileNumber</label>
                                     <input
-                                        value="+918885816487"
+                                        value={editProfileData.mobileNumber}
                                         disabled={!editProfile}
+                                        onChange={(e) =>
+                                            setEditProfileData({
+                                                ...editProfileData,
+                                                mobileNumber: e.target.value,
+                                            })
+                                        }
                                     />
                                 </div>
                                 <div className={styles.InputDiv}>
                                     <label>City</label>
                                     <input
-                                        value="Hyderabad"
+                                        value={editProfileData.city}
                                         disabled={!editProfile}
+                                        onChange={(e) =>
+                                            setEditProfileData({
+                                                ...editProfileData,
+                                                city: e.target.value,
+                                            })
+                                        }
                                     />
                                 </div>
                             </div>
                             <div className={styles.InputGroup}>
                                 <div className={styles.InputDiv}>
-                                    <label>Gender</label>
-                                    <input
-                                        disabled={!editProfile}
-                                        value="Male"
-                                    />
-                                </div>
-                                <div className={styles.InputDiv}>
                                     <label>Pet Parent</label>
-                                    <select disabled={!editProfile}>
+                                    <select
+                                        disabled={!editProfile}
+                                        value={editProfileData.petParent}
+                                        onChange={(e) =>
+                                            setEditProfileData({
+                                                ...editProfileData,
+                                                petParent: e.target.value,
+                                            })
+                                        }
+                                    >
                                         <option value="Yes">YES</option>
                                         <option value="No">NO</option>
                                     </select>
@@ -192,24 +288,60 @@ const ProviderDashboard = () => {
                             </div>
                             <div className={styles.currentPassword}>
                                 <label>Current Password</label>
-                                <input disabled={!editProfile} />
+                                <input
+                                    value={editProfileData.currentPassword}
+                                    disabled={!editProfile}
+                                    onChange={(e) =>
+                                        setEditProfileData({
+                                            ...editProfileData,
+                                            currentPassword: e.target.value,
+                                        })
+                                    }
+                                />
                             </div>
                             <div className={styles.InputGroup}>
                                 <div className={styles.InputDiv}>
                                     <label>New password</label>
-                                    <input disabled={!editProfile} />
+                                    <input
+                                        value={editProfileData.newPassword}
+                                        disabled={!editProfile}
+                                        onChange={(e) =>
+                                            setEditProfileData({
+                                                ...editProfileData,
+                                                newPassword: e.target.value,
+                                            })
+                                        }
+                                    />
                                 </div>
                                 <div className={styles.InputDiv}>
                                     <label>Confirm New Password</label>
-                                    <input disabled={!editProfile} />
+                                    <input
+                                        disabled={!editProfile}
+                                        value={
+                                            editProfileData.confirmNewPassword
+                                        }
+                                        onChange={(e) =>
+                                            setEditProfileData({
+                                                ...editProfileData,
+                                                confirmNewPassword:
+                                                    e.target.value,
+                                            })
+                                        }
+                                    />
                                 </div>
                             </div>
                             {editProfile && (
                                 <div className={styles.bottomButtonsDiv}>
                                     {editProfile && (
                                         <div className={styles.buttonsDiv}>
-                                            <button>Discard</button>
-                                            <button>Update Info</button>
+                                            <button onClick={resetFormData}>
+                                                Discard
+                                            </button>
+                                            <button
+                                                onClick={saveChangesHandler}
+                                            >
+                                                Update Info
+                                            </button>
                                         </div>
                                     )}
                                 </div>
@@ -243,11 +375,22 @@ const ProviderDashboard = () => {
                                     {closeCircularCross}
                                 </button>
 
-                                <form className={styles.formDiv}>
+                                <form
+                                    className={styles.formDiv}
+                                    onSubmit={handleFormSubmit}
+                                >
                                     <h4>Add Service</h4>
                                     <div className={styles.inputGroup}>
                                         <label>Service Type</label>
-                                        <select>
+                                        <select
+                                            value={formData.serviceType}
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    serviceType: e.target.value,
+                                                })
+                                            }
+                                        >
                                             <option value="PetGrooming">
                                                 PetGrooming
                                             </option>
@@ -270,27 +413,70 @@ const ProviderDashboard = () => {
                                     </div>
                                     <div className={styles.inputGroup}>
                                         <label>Price</label>
-                                        <div
-                                            className={styles.select}
-                                            onChange={handlerTickerChange}
-                                        >
-                                            <select>
-                                                <option>USD</option>
-                                                <option>INR</option>
-                                                <option>SEK</option>
+                                        <div className={styles.select}>
+                                            <select
+                                                value={formData.currency}
+                                                onChange={(e) => {
+                                                    setFormData({
+                                                        ...formData,
+                                                        currency:
+                                                            e.target.value,
+                                                    });
+                                                    console.log(e.target.value);
+                                                }}
+                                            >
+                                                {currencyOptions.map(
+                                                    (currency) => (
+                                                        <option
+                                                            key={currency}
+                                                            value={currency}
+                                                        >
+                                                            {currency}
+                                                        </option>
+                                                    )
+                                                )}
                                             </select>
                                             <input
-                                                onChange={handlerPriceChange}
-                                                value={"5"}
-                                            ></input>
+                                                value={formData.price}
+                                                onChange={(e) =>
+                                                    setFormData({
+                                                        ...formData,
+                                                        price: e.target.value,
+                                                    })
+                                                }
+                                            />
                                         </div>
                                     </div>
                                     <div className={styles.inputGroup}>
                                         <label>Note</label>
-                                        <input />
+                                        <input
+                                            value={formData.note}
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    note: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label>Pet Type</label>
+                                        <select
+                                            value={formData.petType}
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    petType: e.target.value,
+                                                })
+                                            }
+                                        >
+                                            <option value="Cat">Cat</option>
+                                            <option value="Dog">Dog</option>
+                                            <option value="Both">Both</option>
+                                        </select>
                                     </div>
                                     <div className={styles.submitButton}>
-                                        <button>Save</button>
+                                        <button type="submit">Save</button>
                                     </div>
                                 </form>
                             </div>

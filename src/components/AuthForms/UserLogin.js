@@ -2,19 +2,17 @@ import { useRef, useState, useContext } from "react";
 import styles from "./UserLogin.module.css";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
-import AuthContext from "../../store/auth-context";
 import Loading from "../Spinner/Spinner";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
+import { useAppDispatch } from "../../app/hooks";
+import { userActions } from "../../features/userSlice";
 const UserLogin = () => {
     const navigate = useNavigate();
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
-
-    const authCtx = useContext(AuthContext);
-
     const [isLoading, setIsLoading] = useState(false);
-
+    const dispatch = useAppDispatch();
     const submitHandler = async (event) => {
         setIsLoading(true);
         event.preventDefault();
@@ -29,28 +27,11 @@ const UserLogin = () => {
                 password: Data.password,
             });
             console.log(response.data);
+            dispatch(userActions.setState({ ...response.data }));
+            navigate("/", { replace: true });
         } catch (err) {
             console.log(err);
         }
-        // fetch("https://friskei-backend.onrender.com/users/login", {
-        //     method: "POST",
-        //     body: JSON.stringify(Data),
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        // }).then((response) => {
-        //     setIsLoading(false);
-        //     if (response.ok) {
-        //         response.json().then((result) => {
-        //             const expirationTime = new Date(
-        //                 new Date().getTime() + 1.8e7
-        //             );
-        //             authCtx.login(result.token, expirationTime.toISOString());
-        //             navigate("/");
-        //         });
-        //         console.log("logged in sucessfully");
-        //     }
-        // });
     };
     return (
         <>
@@ -82,9 +63,7 @@ const UserLogin = () => {
                         <p>Don't have an account with us ?</p>
                         <div className={styles.registerDiv}>
                             <p>
-                                <Link to="/register">
-                                    Click here to Register
-                                </Link>
+                                <Link to="/joinus">Click here to Register</Link>
                             </p>
                         </div>
                     </div>

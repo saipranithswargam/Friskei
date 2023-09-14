@@ -4,6 +4,7 @@ import Hero from "./LandingPage/Hero/Hero";
 import { Fragment } from "react";
 import Services from "./LandingPage/Services/Services";
 import JoinUs from "./LandingPage/JoinUs/JoinUs";
+import { ToastContainer } from "react-toastify";
 import CustomerReview from "./LandingPage/CustomerReview/CustomerReview";
 import CustomerReviewCarousel from "./LandingPage/Slider/CustomerReviewCarousel";
 import Footer from "./Footer/Footer";
@@ -24,8 +25,14 @@ import AboutUs from "./AboutUs/AboutUs";
 import ContactUs from "./ContactUs/ContactUs";
 import JoinUsMain from "./JoinUs/JoinUs";
 import ChatWidget from "./ChatWidget/ChatWidget";
-
+import ProviderProfile from "../pages/ProviderProfile/ProviderProfile";
+import { useAppSelector } from "../app/hooks";
+import PageLoader from "./PageLoader/Loader";
+import Protected from "./Protected/Protected";
+import InitialLoader from "./PageLoader/InitialLoader";
+import AuthProtected from "./AuthProtected/AuthProtected";
 function Navigation() {
+    const user = useAppSelector((state) => state.user);
     const style = {
         margin: 0,
         top: "auto",
@@ -40,6 +47,7 @@ function Navigation() {
 
     return (
         <>
+            <ToastContainer style={{ fontSize: "20px" }} />
             <Routes>
                 <Route
                     path="/"
@@ -57,7 +65,16 @@ function Navigation() {
                         </React.Fragment>
                     }
                 />
-                <Route element={<UserLogin />} path="/login" />
+                <Route path="/auth" element={<AuthProtected />}>
+                    <Route
+                        path="login"
+                        element={
+                            <React.Suspense fallback={<InitialLoader />}>
+                                <UserLogin />
+                            </React.Suspense>
+                        }
+                    />
+                </Route>
                 <Route element={<UserRegsiter />} path="/register" />
                 <Route element={<AboutUs />} path="/aboutus" />
                 <Route element={<ContactUs />} path="/contact" />
@@ -88,11 +105,36 @@ function Navigation() {
                     element={<JoinUsServiceDetails />}
                     path="/joinus/register/:joinAs/serviceDetails"
                 />
-                <Route element={<UserDashboard />} path="/userdashboard" />
                 <Route
-                    element={<ProviderDashboard />}
-                    path="/providerdashboard"
+                    element={<ProviderProfile />}
+                    path="/search/provider/:id"
                 />
+                <Route path="/" element={<Protected />}>
+                    {user.type === "user" && (
+                        <Route path="user/dashboard">
+                            <Route
+                                path=""
+                                element={
+                                    <React.Suspense fallback={<PageLoader />}>
+                                        <UserDashboard />
+                                    </React.Suspense>
+                                }
+                            />
+                        </Route>
+                    )}
+                    {user.type === "provider" && (
+                        <Route path="provider/dashboard">
+                            <Route
+                                path=""
+                                element={
+                                    <React.Suspense fallback={<PageLoader />}>
+                                        <ProviderDashboard />
+                                    </React.Suspense>
+                                }
+                            />
+                        </Route>
+                    )}
+                </Route>
                 <Route element={<ProviderLogin />} path="/providerlogin" />
                 <Route element={<EditService />} path="/editservice/:id" />
             </Routes>

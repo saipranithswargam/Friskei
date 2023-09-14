@@ -7,18 +7,23 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
+import { userActions } from "../../features/userSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Logo from "./logo.svg";
-import AuthContext from "../../store/auth-context";
-import { useContext } from "react";
+import axiosInstance from "../../api/axiosInstance";
 const Header = () => {
-    const authCtx = useContext(AuthContext);
+    const user = useAppSelector((state) => state.user);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const location = useLocation();
     const [url, setUrl] = useState(null);
     const [anchorEl, setAnchorEl] = useState(null);
-    const logoutHandler = () => {
-        authCtx.logout();
+    const logoutHandler = async () => {
+        var response = await axiosInstance.get("/users/logout");
+        dispatch(userActions.reset());
+        navigate("/");
     };
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -42,7 +47,7 @@ const Header = () => {
                     className={`${styles.nav}`}
                 >
                     <Navbar.Brand as={Link} to="/" className={styles.navBrand}>
-                        <img src={Logo} alt="icon" style={{scale:"1.4"}} />
+                        <img src={Logo} alt="icon" style={{ scale: "1.4" }} />
                         <div
                             style={{
                                 display: "flex",
@@ -110,15 +115,6 @@ const Header = () => {
                                 >
                                     Join Us
                                 </Nav.Link>
-                                {/* <Nav.Link
-                                    as={Link}
-                                    to="/petblog"
-                                    className={`${styles.navLink} + ${
-                                        url === "/petblog" ? styles.active : ""
-                                    }`}
-                                >
-                                    Pet Blog
-                                </Nav.Link> */}
                                 <Nav.Link
                                     as={Link}
                                     to="/aboutus"
@@ -137,7 +133,7 @@ const Header = () => {
                                 >
                                     Contact
                                 </Nav.Link>
-                                {authCtx.isLoggedIn && (
+                                {user.isLoggedIn && (
                                     <div>
                                         <Button
                                             aria-describedby={id}
@@ -163,7 +159,7 @@ const Header = () => {
                                             >
                                                 <Nav.Link
                                                     as={Link}
-                                                    to="/userdashboard"
+                                                    to="/user/dashboard"
                                                     className={
                                                         styles.dropdownLink
                                                     }
@@ -187,7 +183,7 @@ const Header = () => {
                                         </Popover>
                                     </div>
                                 )}
-                                {!authCtx.isLoggedIn && (
+                                {!user.isLoggedIn && (
                                     <div>
                                         <Button
                                             aria-describedby={id}
@@ -214,7 +210,10 @@ const Header = () => {
                                                 sx={{ padding: "1rem 6rem" }}
                                                 className={styles.test}
                                             >
-                                                <Nav.Link as={Link} to="/login">
+                                                <Nav.Link
+                                                    as={Link}
+                                                    to="/auth/login"
+                                                >
                                                     User Login
                                                 </Nav.Link>
                                             </Typography>

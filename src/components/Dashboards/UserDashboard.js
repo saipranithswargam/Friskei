@@ -1,13 +1,41 @@
 import styles from "./UserDashboard.module.css";
 import Header from "../Header/Header";
-import AuthContext from "../../store/auth-context";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { useState, useEffect } from "react";
 import Footer from "../Footer/Footer";
 import { Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { useNavigate } from "react-router-dom";
+import { userActions } from "../../features/userSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import axiosInstance from "../../api/axiosInstance";
+import { toast } from "react-toastify";
+import parsePhoneNumber from "libphonenumber-js";
+import ProfileImageUpdate from "./UpdateImage";
 const UserDashboard = () => {
+    const user = useAppSelector((state) => state.user);
+    const [editProfileData, setEditProfileData] = useState({
+        name: user.name,
+        mobileNumber: user.mobileNumber,
+        email: user.email,
+        city: user.city,
+        petParent: user.petParent,
+        currentPassword: "",
+        newPassword: "",
+        confirmNewPassword: "",
+    });
+    const resetFormData = () => {
+        setEditProfileData({
+            name: user.name,
+            mobileNumber: user.mobileNumber,
+            email: user.email,
+            city: user.city,
+            petParent: user.petParent,
+            currentPassword: "",
+            newPassword: "",
+            confirmNewPassword: "",
+        });
+        setEditProfile(false);
+    };
     const EditPencil = (
         <svg
             viewBox="0 0 24 24"
@@ -22,53 +50,56 @@ const UserDashboard = () => {
             ></path>
         </svg>
     );
-    const [profileActive, setProfileActive] = useState(true);
-    const [reviewActive, setReviewActive] = useState(false);
     const [editProfile, setEditProfile] = useState(false);
-    const [editPassword, setEditPassword] = useState(false);
-    const profileClickHandler = () => {
-        setProfileActive(true);
-        setReviewActive(false);
-    };
-    const reviewClickHandler = () => {
-        setProfileActive(false);
-        setReviewActive(true);
-    };
     const editClickHandler = () => {
         setEditProfile(true);
     };
-    const navigate = useNavigate();
-    const authCtx = useContext(AuthContext);
-    const [settings, setSettings] = useState(false);
-    const backChangeHandler = () => {
-        setSettings(false);
+
+    const validatePhoneNumber = () => {
+        try {
+            const phoneNumberObj = parsePhoneNumber(
+                editProfileData.mobileNumber
+            );
+
+            const isValid = phoneNumberObj.isValid();
+
+            return isValid;
+        } catch (error) {
+            return false;
+        }
     };
     const saveChangesHandler = () => {
-        console.log("here goes post request to backend");
+        if (!validatePhoneNumber()) {
+            console.log("phoneNumber is invalid please try again !");
+            toast.error("Please enter a valid phone number.", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 3000,
+            });
+            resetFormData();
+            return;
+        }
+        const updatedData = {
+            name: editProfileData.name,
+            mobileNumber: editProfileData.mobileNumber,
+            email: editProfileData.email,
+            city: editProfileData.city,
+            petParent: editProfileData.petParent,
+            currentPassword: editProfileData.currentPassword,
+            newPassword: editProfileData.newPassword,
+            confirmNewPassword: editProfileData.confirmNewPassword,
+        };
+        axiosInstance
+            .post("/users/updateInfo", updatedData)
+            .then((response) => {
+                console.log("Update Info Success:", response.data);
+            })
+            .catch((error) => {
+                console.error("Update Info Error:", error);
+            });
     };
-    console.log(authCtx.token);
-    // useEffect(() => {
-    //     fetch(`https://friskei-backend.onrender.com/users/profile`, {
-    //         method: "get",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             Authorization: "Bearer " + authCtx.token,
-    //         },
-    //     }).then((response) => {
-    //         if (response.ok) {
-    //             response.json().then((data) => {
-    //                 console.log(data);
-    //             });
-    //         } else {
-    //             navigate("/login");
-    //         }
-    //     });
-    // }, [authCtx.token, navigate]);
+    useEffect(() => {});
 
-    let activeProfileStyles = profileActive
-        ? styles.activeButton
-        : styles.button;
-    let activeReviewStyles = reviewActive ? styles.activeButton : styles.button;
+    let activeProfileStyles = true ? styles.activeButton : styles.button;
 
     return (
         <>
@@ -76,122 +107,166 @@ const UserDashboard = () => {
             <div className={styles.main}>
                 <div className={styles.upper}>
                     <div className={styles.info}>
-                        <div className={styles.symbol}>M</div>
-                        <h5>Madhav Bhallamudi</h5>
+                        <ProfileImageUpdate />
+                        <h5>{user.name}</h5>
                         <p></p>
                     </div>
                 </div>
                 <div className={styles.lower}>
                     <div className={styles.buttonsDiv}>
-                        <button
-                            className={activeProfileStyles}
-                            onClick={profileClickHandler}
-                        >
-                            Profile
-                        </button>
-                        <button
-                            className={activeReviewStyles}
-                            onClick={reviewClickHandler}
-                        >
-                            Review
-                        </button>
+                        <button className={activeProfileStyles}>Profile</button>
                     </div>
                 </div>
-                {profileActive && (
-                    <div className={styles.profile}>
-                        <div className={styles.upperHeading}>
-                            <h1>Profile</h1>
-                            {!editProfile && (
-                                <button onClick={editClickHandler}>
-                                    {EditPencil} Edit Profile
+                <div className={styles.profile}>
+                    <div className={styles.upperHeading}>
+                        <h1>Profile</h1>
+                        {!editProfile && (
+                            <button onClick={editClickHandler}>
+                                {EditPencil} Edit Profile
+                            </button>
+                        )}
+                        {editProfile && (
+                            <div className={styles.buttonsDiv}>
+                                <button onClick={resetFormData}>Discard</button>
+                                <button onClick={saveChangesHandler}>
+                                    Update Info
                                 </button>
-                            )}
-                            {editProfile && (
-                                <div className={styles.buttonsDiv}>
-                                    <button>Discard</button>
-                                    <button>Update Info</button>
-                                </div>
-                            )}
-                        </div>
-                        <div className={styles.profileManagement}>
-                            <div className={styles.InputGroup}>
-                                <div className={styles.InputDiv}>
-                                    <label>Name</label>
-                                    <input
-                                        value="Madhav Bhallamudi"
-                                        disabled={!editProfile}
-                                    />
-                                </div>
-                                <div className={styles.InputDiv}>
-                                    <label>Email</label>
-                                    <input
-                                        value="Madhav@gmail.com"
-                                        disabled={!editProfile}
-                                    />
-                                </div>
                             </div>
-                            <div className={styles.InputGroup}>
-                                <div className={styles.InputDiv}>
-                                    <label>MobileNumber</label>
-                                    <input
-                                        value="+918885816487"
-                                        disabled={!editProfile}
-                                    />
-                                </div>
-                                <div className={styles.InputDiv}>
-                                    <label>City</label>
-                                    <input
-                                        value="Hyderabad"
-                                        disabled={!editProfile}
-                                    />
-                                </div>
-                            </div>
-                            <div className={styles.InputGroup}>
-                                <div className={styles.InputDiv}>
-                                    <label>Gender</label>
-                                    <input
-                                        disabled={!editProfile}
-                                        value="Male"
-                                    />
-                                </div>
-                                <div className={styles.InputDiv}>
-                                    <label>Pet Parent</label>
-                                    <select disabled={!editProfile}>
-                                        <option value="Yes">YES</option>
-                                        <option value="No">NO</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className={styles.currentPassword}>
-                                <label>Current Password</label>
-                                <input disabled={!editProfile} />
-                            </div>
-                            <div className={styles.InputGroup}>
-                                <div className={styles.InputDiv}>
-                                    <label>New password</label>
-                                    <input disabled={!editProfile} />
-                                </div>
-                                <div className={styles.InputDiv}>
-                                    <label>Confirm New Password</label>
-                                    <input disabled={!editProfile} />
-                                </div>
-                            </div>
-                            {editProfile && (
-                                <div className={styles.bottomButtonsDiv}>
-                                    {editProfile && (
-                                        <div className={styles.buttonsDiv}>
-                                            <button>Discard</button>
-                                            <button>Update Info</button>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
-                        </div>
+                        )}
                     </div>
-                )}
-                {reviewActive && <div className={styles.review}>
-                    
-                </div>}
+                    <div className={styles.profileManagement}>
+                        <div className={styles.InputGroup}>
+                            <div className={styles.InputDiv}>
+                                <label>Name</label>
+                                <input
+                                    value={editProfileData.name}
+                                    onChange={(e) =>
+                                        setEditProfileData({
+                                            ...editProfileData,
+                                            name: e.target.value,
+                                        })
+                                    }
+                                    disabled={!editProfile}
+                                />
+                            </div>
+                            <div className={styles.InputDiv}>
+                                <label>Email</label>
+                                <input
+                                    type="email"
+                                    value={editProfileData.email}
+                                    disabled={!editProfile}
+                                    onChange={(e) =>
+                                        setEditProfileData({
+                                            ...editProfileData,
+                                            email: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.InputGroup}>
+                            <div className={styles.InputDiv}>
+                                <label>MobileNumber</label>
+                                <input
+                                    value={editProfileData.mobileNumber}
+                                    disabled={!editProfile}
+                                    onChange={(e) =>
+                                        setEditProfileData({
+                                            ...editProfileData,
+                                            mobileNumber: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className={styles.InputDiv}>
+                                <label>City</label>
+                                <input
+                                    value={editProfileData.city}
+                                    disabled={!editProfile}
+                                    onChange={(e) =>
+                                        setEditProfileData({
+                                            ...editProfileData,
+                                            city: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.InputGroup}>
+                            <div className={styles.InputDiv}>
+                                <label>Pet Parent</label>
+                                <select
+                                    disabled={!editProfile}
+                                    value={editProfileData.petParent}
+                                    onChange={(e) =>
+                                        setEditProfileData({
+                                            ...editProfileData,
+                                            petParent: e.target.value,
+                                        })
+                                    }
+                                >
+                                    <option value="Yes">YES</option>
+                                    <option value="No">NO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className={styles.currentPassword}>
+                            <label>Current Password</label>
+                            <input
+                                value={editProfileData.currentPassword}
+                                disabled={!editProfile}
+                                onChange={(e) =>
+                                    setEditProfileData({
+                                        ...editProfileData,
+                                        currentPassword: e.target.value,
+                                    })
+                                }
+                            />
+                        </div>
+                        <div className={styles.InputGroup}>
+                            <div className={styles.InputDiv}>
+                                <label>New password</label>
+                                <input
+                                    value={editProfileData.newPassword}
+                                    disabled={!editProfile}
+                                    onChange={(e) =>
+                                        setEditProfileData({
+                                            ...editProfileData,
+                                            newPassword: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className={styles.InputDiv}>
+                                <label>Confirm New Password</label>
+                                <input
+                                    disabled={!editProfile}
+                                    value={editProfileData.confirmNewPassword}
+                                    onChange={(e) =>
+                                        setEditProfileData({
+                                            ...editProfileData,
+                                            confirmNewPassword: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                        </div>
+                        {editProfile && (
+                            <div className={styles.bottomButtonsDiv}>
+                                {editProfile && (
+                                    <div className={styles.buttonsDiv}>
+                                        <button onClick={resetFormData}>
+                                            Discard
+                                        </button>
+                                        <button onClick={saveChangesHandler}>
+                                            Update Info
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
             <Footer />
         </>

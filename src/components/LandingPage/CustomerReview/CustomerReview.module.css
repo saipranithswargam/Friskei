@@ -22,6 +22,7 @@
 .review {
     padding: 7rem 0;
     display: grid;
+    gap:1.5rem;
     grid-template-columns: 1fr 1fr 1fr;
 }
 .reviewCard {
@@ -78,7 +79,7 @@
     .reviewCard,
     .reviewCard2,
     .reviewCard3 {
-        height: 85%;
+        min-height: 89%;
         width: 90%;
     }
 }
