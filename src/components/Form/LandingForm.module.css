@@ -19,6 +19,14 @@
     display: inline-block;
     margin: 0 10px;
 }
+.dropDownDiv {
+    margin: 0 auto!important;
+    width: 85% !important;
+    left: 0 !important;
+    display: flex;
+    justify-content: space-between;
+}
+
 
 .upper input[type="checkbox"]:checked {
     background-color: #d1000a !important;

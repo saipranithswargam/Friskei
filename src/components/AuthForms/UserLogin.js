@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
 import { useAppDispatch } from "../../app/hooks";
 import { userActions } from "../../features/userSlice";
+import { toast } from "react-toastify";
 const UserLogin = () => {
     const navigate = useNavigate();
     const emailInputRef = useRef();
@@ -26,11 +27,18 @@ const UserLogin = () => {
                 email: Data.email,
                 password: Data.password,
             });
-            console.log(response.data);
+            setIsLoading(false);
             dispatch(userActions.setState({ ...response.data }));
             navigate("/", { replace: true });
+            toast.success("Logged in successfully!", {
+                position: "top-right",
+            });
         } catch (err) {
+            setIsLoading(false);
             console.log(err);
+            toast.error(err.response.data.message, {
+                position: "top-right",
+            });
         }
     };
     return (

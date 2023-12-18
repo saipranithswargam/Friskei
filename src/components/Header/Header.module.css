@@ -40,6 +40,8 @@
     height: 100%;
     background-color: transparent !important;
     box-shadow: none !important;
+    display: flex;
+    gap:10px;
 }
 .navLink:global(.active) {
     border-radius: 50px;

@@ -1,11 +1,13 @@
 import styles from "./UserDashboard.module.css";
 import Header from "../Header/Header";
 import { useState, useEffect } from "react";
+import { Dropdown, InputGroup } from 'react-bootstrap';
 import Footer from "../Footer/Footer";
 import { Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import { userActions } from "../../features/userSlice";
+import { Country, State, City } from 'country-state-city';
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import axiosInstance from "../../api/axiosInstance";
 import { toast } from "react-toastify";
@@ -13,15 +15,21 @@ import parsePhoneNumber from "libphonenumber-js";
 import ProfileImageUpdate from "./UpdateImage";
 const UserDashboard = () => {
     const user = useAppSelector((state) => state.user);
+    const [countries, setCountries] = useState([]);
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState({ label: user.country, value: '' });
+    const [selectedState, setSelectedState] = useState({ label: user.state, value: '' });
+    const [selectedCity, setSelectedCity] = useState({ label: user.city, value: '' });
+    const [loading, setLoading] = useState(false);
+    const dispatch = useAppDispatch();
     const [editProfileData, setEditProfileData] = useState({
         name: user.name,
         mobileNumber: user.mobileNumber,
         email: user.email,
-        city: user.city,
         petParent: user.petParent,
         currentPassword: "",
         newPassword: "",
-        confirmNewPassword: "",
     });
     const resetFormData = () => {
         setEditProfileData({
@@ -30,12 +38,36 @@ const UserDashboard = () => {
             email: user.email,
             city: user.city,
             petParent: user.petParent,
+            state: user.state,
+            country: user.country,
             currentPassword: "",
             newPassword: "",
             confirmNewPassword: "",
         });
         setEditProfile(false);
     };
+    const handleCountryChange = (selectedCountry) => {
+        setSelectedCountry(selectedCountry);
+        setSelectedState('');
+        const countryStates = State.getStatesOfCountry(selectedCountry.value).map(state => ({
+            label: state.name,
+            value: state.isoCode,
+        }));
+
+        setStates(countryStates);
+        setCities([]);
+    };
+    const handleStateChange = (selectedState) => {
+        setSelectedState(selectedState);
+        const stateCities = City.getCitiesOfState(selectedCountry.value, selectedState.value).map(city => ({
+            label: city.name,
+            value: city.name,
+        }));
+        setCities(stateCities);
+    };
+    const handleCityChange = (selectedCity) => {
+        setSelectedCity(selectedCity);
+    }
     const EditPencil = (
         <svg
             viewBox="0 0 24 24"
@@ -68,7 +100,14 @@ const UserDashboard = () => {
             return false;
         }
     };
-    const saveChangesHandler = () => {
+    const saveChangesHandler = async () => {
+        if (editProfileData.currentPassword.length === 0) {
+            toast.warn("Current Password is mandatory !", {
+                position: "top-right",
+            });
+            resetFormData();
+            return;
+        }
         if (!validatePhoneNumber()) {
             console.log("phoneNumber is invalid please try again !");
             toast.error("Please enter a valid phone number.", {
@@ -86,18 +125,38 @@ const UserDashboard = () => {
             petParent: editProfileData.petParent,
             currentPassword: editProfileData.currentPassword,
             newPassword: editProfileData.newPassword,
-            confirmNewPassword: editProfileData.confirmNewPassword,
         };
-        axiosInstance
-            .post("/users/updateInfo", updatedData)
-            .then((response) => {
-                console.log("Update Info Success:", response.data);
-            })
-            .catch((error) => {
-                console.error("Update Info Error:", error);
+        setLoading(true);
+        try {
+            const response = await axiosInstance.post(
+                "/users/updateinfo",
+                updatedData
+            );
+            setLoading(false);
+            setEditProfile(false);
+            console.log(response.data);
+            dispatch(userActions.setState(response.data));
+            toast.success("Profile Updated Successfully!", {
+                position: "top-right",
             });
+        } catch (err) {
+            console.log(err);
+            resetFormData();
+            setLoading(false);
+            setEditProfile(false);
+            toast.error(err.response.data.message, {
+                position: "top-right",
+            });
+        }
     };
-    useEffect(() => {});
+    useEffect(() => {
+        resetFormData();
+        const allCountries = Country.getAllCountries().map(country => ({
+            label: country.name,
+            value: country.isoCode,
+        }));
+        setCountries(allCountries);
+    }, []);
 
     let activeProfileStyles = true ? styles.activeButton : styles.button;
 
@@ -179,21 +238,6 @@ const UserDashboard = () => {
                                 />
                             </div>
                             <div className={styles.InputDiv}>
-                                <label>City</label>
-                                <input
-                                    value={editProfileData.city}
-                                    disabled={!editProfile}
-                                    onChange={(e) =>
-                                        setEditProfileData({
-                                            ...editProfileData,
-                                            city: e.target.value,
-                                        })
-                                    }
-                                />
-                            </div>
-                        </div>
-                        <div className={styles.InputGroup}>
-                            <div className={styles.InputDiv}>
                                 <label>Pet Parent</label>
                                 <select
                                     disabled={!editProfile}
@@ -210,42 +254,81 @@ const UserDashboard = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className={styles.currentPassword}>
-                            <label>Current Password</label>
-                            <input
-                                value={editProfileData.currentPassword}
-                                disabled={!editProfile}
-                                onChange={(e) =>
-                                    setEditProfileData({
-                                        ...editProfileData,
-                                        currentPassword: e.target.value,
-                                    })
-                                }
-                            />
+                        <div className={styles.InputGroup}>
+                            <div className={styles.InputDiv}>
+                                <label>Country</label>
+                                <Dropdown className={styles.dropDownDiv} >
+                                    <Dropdown.Toggle variant="success" id="country-dropdown" className={styles.dropDown} disabled={!editProfile} >
+                                        {selectedCountry.label || 'Select Country'}
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        {countries.map(country => (
+                                            <Dropdown.Item key={country.value} onClick={() => handleCountryChange(country)}>
+                                                {country.label}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </div>
+                            <div className={styles.InputDiv}>
+                                <label>State</label>
+                                <Dropdown className={styles.dropDownDiv}>
+                                    <Dropdown.Toggle variant="success" id="state-dropdown" className={styles.dropDown} disabled={!editProfile}>
+                                        {selectedState.label || 'Select State'}
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        {states.map(state => (
+                                            <Dropdown.Item key={state.value} onClick={() => handleStateChange(state)}>
+                                                {state.label}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </div>
+                        </div>
+                        <div className={InputGroup}>
+                            <div className={styles.InputDiv}>
+                                <label>City</label>
+                                <Dropdown className={styles.dropDownDiv}>
+                                    <Dropdown.Toggle variant="success" id="city-dropdown" className={styles.dropDown} disabled={!editProfile}>
+                                        {selectedCity.label || 'Select State'}
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        {cities.map(city => (
+                                            <Dropdown.Item key={city.value} onClick={() => { setSelectedCity(city) }}>
+                                                {city.label}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </div>
                         </div>
                         <div className={styles.InputGroup}>
                             <div className={styles.InputDiv}>
-                                <label>New password</label>
+                                <label>Current Password</label>
                                 <input
-                                    value={editProfileData.newPassword}
+                                    type="password"
+                                    value={editProfileData.currentPassword}
                                     disabled={!editProfile}
+                                    required
                                     onChange={(e) =>
                                         setEditProfileData({
                                             ...editProfileData,
-                                            newPassword: e.target.value,
+                                            currentPassword: e.target.value,
                                         })
                                     }
                                 />
                             </div>
                             <div className={styles.InputDiv}>
-                                <label>Confirm New Password</label>
+                                <label>New Password</label>
                                 <input
+                                    type="password"
                                     disabled={!editProfile}
-                                    value={editProfileData.confirmNewPassword}
+                                    value={editProfileData.newPassword}
                                     onChange={(e) =>
                                         setEditProfileData({
                                             ...editProfileData,
-                                            confirmNewPassword: e.target.value,
+                                            newPassword: e.target.value,
                                         })
                                     }
                                 />

@@ -55,7 +55,7 @@ function Navigation() {
                         <React.Fragment>
                             <Header />
                             <Hero />
-                            <LandingForm />
+                            {user.type !== 'provider' && <LandingForm />}
                             <Services />
                             <JoinUs />
                             <CustomerReview />

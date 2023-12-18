@@ -26,6 +26,8 @@ const userSlice = createSlice({
             state.mobileNumber = action.payload.mobileNum;
             state.city = action.payload.city;
             state.petParent = action.payload.petParent;
+            state.state = action.payload.state;
+            state.country = action.payload.country;
         },
         setImage: (state, action) => {
             state.image = action.payload;
@@ -36,6 +38,9 @@ const userSlice = createSlice({
         setLocation: (state, action) => {
             state.latitude = action.payload.latitude;
             state.longitude = action.payload.longitude;
+        },
+        setType: (state, action) => {
+            state.type = action.payload.type;
         },
     },
 });

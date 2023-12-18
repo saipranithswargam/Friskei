@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { Dropdown } from 'react-bootstrap';
+import { Country, State, City } from 'country-state-city';
 import styles from "./JoinUs.module.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import InputLabel from "@mui/material/InputLabel";
 import { Box, Button } from "@mui/material";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
+import InputLabel from "@mui/material/InputLabel";
 import { Controller, useForm } from "react-hook-form";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -15,7 +17,72 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import axiosInstance from "../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+const LocationSelector = ({ handleCountryChange, handleStateChange, handleCityChange, cities, selectedCountry, selectedState, selectedCity }) => {
+    const dropdownStyle = {
+        width: "100%",
+        backgroundColor: "#d1000a",
+        padding: '0.6rem',
+        outline: 'none',
+        border: 'none',
+    };
+
+    const scrollableDropdownStyle = {
+        maxHeight: '40vh',
+        overflowY: 'auto',
+        backgroundColor: 'white'
+    };
+
+    return (
+        <form className={styles.dropDownDiv}>
+            <Dropdown>
+                <Dropdown.Toggle style={dropdownStyle} id="country-dropdown">
+                    {selectedCountry.name || 'Select Country'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu style={{ ...dropdownStyle, ...scrollableDropdownStyle }}>
+                    {Country.getAllCountries().map(country => (
+                        <Dropdown.Item key={country.isoCode} onClick={() => handleCountryChange(country)}>
+                            {country.name}
+                        </Dropdown.Item>
+                    ))}
+                </Dropdown.Menu>
+            </Dropdown>
+
+            <Dropdown>
+                <Dropdown.Toggle style={dropdownStyle} id="state-dropdown">
+                    {selectedState.name || 'Select State'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu style={{ ...dropdownStyle, ...scrollableDropdownStyle }}>
+                    {State.getStatesOfCountry(selectedCountry.isoCode).map(state => (
+                        <Dropdown.Item key={state.isoCode} onClick={() => handleStateChange(state)}>
+                            {state.name}
+                        </Dropdown.Item>
+                    ))}
+                </Dropdown.Menu>
+            </Dropdown>
+
+            <Dropdown>
+                <Dropdown.Toggle style={dropdownStyle} id="city-dropdown">
+                    {selectedCity.label || 'Select City'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu style={{ ...dropdownStyle, ...scrollableDropdownStyle }}>
+                    {cities.map(city => (
+                        <Dropdown.Item key={city.value} onClick={() => handleCityChange(city)}>
+                            {city.label}
+                        </Dropdown.Item>
+                    ))}
+                </Dropdown.Menu>
+            </Dropdown>
+        </form>
+    );
+};
+
 const JoinUs = () => {
+    const [cities, setCities] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState({});
+    const [selectedState, setSelectedState] = useState({});
+    const [selectedCity, setSelectedCity] = useState({});
     const [name, setName] = React.useState("");
     const [type, setType] = React.useState("");
     const [email, setEmail] = React.useState("");
@@ -25,6 +92,24 @@ const JoinUs = () => {
     const [userSignUp, setUserSignUp] = React.useState(true);
     const [providerSignUp, setProviderSignUp] = React.useState(false);
     const navigate = useNavigate();
+
+    const handleCountryChange = (selectedCountry) => {
+        setSelectedCountry(selectedCountry);
+        setSelectedState({});
+        setCities([]);
+    };
+    const handleStateChange = (selectedState) => {
+        setSelectedState(selectedState);
+        const stateCities = City.getCitiesOfState(selectedCountry.isoCode, selectedState.isoCode).map(city => ({
+            label: city.name,
+            value: city.name,
+        }));
+        setCities(stateCities);
+        console.log(cities);
+    };
+    const handleCityChange = (selectedCity) => {
+        setSelectedCity(selectedCity);
+    }
     const typeChangeHandler = (event) => {
         setType(event.target.value);
     };
@@ -54,6 +139,7 @@ const JoinUs = () => {
             timeout: 5000,
             maximumAge: 0,
         };
+        console.log(selectedCity, selectedCountry, selectedState);
         const sucess = async (pos) => {
             let phone = data.phone.replaceAll(/\s/g, "");
             const Data = {
@@ -61,10 +147,13 @@ const JoinUs = () => {
                 email: email,
                 password: password,
                 mobileNum: phone,
-                city: city.toLowerCase(),
+                city: selectedCity.label,
+                country: selectedCountry.name,
+                state: selectedState.name,
                 petParent: petParent,
                 latitude: pos.coords.latitude,
                 longitude: pos.coords.longitude,
+
             };
             if (userSignUp) {
                 try {
@@ -72,8 +161,11 @@ const JoinUs = () => {
                         "/users/register",
                         Data
                     );
-                    navigate("/auth/login");
+                    if (response.status===200) {
+                        navigate("/auth/login");
+                    }
                 } catch (err) {
+                    toast.error(err.response.data.message);
                     console.log(err);
                 }
             }
@@ -84,7 +176,9 @@ const JoinUs = () => {
                         Data
                     );
                     console.log(response.data);
+                    navigate("/providerlogin");
                 } catch (err) {
+                    toast.error(err.response.data.message);
                     console.log(err);
                 }
             }
@@ -103,6 +197,7 @@ const JoinUs = () => {
     let providerSignUpStyles = providerSignUp
         ? styles.activeSignUp
         : styles.Button;
+
     return (
         <>
             <Header />
@@ -272,20 +367,24 @@ const JoinUs = () => {
                                     name="phone"
                                 />
                             </Box>
-                            <Box
-                                sx={{
-                                    minWidth: "100%",
-                                    textAlign: "center",
-                                    marginTop: "2rem",
-                                }}
-                            >
-                                <TextField
-                                    sx={{ width: "80%" }}
-                                    variant="standard"
-                                    label="City"
-                                    onChange={cityChangeHandler}
-                                    value={city}
-                                    required
+                            <Box sx={{
+                                minWidth: "100%",
+                                textAlign: "center",
+                                marginTop: "2rem",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                                alignItems: 'center'
+
+                            }}>
+                                <LocationSelector
+                                    handleCountryChange={handleCountryChange}
+                                    handleStateChange={handleStateChange}
+                                    handleCityChange={handleCityChange}
+                                    cities={cities}
+                                    selectedCountry={selectedCountry}
+                                    selectedState={selectedState}
+                                    selectedCity={selectedCity}
                                 />
                             </Box>
                             <Box

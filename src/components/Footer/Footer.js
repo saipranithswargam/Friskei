@@ -6,7 +6,7 @@ const Footer = () => {
                 <div className={styles.left}>
                     <p style={{ fontWeight: "100" }}>Address</p>
                     <p>Vancouver, BC , Canada</p>
-                    <p>Gothenburg, Sweden</p>
+                    <p>Oslo, Norway</p>
                 </div>
                 <div className={styles.right}>
                     <p style={{ fontWeight: "100" }}>Contact</p>

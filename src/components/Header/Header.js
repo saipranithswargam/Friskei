@@ -26,6 +26,7 @@ const Header = () => {
         navigate("/");
     };
     const handleClick = (event) => {
+        console.log(event.currentTarget);
         setAnchorEl(event.currentTarget);
     };
 
@@ -91,45 +92,42 @@ const Header = () => {
                                 <Nav.Link
                                     as={Link}
                                     to="/"
-                                    className={`${styles.navLink} + ${
-                                        url === "/" ? styles.active : ""
-                                    }`}
+                                    className={`${styles.navLink} + ${url === "/" ? styles.active : ""
+                                        }`}
                                 >
                                     Home
                                 </Nav.Link>
-                                <Nav.Link
-                                    as={Link}
-                                    to="/services"
-                                    className={`${styles.navLink} + ${
-                                        url === "/services" ? styles.active : ""
-                                    }`}
-                                >
-                                    Services
-                                </Nav.Link>
+                                {user.type !== 'provider' &&
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/services"
+                                        className={`${styles.navLink} + ${url === "/services" ? styles.active : ""
+                                            }`}
+                                    >
+                                        Services
+                                    </Nav.Link>
+                                }
                                 <Nav.Link
                                     as={Link}
                                     to="/joinus"
-                                    className={`${styles.navLink} + ${
-                                        url === "/joinus" ? styles.active : ""
-                                    }`}
+                                    className={`${styles.navLink} + ${url === "/joinus" ? styles.active : ""
+                                        }`}
                                 >
                                     Join Us
                                 </Nav.Link>
                                 <Nav.Link
                                     as={Link}
                                     to="/aboutus"
-                                    className={`${styles.navLink} + ${
-                                        url === "/aboutus" ? styles.active : ""
-                                    }`}
+                                    className={`${styles.navLink} + ${url === "/aboutus" ? styles.active : ""
+                                        }`}
                                 >
                                     About Us
                                 </Nav.Link>
                                 <Nav.Link
                                     as={Link}
                                     to="/contact"
-                                    className={`${styles.navLink} + ${
-                                        url === "/contact" ? styles.active : ""
-                                    }`}
+                                    className={`${styles.navLink} + ${url === "/contact" ? styles.active : ""
+                                        }`}
                                 >
                                     Contact
                                 </Nav.Link>
@@ -141,7 +139,7 @@ const Header = () => {
                                             onClick={handleClick}
                                             className={styles.userIcon}
                                         >
-                                            User
+                                            <span style={{ fontSize: "1rem" }}>{user.name[0]}</span>
                                         </Button>
                                         <Popover
                                             id={id}
@@ -159,7 +157,7 @@ const Header = () => {
                                             >
                                                 <Nav.Link
                                                     as={Link}
-                                                    to="/user/dashboard"
+                                                    to={`/${user.type}/dashboard`}
                                                     className={
                                                         styles.dropdownLink
                                                     }

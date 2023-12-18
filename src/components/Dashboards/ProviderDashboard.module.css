@@ -83,6 +83,14 @@
     width: 40%;
     gap: 0.5rem;
 }
+.dropDownDiv {
+    padding: 0.5rem 0.3rem;
+    outline: none;
+    width: 100%;
+    background-color: white;
+    color: black;
+}
+
 .InputDiv input {
     padding: 0.5rem 0.3rem;
     outline: none;
@@ -93,6 +101,19 @@
     outline: none;
     border: 1px solid #d1000a;
 }
+.InputDiv .dropDown {
+    padding: 0.5rem 0.3rem;
+    outline: none;
+    border: 1px solid #d1000a;
+    width: 100%;
+    background-color: white;
+    color: black;
+    border-radius: 0;
+}
+.dropDown:disabled{
+    border: 1px solid slategray !important;
+}
+
 .InputDiv select:disabled {
     border: 1px solid slategray;
 }
@@ -149,9 +170,9 @@
     font-weight: 400;
     font-family: "Poppins", sans-serif;
 }
-.servicesList {
+.servicesListMain {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 1rem 3rem;
     gap: 1rem;
 }

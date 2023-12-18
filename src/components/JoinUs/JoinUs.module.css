@@ -105,3 +105,11 @@
     color: white;
     border: none;
 }
+.dropDownDiv {
+    margin: 0 auto!important;
+    width: 85% !important;
+    left: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}

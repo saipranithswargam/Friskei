@@ -1,8 +1,10 @@
 import React from "react";
 import styles from "./ProviderDashboard.module.css";
 import Header from "../Header/Header";
+import { Dropdown, InputGroup } from 'react-bootstrap';
 import axiosInstance from "../../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import { Country, State, City } from 'country-state-city';
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import Footer from "../Footer/Footer";
@@ -13,6 +15,15 @@ import parsePhoneNumber from "libphonenumber-js";
 import ProfileImageUpdate from "./UpdateImage";
 const ProviderDashboard = () => {
     const user = useAppSelector((state) => state.user);
+    const [loading, setLoading] = useState(false);
+    const [countries, setCountries] = useState([]);
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState({ label: user.country, value: '' });
+    const [selectedState, setSelectedState] = useState({ label: user.state, value: '' });
+    const [selectedCity, setSelectedCity] = useState({ label: user.city, value: '' });
+    const [services, setServices] = useState([]);
+    const dispatch = useAppDispatch();
     const currencyOptions = [
         "USD",
         "INR",
@@ -34,30 +45,61 @@ const ProviderDashboard = () => {
         name: user.name,
         mobileNumber: user.mobileNumber,
         email: user.email,
-        city: user.city,
         petParent: user.petParent,
         currentPassword: "",
         newPassword: "",
-        confirmNewPassword: "",
     });
+    const getServices = () => {
+        axiosInstance.get("/providers/serviceDashboard").then((response) => {
+            setServices(response.data);
+        })
+        console.log(services);
+    }
     const resetFormData = () => {
         setEditProfileData({
             name: user.name,
             mobileNumber: user.mobileNumber,
             email: user.email,
-            city: user.city,
             petParent: user.petParent,
             currentPassword: "",
-            newPassword: "",
             confirmNewPassword: "",
         });
         setEditProfile(false);
     };
+    const handleCountryChange = (selectedCountry) => {
+        setSelectedCountry(selectedCountry);
+        setSelectedState('');
+        const countryStates = State.getStatesOfCountry(selectedCountry.value).map(state => ({
+            label: state.name,
+            value: state.isoCode,
+        }));
+
+        setStates(countryStates);
+        setCities([]);
+    };
+    const handleStateChange = (selectedState) => {
+        setSelectedState(selectedState);
+        const stateCities = City.getCitiesOfState(selectedCountry.value, selectedState.value).map(city => ({
+            label: city.name,
+            value: city.name,
+        }));
+        setCities(stateCities);
+    };
+    const handleCityChange = (selectedCity) => {
+        setSelectedCity(selectedCity);
+    }
     const handleFormSubmit = (event) => {
         event.preventDefault();
         axiosInstance.post("/providers/details", formData).then((response) => {
+            getServices();
             console.log(response.data);
-        });
+        }).catch(err => {
+            toast.error("Error!", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 3000,
+            });
+            console.log(err);
+        })
     };
     const EditPencil = (
         <svg
@@ -101,6 +143,7 @@ const ProviderDashboard = () => {
         setReviewActive(false);
     };
     const reviewClickHandler = () => {
+        getServices();
         setProfileActive(false);
         setReviewActive(true);
     };
@@ -123,12 +166,19 @@ const ProviderDashboard = () => {
 
             const isValid = phoneNumberObj.isValid();
 
-            return isValid; // Return true if valid, false if not.
+            return isValid;
         } catch (error) {
-            return false; // Return false in case of an error.
+            return false;
         }
     };
     const saveChangesHandler = () => {
+        if (editProfileData.currentPassword.length === 0) {
+            toast.warn("Current Password is mandatory !", {
+                position: "top-right",
+            });
+            resetFormData();
+            return;
+        }
         if (!validatePhoneNumber()) {
             console.log("phoneNumber is invalid please try again !");
             toast.error("Please enter a valid phone number.", {
@@ -146,18 +196,33 @@ const ProviderDashboard = () => {
             petParent: editProfileData.petParent,
             currentPassword: editProfileData.currentPassword,
             newPassword: editProfileData.newPassword,
-            confirmNewPassword: editProfileData.confirmNewPassword,
         };
+        setLoading(true);
         axiosInstance
-            .post("/users/updateInfo", updatedData)
+            .post("/providers/updateInfo", updatedData)
             .then((response) => {
                 console.log("Update Info Success:", response.data);
+                dispatch(userActions.setState(response.data));
+                setLoading(false);
+                setEditProfile(false);
+                toast.success("Profile Updated Successfully!", {
+                    position: "top-right",
+                });
+                resetFormData();
             })
-            .catch((error) => {
-                console.error("Update Info Error:", error);
+            .catch((err) => {
+                resetFormData();
+                setLoading(false);
+                setEditProfile(false);
+                toast.error(err.response.data.message, {
+                    position: "top-right",
+                });
             });
     };
-    useEffect(() => {}, []);
+    useEffect(() => {
+        resetFormData();
+        getServices();
+    }, [user]);
     let activeProfileStyles = profileActive
         ? styles.activeButton
         : styles.button;
@@ -255,21 +320,6 @@ const ProviderDashboard = () => {
                                     />
                                 </div>
                                 <div className={styles.InputDiv}>
-                                    <label>City</label>
-                                    <input
-                                        value={editProfileData.city}
-                                        disabled={!editProfile}
-                                        onChange={(e) =>
-                                            setEditProfileData({
-                                                ...editProfileData,
-                                                city: e.target.value,
-                                            })
-                                        }
-                                    />
-                                </div>
-                            </div>
-                            <div className={styles.InputGroup}>
-                                <div className={styles.InputDiv}>
                                     <label>Pet Parent</label>
                                     <select
                                         disabled={!editProfile}
@@ -286,45 +336,81 @@ const ProviderDashboard = () => {
                                     </select>
                                 </div>
                             </div>
-                            <div className={styles.currentPassword}>
-                                <label>Current Password</label>
-                                <input
-                                    value={editProfileData.currentPassword}
-                                    disabled={!editProfile}
-                                    onChange={(e) =>
-                                        setEditProfileData({
-                                            ...editProfileData,
-                                            currentPassword: e.target.value,
-                                        })
-                                    }
-                                />
+                            <div className={styles.InputGroup}>
+                                <div className={styles.InputDiv}>
+                                    <label>Country</label>
+                                    <Dropdown className={styles.dropDownDiv} >
+                                        <Dropdown.Toggle variant="success" id="country-dropdown" className={styles.dropDown} disabled={!editProfile} >
+                                            {selectedCountry.label || 'Select Country'}
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            {countries.map(country => (
+                                                <Dropdown.Item key={country.value} onClick={() => handleCountryChange(country)}>
+                                                    {country.label}
+                                                </Dropdown.Item>
+                                            ))}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </div>
+                                <div className={styles.InputDiv}>
+                                    <label>State</label>
+                                    <Dropdown className={styles.dropDownDiv}>
+                                        <Dropdown.Toggle variant="success" id="state-dropdown" className={styles.dropDown} disabled={!editProfile}>
+                                            {selectedState.label || 'Select State'}
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            {states.map(state => (
+                                                <Dropdown.Item key={state.value} onClick={() => handleStateChange(state)}>
+                                                    {state.label}
+                                                </Dropdown.Item>
+                                            ))}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </div>
+                            </div>
+                            <div className={InputGroup}>
+                                <div className={styles.InputDiv}>
+                                    <label>City</label>
+                                    <Dropdown className={styles.dropDownDiv}>
+                                        <Dropdown.Toggle variant="success" id="city-dropdown" className={styles.dropDown} disabled={!editProfile}>
+                                            {selectedCity.label || 'Select State'}
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            {cities.map(city => (
+                                                <Dropdown.Item key={city.value} onClick={() => { setSelectedCity(city) }}>
+                                                    {city.label}
+                                                </Dropdown.Item>
+                                            ))}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </div>
                             </div>
                             <div className={styles.InputGroup}>
                                 <div className={styles.InputDiv}>
-                                    <label>New password</label>
+                                    <label>Current Password</label>
                                     <input
-                                        value={editProfileData.newPassword}
+                                        type="password"
+                                        value={editProfileData.currentPassword}
                                         disabled={!editProfile}
+                                        required
                                         onChange={(e) =>
                                             setEditProfileData({
                                                 ...editProfileData,
-                                                newPassword: e.target.value,
+                                                currentPassword: e.target.value,
                                             })
                                         }
                                     />
                                 </div>
                                 <div className={styles.InputDiv}>
-                                    <label>Confirm New Password</label>
+                                    <label>New Password</label>
                                     <input
+                                        type="password"
                                         disabled={!editProfile}
-                                        value={
-                                            editProfileData.confirmNewPassword
-                                        }
+                                        value={editProfileData.newPassword}
                                         onChange={(e) =>
                                             setEditProfileData({
                                                 ...editProfileData,
-                                                confirmNewPassword:
-                                                    e.target.value,
+                                                newPassword: e.target.value,
                                             })
                                         }
                                     />
@@ -355,12 +441,24 @@ const ProviderDashboard = () => {
                             <h1>Services</h1>
                         </div>
                         {!showModal && (
-                            <div className={styles.servicesList}>
-                                <div
-                                    className={styles.serviceAddCard}
-                                    onClick={showModalClickHandler}
-                                >
-                                    {addCircularButton}
+                            <div className={styles.servicesListMain}>
+                                {services.map((doc, index) => (
+                                    <div className={styles.servicesList}>
+                                        <div
+                                            className={styles.serviceAddCard}
+                                        >
+                                            {doc.price}
+                                            { }
+                                        </div>
+                                    </div>
+                                ))}
+                                <div className={styles.servicesList}>
+                                    <div
+                                        className={styles.serviceAddCard}
+                                        onClick={showModalClickHandler}
+                                    >
+                                        {addCircularButton}
+                                    </div>
                                 </div>
                             </div>
                         )}

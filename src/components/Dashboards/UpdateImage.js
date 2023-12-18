@@ -33,7 +33,8 @@ const ProfileImageUpdate = () => {
     const updateImage = async (e) => {
         setChange(false);
         try {
-            await axiosInstance.post("/users/updateimage", {
+            const type = user.type + 's';
+            await axiosInstance.post(`/${type}/updateimage`, {
                 image,
                 email: user.email,
             });

@@ -5,7 +5,6 @@
     padding: 3rem 5rem;
     padding-top: 6rem;
     background-color: rgb(139, 0, 7);
-    margin-top: 1rem;
 }
 .upper .info {
     display: flex;
@@ -83,6 +82,13 @@
     width: 40%;
     gap: 0.5rem;
 }
+.dropDownDiv {
+    padding: 0.5rem 0.3rem;
+    outline: none;
+    width: 100%;
+    background-color: white;
+    color: black;
+}
 .InputDiv input {
     padding: 0.5rem 0.3rem;
     outline: none;
@@ -92,6 +98,18 @@
     padding: 0.5rem 0.3rem;
     outline: none;
     border: 1px solid #d1000a;
+}
+.InputDiv .dropDown {
+    padding: 0.5rem 0.3rem;
+    outline: none;
+    border: 1px solid #d1000a;
+    width: 100%;
+    background-color: white;
+    color: black;
+    border-radius: 0;
+}
+.dropDown:disabled{
+    border: 1px solid slategray !important;
 }
 .InputDiv select:disabled {
     border: 1px solid slategray;
@@ -134,7 +152,7 @@
     outline: none;
     border: 1px solid #d1000a;
 }
-.review{
+.review {
     min-height: 70vh;
     width: 70%;
     margin: 0 auto;

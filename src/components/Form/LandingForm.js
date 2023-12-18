@@ -1,5 +1,7 @@
 import * as React from "react";
 import styles from "./LandingForm.module.css";
+import { Dropdown } from 'react-bootstrap';
+import { Box, Button } from "@mui/material";
 import Boarding from "../../assets/images/BoardingIcon.svg";
 import HouseSitting from "../../assets/images/HouseSitting.svg";
 import DropInVisits from "../../assets/images/DropInVisits.svg";
@@ -7,12 +9,77 @@ import DogDayCare from "../../assets/images/DogDaycare.svg";
 import DogWalking from "../../assets/images/DogWalking.svg";
 import Heart from "../../assets/images/heart.png";
 import { useNavigate } from "react-router-dom";
+import { Country, State, City } from 'country-state-city';
 import Loading from "../Spinner/Spinner";
 import { useContext } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import { userActions } from "../../features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+const LocationSelector = ({ handleCountryChange, handleStateChange, handleCityChange, cities, selectedCountry, selectedState, selectedCity }) => {
+    const dropdownStyle = {
+        width: "100%",
+        backgroundColor: "white",
+        padding: '0.6rem 3rem',
+        color: "black",
+        outline: '#d1000a',
+        border: '2px solid #d1000a',
+    };
+
+    const scrollableDropdownStyle = {
+        maxHeight: '40vh',
+        padding: '0',
+        overflowY: 'auto',
+        backgroundColor: 'white'
+    };
+
+    return (
+        <form className={styles.dropDownDiv}>
+            <Dropdown>
+                <Dropdown.Toggle style={dropdownStyle} id="country-dropdown">
+                    {selectedCountry.name || 'Select Country'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu style={{ ...dropdownStyle, ...scrollableDropdownStyle }}>
+                    {Country.getAllCountries().map(country => (
+                        <Dropdown.Item key={country.isoCode} onClick={() => handleCountryChange(country)}>
+                            {country.name}
+                        </Dropdown.Item>
+                    ))}
+                </Dropdown.Menu>
+            </Dropdown>
+
+            <Dropdown>
+                <Dropdown.Toggle style={dropdownStyle} id="state-dropdown">
+                    {selectedState.name || 'Select State'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu style={{ ...dropdownStyle, ...scrollableDropdownStyle }}>
+                    {State.getStatesOfCountry(selectedCountry.isoCode).map(state => (
+                        <Dropdown.Item key={state.isoCode} onClick={() => handleStateChange(state)}>
+                            {state.name}
+                        </Dropdown.Item>
+                    ))}
+                </Dropdown.Menu>
+            </Dropdown>
+
+            <Dropdown>
+                <Dropdown.Toggle style={dropdownStyle} id="city-dropdown">
+                    {selectedCity.label || 'Select City'}
+                </Dropdown.Toggle>
+                <Dropdown.Menu style={{ ...dropdownStyle, ...scrollableDropdownStyle }}>
+                    {cities.map(city => (
+                        <Dropdown.Item key={city.value} onClick={() => handleCityChange(city)}>
+                            {city.label}
+                        </Dropdown.Item>
+                    ))}
+                </Dropdown.Menu>
+            </Dropdown>
+        </form>
+    );
+};
 const LandingForm = () => {
+    const [cities, setCities] = React.useState([]);
+    const [selectedCountry, setSelectedCountry] = React.useState({});
+    const [selectedState, setSelectedState] = React.useState({});
+    const [selectedCity, setSelectedCity] = React.useState({});
     const user = useAppSelector((state) => state.user);
     const navigate = useNavigate();
     const [selectedCat, setSelectedCat] = React.useState(false);
@@ -35,7 +102,23 @@ const LandingForm = () => {
     const locationHandler = (event) => {
         setLocation(event.target.value);
     };
-
+    const handleCountryChange = (selectedCountry) => {
+        setSelectedCountry(selectedCountry);
+        setSelectedState({});
+        setCities([]);
+    };
+    const handleStateChange = (selectedState) => {
+        setSelectedState(selectedState);
+        const stateCities = City.getCitiesOfState(selectedCountry.isoCode, selectedState.isoCode).map(city => ({
+            label: city.name,
+            value: city.name,
+        }));
+        setCities(stateCities);
+        console.log(cities);
+    };
+    const handleCityChange = (selectedCity) => {
+        setSelectedCity(selectedCity);
+    }
     const dogClickHandler = () => {
         setSelectedDog(true);
         setSelectOther(false);
@@ -164,6 +247,8 @@ const LandingForm = () => {
     let activeBreedingStyles = activeBreeding ? styles.active : styles.breeding;
 
     const submitHandler = () => {
+        // console.log(selectedCity.label, selectedCountry.name, selectedState.name);
+        // return;
         if (!user.isLoggedIn) {
             navigate("/login");
         }
@@ -177,6 +262,7 @@ const LandingForm = () => {
         if (selectedDog) {
             petType = "dog";
         }
+
         console.log(serviceType, location, petType);
         // let lowerLocation = location.toLowerCase();
         setLoading(true);
@@ -297,36 +383,32 @@ const LandingForm = () => {
                                 </div>
                                 <p>Breeding</p>
                             </div>
-                            {/* <div
-                                className={activePetAdoptStyles}
-                                onClick={adoptionClickHandler}
-                            >
-                                <div className={styles.imageDiv}>
-                                    <img alt="" src={Adopt} />
-                                </div>
-                                <p>Pet Adoption</p>
-                            </div> */}
                         </div>
                         {locType === "city" && (
-                            <div className={styles.sizeSearch}>
-                                <div className={styles.zipPicker}>
-                                    <p>Service Location</p>
-                                    <input
-                                        type="text"
-                                        placeholder="City"
-                                        style={{
-                                            padding: "16.5px 0 16.5px 18px",
-                                            width: "100%",
-                                        }}
-                                        onChange={locationHandler}
-                                    />
-                                </div>
+                            <Box sx={{
+                                minWidth: "100%",
+                                textAlign: "center",
+                                marginTop: "2rem",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: 'center'
+
+                            }}>
+                                <LocationSelector
+                                    handleCountryChange={handleCountryChange}
+                                    handleStateChange={handleStateChange}
+                                    handleCityChange={handleCityChange}
+                                    cities={cities}
+                                    selectedCountry={selectedCountry}
+                                    selectedState={selectedState}
+                                    selectedCity={selectedCity}
+                                />
                                 <div className={styles.button}>
                                     <button onClick={submitHandler}>
                                         Search
                                     </button>
                                 </div>
-                            </div>
+                            </Box>
                         )}
                         {locType === "geolocation" && (
                             <div className={styles.sizeSearch}>
