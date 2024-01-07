@@ -162,7 +162,7 @@ const JoinUs = () => {
                         Data
                     );
                     if (response.status===200) {
-                        navigate("/auth/login");
+                        navigate("/auth/userlogin");
                     }
                 } catch (err) {
                     toast.error(err.response.data.message);
@@ -176,7 +176,7 @@ const JoinUs = () => {
                         Data
                     );
                     console.log(response.data);
-                    navigate("/providerlogin");
+                    navigate("/auth/providerlogin");
                 } catch (err) {
                     toast.error(err.response.data.message);
                     console.log(err);

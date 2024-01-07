@@ -7,10 +7,12 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import { userActions } from "../../features/userSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Logo from "./logo.svg";
 import axiosInstance from "../../api/axiosInstance";
 const Header = () => {
@@ -18,26 +20,36 @@ const Header = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
+
     const [url, setUrl] = useState(null);
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState(false);
+
     const logoutHandler = async () => {
-        var response = await axiosInstance.get("/users/logout");
-        dispatch(userActions.reset());
-        navigate("/");
+        try {
+            await axiosInstance.get("/users/logout");
+            handleClose();
+            dispatch(userActions.reset());
+            navigate("/");
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
     };
+
     const handleClick = (event) => {
-        console.log(event.currentTarget);
         setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => {
-        setAnchorEl(null);
+        setAnchorEl(false);
     };
+
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
+
     useEffect(() => {
         setUrl(location.pathname);
     }, [location]);
+
     return (
         <Fragment>
             {["lg"].map((expand) => (
@@ -139,11 +151,13 @@ const Header = () => {
                                             onClick={handleClick}
                                             className={styles.userIcon}
                                         >
-                                            <span style={{ fontSize: "1rem" }}>{user.name[0]}</span>
+                                            <span style={{ fontSize: "1rem" }}>
+                                                {user.name[0]}
+                                            </span>
                                         </Button>
                                         <Popover
                                             id={id}
-                                            open={open}
+                                            open={Boolean(anchorEl)}
                                             anchorEl={anchorEl}
                                             onClose={handleClose}
                                             anchorOrigin={{
@@ -158,9 +172,7 @@ const Header = () => {
                                                 <Nav.Link
                                                     as={Link}
                                                     to={`/${user.type}/dashboard`}
-                                                    className={
-                                                        styles.dropdownLink
-                                                    }
+                                                    className={styles.dropdownLink}
                                                 >
                                                     Profile
                                                 </Nav.Link>
@@ -170,9 +182,7 @@ const Header = () => {
                                                 sx={{ padding: "1rem 6rem" }}
                                             >
                                                 <button
-                                                    className={
-                                                        styles.logoutButton
-                                                    }
+                                                    className={styles.logoutButton}
                                                     onClick={logoutHandler}
                                                 >
                                                     Logout
@@ -189,14 +199,12 @@ const Header = () => {
                                             onClick={handleClick}
                                             className={styles.userIcon}
                                         >
-                                            <AccountCircleIcon
-                                                sx={{ fontSize: 28 }}
-                                            />{" "}
+                                            <AccountCircleIcon sx={{ fontSize: 28 }} />{" "}
                                             Login
                                         </Button>
                                         <Popover
                                             id={id}
-                                            open={open}
+                                            open={Boolean(anchorEl)}
                                             anchorEl={anchorEl}
                                             onClose={handleClose}
                                             anchorOrigin={{
@@ -208,11 +216,8 @@ const Header = () => {
                                                 sx={{ padding: "1rem 6rem" }}
                                                 className={styles.test}
                                             >
-                                                <Nav.Link
-                                                    as={Link}
-                                                    to="/auth/login"
-                                                >
-                                                    User Login
+                                                <Nav.Link as={Link} to="/auth/userlogin">
+                                                    {<PersonAddIcon />} User Login
                                                 </Nav.Link>
                                             </Typography>
                                             <Typography
@@ -221,9 +226,9 @@ const Header = () => {
                                             >
                                                 <Nav.Link
                                                     as={Link}
-                                                    to="/providerlogin"
+                                                    to="/auth/providerlogin"
                                                 >
-                                                    Provider Login
+                                                    {<ManageAccountsIcon />} Provider Login
                                                 </Nav.Link>
                                             </Typography>
                                         </Popover>
@@ -233,8 +238,9 @@ const Header = () => {
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
                 </Navbar>
-            ))}
-        </Fragment>
+            ))
+            }
+        </Fragment >
     );
 };
 

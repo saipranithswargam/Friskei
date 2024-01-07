@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500&family=Poppins:ital,wght@0,100;0,200;0,300;0,500;1,100;1,300&family=Roboto:wght@100;300;400;500;700&family=Space+Grotesk:wght@300;400;600&display=swap");
 * {
     margin: 0;
     padding: 0;
@@ -12,6 +13,9 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
-        body::-webkit-scrollbar {
-            display: none;
-        }
+body::-webkit-scrollbar {
+    display: none;
+}
+.rdrMonth{
+    width: 100% !important;
+}

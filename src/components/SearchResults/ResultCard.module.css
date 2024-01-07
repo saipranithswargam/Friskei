@@ -1,0 +1,78 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: max-content;
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(11.1px);
+    -webkit-backdrop-filter: blur(11.1px);
+    border: 1px solid rgba(210, 210, 210, 0.342);
+    padding: 1.5rem;
+    padding-right: 2rem;
+}
+.details {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+}
+
+.imageDiv img {
+    border-radius: 100%;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.content h1 {
+    font-family: "Poppins", sans-serif;
+    font-size: 40px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.content p {
+    text-transform: capitalize;
+    color: rgb(101, 102, 104);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+}
+.content button {
+    margin-top: 0.5rem;
+    width: fit-content;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 9px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    background-color: rgb(73, 73, 73);
+    color: white;
+}
+.price {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-direction: column;
+}
+.price p {
+    display: flex;
+    text-transform: capitalize;
+    align-items: center;
+    color: rgb(73, 73, 73);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+}
+.more {
+    text-transform: capitalize;
+    color: rgb(101, 102, 104);
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: medium;
+    margin-right: 0.5rem;
+}
+.price p:nth-child(2) {
+    font-size: 30px;
+    color: #c12129;
+}

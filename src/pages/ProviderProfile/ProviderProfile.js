@@ -6,53 +6,29 @@ import { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import { useParams, useNavigate } from "react-router-dom";
 import InitialLoader from "../../components/PageLoader/InitialLoader";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    Typography,
-} from "@mui/material";
-import styled from "styled-components";
-const StyledTableContainer = styled(TableContainer)`
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-    height: fit-content;
-    background-color: #f4f5f6 !important;
-`;
-
-const StyledTable = styled(Table)`
-    && {
-        border-collapse: collapse;
-        width: 100%;
-    }
-`;
-
-const StyledTableHeadCell = styled(TableCell)`
-    && {
-        font-weight: bold;
-    }
-`;
-
-const StyledTableCell = styled(TableCell)`
-    && {
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
-    }
-`;
+import PublicIcon from '@mui/icons-material/Public';
+import PlaceIcon from '@mui/icons-material/Place';
+import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
+import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 const ProviderProfile = () => {
     const { id } = useParams();
     const [providerDetails, setProviderDetails] = useState(null);
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const handleContact = () => {
+        const data = { email: providerDetails?.email, name: providerDetails?.name };
+        navigate(`/contact/provider/${id}`, { state: providerDetails });
+    }
+    const handleRate = () => {
+
+    }
     const fetchData = async () => {
         try {
-            const response = await axiosInstance.get("/users/details");
+            setLoading(true);
+            const response = await axiosInstance.get(`/search/provider/${id}`);
             setProviderDetails(response.data);
+            console.log(response.data);
+            console.log(response.data?.location?.coordinates[0])
             setLoading(false);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -61,7 +37,7 @@ const ProviderProfile = () => {
         }
     };
     useEffect(() => {
-        // fetchData();
+        fetchData();
     }, [id]);
     return (
         <>
@@ -75,83 +51,53 @@ const ProviderProfile = () => {
                             <img
                                 src="https://www.rover.com/cf-image-cdn/remote/images/people/NEZep0og/ouzfcxhlyx/original?width=450&height=450&quality=70&fit=cover"
                                 alt="userImage"
-                                height="240px"
-                                width="240px"
+                                height="250"
+                                width="250"
                             />
                         </div>
                         <div className={styles.infoDiv}>
-                            <h1>Name</h1>
-                            <p>place,city</p>
-                            <div style={{ marginTop: "0.5rem" }}>
-                                <Rating Rating={5} />
-                                <span>(5)</span>
-                            </div>
-                            <p>Mobile number</p>
-                            <div className={styles.buttonDiv}>
-                                <button>Contact Name</button>
-                                <button>Rate Experience</button>
-                            </div>
+                            <h1>{providerDetails?.name}</h1>
+                            <p><PublicIcon /> {providerDetails?.country}</p>
+                            <p><PlaceIcon sx={{ fontSize: '26px' }} /> {providerDetails?.state}, {providerDetails?.city}</p>
+                            <p><PhoneInTalkIcon /> {providerDetails?.mobileNum}</p>
+                            <p>
+                                <ThumbsUpDownIcon sx={{ marginRight: '5px', fontSize: '28px' }} /> <Rating Rating={5} />
+                            </p>
+                        </div>
+                        <div className={styles.buttonDiv}>
+                            <button onClick={handleContact} >Contact</button>
+                            <button>Rate Experience</button>
                         </div>
                     </div>
-                    <div className={styles.lowerMain}>
-                        <StyledTableContainer component={Paper}>
-                            <Typography variant="h4" gutterBottom>
-                                Services
-                            </Typography>
-                            <StyledTable>
-                                <TableHead>
-                                    <TableRow>
-                                        <StyledTableHeadCell>
-                                            Service
-                                        </StyledTableHeadCell>
-                                        <StyledTableHeadCell>
-                                            Price
-                                        </StyledTableHeadCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    <TableRow>
-                                        <StyledTableCell>
-                                            Boarding
-                                        </StyledTableCell>
-                                        <StyledTableCell>$50</StyledTableCell>
-                                    </TableRow>
-                                    {/* Add more rows for other services as needed */}
-                                </TableBody>
-                            </StyledTable>
-                        </StyledTableContainer>
-                        <div className={styles.ratingDiv}>
-                            <h1>Reviews</h1>
-                            <div className={styles.ratingCard}>
-                                <div className={styles.name_imageDiv}>
-                                    <img
-                                        src="https://images-eu.ssl-images-amazon.com/images/S/amazon-avatars-global/94af8113-410f-4d88-9f7e-9cc981ff415e._CR0,0,826,826_SX48_.jpg"
-                                        alt="r1"
-                                    />
-                                    <p>saipranith</p>
-                                </div>
-                                <div className={styles.rating}>
-                                    <Rating Rating={4} />
-                                </div>
-                                <div className={styles.ratingDescription}>
-                                    <p>VeryGood service</p>
-                                </div>
-                            </div>
-                            <div className={styles.ratingCard}>
-                                <div className={styles.name_imageDiv}>
-                                    <img
-                                        src="https://images-eu.ssl-images-amazon.com/images/S/amazon-avatars-global/94af8113-410f-4d88-9f7e-9cc981ff415e._CR0,0,826,826_SX48_.jpg"
-                                        alt="r1"
-                                    />
-                                    <p>saipranith</p>
-                                </div>
-                                <div className={styles.rating}>
-                                    <Rating Rating={3} />
-                                </div>
-                                <div className={styles.ratingDescription}>
-                                    <p>VeryGood service</p>
-                                </div>
-                            </div>
+                    <div className={styles.serviceDetails}>
+                        <h1>Services</h1>
+                        <div className={styles.servicesTable}>
+                            {providerDetails?.services.map((item, index) =>
+                                <div key={item?._id} className={styles.service}>
+                                    <p className={styles.first}>{item?.serviceType}</p>
+                                    <p className={styles.second}>{item?.petType}</p>
+                                    <p className={styles.third}>{item?.priceTicker}{item?.price}</p>
+                                </div>)
+                            }
+                        </div>
+                    </div>
+                    <div className={styles.mapouter}>
+                        <h1>Location</h1>
+                        <div className={styles.gmap_canvas}>
+                            <iframe
+                                title="map"
+                                className={styles.gmap_iframe}
+                                width="100%"
+                                frameborder="0"
+                                marginheight="0"
+                                marginwidth="0"
+                                src={`https://maps.google.com/maps?q=${providerDetails?.location?.coordinates[1]},${providerDetails?.location?.coordinates[0]}&hl=en&z=14&output=embed`}
+                            ></iframe>
+                        </div>
+                    </div>
+                    <div className={styles.reviews}>
+                        <div className={styles.review}>
+
                         </div>
                     </div>
                 </div>

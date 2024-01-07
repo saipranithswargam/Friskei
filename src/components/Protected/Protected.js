@@ -11,7 +11,12 @@ function Protected() {
     const navigate = useNavigate();
     useEffect(() => {
         if (!user.isLoggedIn) {
-            navigate("/auth/login");
+            if (user.type === 'user') {
+                navigate("/auth/userlogin");
+            }
+            if(user.type==='provider'){
+                navigate("/auth/providerlogin")
+            }
         }
         setLoading(false);
     }, [user]);

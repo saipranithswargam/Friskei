@@ -90,17 +90,59 @@ const ProviderDashboard = () => {
     }
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        axiosInstance.post("/providers/details", formData).then((response) => {
-            getServices();
-            console.log(response.data);
-        }).catch(err => {
-            toast.error("Error!", {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 3000,
+        axiosInstance.post("/providers/details", formData)
+            .then((response) => {
+                getServices();
+                console.log(response.data);
+
+                if (response.status === 200) {
+                    setShowModal(false);
+                    toast.success("Added Service Successfully", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 3000,
+                    });
+                } else {
+                    toast.error("An error occurred. Please try again.", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 3000,
+                    });
+                }
+            })
+            .catch((error) => {
+                toast.error("An error occurred. Please try again.", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 3000,
+                });
+
+                setShowModal(false);
+                console.error("API request failed:", error);
+
+                if (error.response) {
+                    console.error("Error response:", error.response.data);
+
+                    if (error.response.status === 400) {
+                        toast.error(error.response.data.message || "Bad Request", {
+                            position: toast.POSITION.TOP_RIGHT,
+                            autoClose: 3000,
+                        });
+                    } else if (error.response.status === 401) {
+                        toast.error("Unauthorized. Please log in.", {
+                            position: toast.POSITION.TOP_RIGHT,
+                            autoClose: 3000,
+                        });
+                    } else {
+                        toast.error("An unexpected error occurred. Please try again later.", {
+                            position: toast.POSITION.TOP_RIGHT,
+                            autoClose: 3000,
+                        });
+                    }
+                } else {
+                    console.error("Network error:", error.message);
+                }
             });
-            console.log(err);
-        })
     };
+
+
     const EditPencil = (
         <svg
             viewBox="0 0 24 24"
@@ -498,10 +540,10 @@ const ProviderDashboard = () => {
                                             <option value="PetTraining">
                                                 PetTraining
                                             </option>
-                                            <option value="VeterinaryCare">
+                                            <option value="PetVeternary">
                                                 VeterinaryCare
                                             </option>
-                                            <option value="Daycare">
+                                            <option value="PetCare">
                                                 Daycare
                                             </option>
                                             <option value="PetBreeding">
@@ -570,7 +612,6 @@ const ProviderDashboard = () => {
                                         >
                                             <option value="Cat">Cat</option>
                                             <option value="Dog">Dog</option>
-                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                     <div className={styles.submitButton}>

@@ -96,7 +96,7 @@ const LandingForm = () => {
     const [activeWalking, setActiveWalking] = React.useState(false);
     const [activeBreeding, setActiveBreeding] = React.useState(false);
     const [activeAdopt, setActiveAdopt] = React.useState(false);
-    const [serviceType, setServiceType] = React.useState("boarding");
+    const [serviceType, setServiceType] = React.useState("PetGrooming");
     const [location, setLocation] = React.useState("");
     const [cityName, setCityName] = React.useState("");
     const locationHandler = (event) => {
@@ -138,7 +138,7 @@ const LandingForm = () => {
         setActiveWalking(false);
         setActiveBreeding(false);
         setActiveAdopt(true);
-        setServiceType("petAdoption");
+        setServiceType("PetAdoption");
     };
 
     const groomingClickHandler = (event) => {
@@ -149,7 +149,7 @@ const LandingForm = () => {
         setActiveHouseSitting(false);
         setActiveWalking(false);
         setActiveBreeding(false);
-        setServiceType("petGrooming");
+        setServiceType("PetGrooming");
     };
 
     const trainingClickHandler = () => {
@@ -160,7 +160,7 @@ const LandingForm = () => {
         setActiveDropIn(false);
         setActiveWalking(false);
         setActiveBreeding(false);
-        setServiceType("petTraining");
+        setServiceType("PetTraining");
     };
 
     const walkingClickHandler = () => {
@@ -171,7 +171,7 @@ const LandingForm = () => {
         setActiveDayCare(false);
         setActiveWalking(false);
         setActiveBreeding(false);
-        setServiceType("petWalking");
+        setServiceType("PetWalking");
     };
 
     const vetClickHandler = () => {
@@ -182,7 +182,7 @@ const LandingForm = () => {
         setActiveBoarding(false);
         setActiveWalking(false);
         setActiveBreeding(false);
-        setServiceType("petVet");
+        setServiceType("PetVeternary");
     };
 
     const daycareClickHandler = () => {
@@ -193,7 +193,7 @@ const LandingForm = () => {
         setActiveHouseSitting(false);
         setActiveBoarding(false);
         setActiveBreeding(false);
-        setServiceType("petCare");
+        setServiceType("PetCare");
     };
 
     const breedingClickHandler = () => {
@@ -204,7 +204,7 @@ const LandingForm = () => {
         setActiveHouseSitting(false);
         setActiveBoarding(false);
         setActiveBreeding(true);
-        setServiceType("petBreeding");
+        setServiceType("PetBreeding");
     };
 
     const otherClickHandler = () => {
@@ -247,47 +247,58 @@ const LandingForm = () => {
     let activeBreedingStyles = activeBreeding ? styles.active : styles.breeding;
 
     const submitHandler = () => {
-        // console.log(selectedCity.label, selectedCountry.name, selectedState.name);
-        // return;
         if (!user.isLoggedIn) {
-            navigate("/login");
+            navigate("/auth/userlogin");
+            return;
         }
         let petType = "";
         if (selectedCat) {
-            petType = "cat";
-        }
-        if (selectOther) {
-            petType = "other";
+            petType = "Cat";
         }
         if (selectedDog) {
-            petType = "dog";
+            petType = "Dog";
         }
 
         console.log(serviceType, location, petType);
-        // let lowerLocation = location.toLowerCase();
         setLoading(true);
         if (locType === "city") {
             console.log(cityName);
             axiosInstance
-                .get(`/search/city/${cityName}/${serviceType}`)
+                .get(`/search/${serviceType}/${petType}/${selectedCountry.name}/${selectedState.name}/${selectedCity.label}/low`)
                 .then((response) => {
                     console.log(response);
+                    if (response.status !== 200) {
+                        setLoading(false);
+                    }
+                    console.log(response.data)
+                    const fullData = { data: response.data, serviceType: serviceType, petType: petType, locationType: 'city', country: selectedCountry.name, city: selectedCity.label, state: selectedState.name }
+                    navigate("/search", {
+                        state: fullData,
+                    });
+                    setLoading(false);
                 })
                 .catch((err) => {
                     console.log(err);
+                    setLoading(false);
                 });
         }
         if (locType === "geolocation") {
             axiosInstance
-                .get(`/search/location/${serviceType}/${longitude}/${latitude}`)
+                .get(`/search/${serviceType}/${longitude}/${latitude}/${5}/${petType}/low`)
                 .then((response) => {
                     if (response.status === 200) {
                         console.log(response.data);
-                        navigate("/search", { state: response.data });
+                        const fullData = { data: response.data, serviceType: serviceType, petType: petType, locationType: 'geolocation', latitude: latitude, longitude: longitude }
+                        navigate("/search", {
+                            state: fullData,
+                        });
+                        setLoading(false);
                     }
+                    setLoading(false);
                 })
                 .catch((err) => {
                     console.log(err);
+                    setLoading(false);
                 });
         }
     };

@@ -20,7 +20,6 @@ import Search from "./SearchResults/Search";
 import UserDashboard from "./Dashboards/UserDashboard";
 import ProviderLogin from "./AuthForms/ProviderLogin";
 import ProviderDashboard from "./Dashboards/ProviderDashboard";
-import EditService from "./Dashboards/EditService";
 import AboutUs from "./AboutUs/AboutUs";
 import ContactUs from "./ContactUs/ContactUs";
 import JoinUsMain from "./JoinUs/JoinUs";
@@ -31,6 +30,8 @@ import PageLoader from "./PageLoader/Loader";
 import Protected from "./Protected/Protected";
 import InitialLoader from "./PageLoader/InitialLoader";
 import AuthProtected from "./AuthProtected/AuthProtected";
+import ContactProvider from "../pages/ContactProvider/ContactProvider";
+import DogBreedSelect from "./DogBreedSelect/DogBreedSelect";
 function Navigation() {
     const user = useAppSelector((state) => state.user);
     const style = {
@@ -67,15 +68,23 @@ function Navigation() {
                 />
                 <Route path="/auth" element={<AuthProtected />}>
                     <Route
-                        path="login"
+                        path="userlogin"
                         element={
                             <React.Suspense fallback={<InitialLoader />}>
                                 <UserLogin />
                             </React.Suspense>
                         }
                     />
+                    <Route
+                        path="providerlogin"
+                        element={
+                            <React.Suspense fallback={<InitialLoader />}>
+                                <ProviderLogin />
+                            </React.Suspense>
+                        }
+                    />
+
                 </Route>
-                <Route element={<UserRegsiter />} path="/register" />
                 <Route element={<AboutUs />} path="/aboutus" />
                 <Route element={<ContactUs />} path="/contact" />
                 <Route element={<Search />} path="/search" />
@@ -134,9 +143,17 @@ function Navigation() {
                             />
                         </Route>
                     )}
+                    <Route path="contact/provider/:id">
+                        <Route
+                            path=""
+                            element={
+                                <React.Suspense fallback={<PageLoader />}>
+                                    <ContactProvider />
+                                </React.Suspense>
+                            }
+                        />
+                    </Route>
                 </Route>
-                <Route element={<ProviderLogin />} path="/providerlogin" />
-                <Route element={<EditService />} path="/editservice/:id" />
             </Routes>
         </>
     );
