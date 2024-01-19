@@ -264,7 +264,7 @@ const LandingForm = () => {
         if (locType === "city") {
             console.log(cityName);
             axiosInstance
-                .get(`/search/${serviceType}/${petType}/${selectedCountry.name}/${selectedState.name}/${selectedCity.label}/low`)
+                .get(`/search/citybased/${serviceType}/${petType}/${selectedCountry.name}/${selectedState.name}/${selectedCity.label}/low`)
                 .then((response) => {
                     console.log(response);
                     if (response.status !== 200) {
@@ -284,7 +284,7 @@ const LandingForm = () => {
         }
         if (locType === "geolocation") {
             axiosInstance
-                .get(`/search/${serviceType}/${longitude}/${latitude}/${5}/${petType}/low`)
+                .get(`/search/geolocation/${serviceType}/${longitude}/${latitude}/${5}/${petType}/low`)
                 .then((response) => {
                     if (response.status === 200) {
                         console.log(response.data);

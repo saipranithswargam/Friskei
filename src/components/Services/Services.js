@@ -5,53 +5,75 @@ import DogWalk from "./DogWalk.jpg";
 import DogJump from "./DogJumping.jpg";
 import Vet from "./Vet.jpg";
 import Breeder from "./Cats-in-a-basket_edited.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer";
+import axiosInstance from "../../api/axiosInstance";
+import { useAppSelector } from "../../app/hooks"
+import { useState } from "react";
 const cards = [
     {
         name: "Pet Grooming",
         src: Grooming,
-        link: "/joinus/register/petgroomer",
-        alt: "groomer",
+        alt: "PetGrooming",
         des: "Pamper your furry friend with our exclusive pet grooming services. We offer personalized care for a happy and healthy pet",
     },
     {
         name: "Pet Walking",
         src: DogWalk,
-        link: "/joinus/register/petwalker",
-        alt: "petwalker",
+        alt: "PetWalking",
         des: "Looking for exclusive pet walking services? Our professional team offers customized, personalized walks to meet your furry friend's every need.",
     },
     {
         name: "Pet Training",
         src: DogJump,
-        link: "/joinus/register/pettrainer",
-        alt: "pettrainer",
+        alt: "PetTraining",
         des: "Our exclusive pet training services offer personalized attention and proven methods to help your furry friend reach their full potential.",
     },
     {
         name: "Veterinary Care",
         src: Vet,
-        link: "/joinus/register/vet",
-        alt: "vet",
+        alt: "PetVeternary",
         des: "Our exclusive vet care services offer personalized care, emergency services, and state-of-the-art equipment for your furry friend.",
     },
     {
         name: "Daycare Facilities",
         src: DayCarer,
-        link: "/joinus/register/daycarer",
-        alt: "daycare",
+        alt: "PetCare",
         des: "Our exclusive services provide top-quality, personalized care to your day care facility. Trust us to nurture your pet's development.",
     },
     {
         name: "Pet Breeding",
         src: Breeder,
-        link: "/joinus/register/petbreeder",
-        alt: "breeder",
+        alt: "PetBreeding",
         des: "Our exclusive pet breeding services offer personalized care and attention to ensure your pet's health and happiness.",
     },
 ];
 const JoinUsPage = () => {
+    const user = useAppSelector((state) => state.user);
+    const navigate = useNavigate();
+    const [locading, setLoading] = useState();
+    console.log(user)
+    const handleClick = (service) => {
+        console.log(service)
+        axiosInstance
+            .get(`/search/citybased/${service}/${'Dog'}/${user.country}/${user.state}/${user.city}/low`)
+            .then((response) => {
+                console.log(response);
+                if (response.status !== 200) {
+                    setLoading(false);
+                }
+                console.log(response.data)
+                const fullData = { data: response.data, serviceType: service, petType: 'Dog', locationType: 'city', country: user.country, city: user.city, state: user.state }
+                navigate("/search", {
+                    state: fullData,
+                });
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                setLoading(false);
+            });
+    }
     return (
         <>
             <div className={styles.main}>
@@ -85,22 +107,16 @@ const JoinUsPage = () => {
                 </div>
                 <div className={styles.lower}>
                     {cards.map((doc) => (
-                        <Link
-                            to={doc.link}
-                            className={styles.cardLink}
-                            key={doc.alt}
-                        >
-                            <div className={styles.card}>
-                                <h4>{doc.name}</h4>
-                                <hr />
-                                <div className={styles.imageDiv}>
-                                    <img src={doc.src} alt={doc.alt} />
-                                </div>
-                                <div className={styles.desDiv}>
-                                    <p>{doc.des}</p>
-                                </div>
+                        <div className={styles.card} onClick={() => { handleClick(doc.alt) }}>
+                            <h4>{doc.name}</h4>
+                            <hr />
+                            <div className={styles.imageDiv}>
+                                <img src={doc.src} alt={doc.alt} />
                             </div>
-                        </Link>
+                            <div className={styles.desDiv}>
+                                <p>{doc.des}</p>
+                            </div>
+                        </div>
                     ))}
                 </div>
             </div>

@@ -15,6 +15,9 @@ import parsePhoneNumber from "libphonenumber-js";
 import ProfileImageUpdate from "./UpdateImage";
 const ProviderDashboard = () => {
     const user = useAppSelector((state) => state.user);
+    const [addNewService, SetAddNewService] = useState(false);
+    const [editService, SetEditService] = useState(false);
+    const [serviceId, SetServiceId] = useState('');
     const [loading, setLoading] = useState(false);
     const [countries, setCountries] = useState([]);
     const [states, setStates] = useState([]);
@@ -34,10 +37,17 @@ const ProviderDashboard = () => {
         "AUD",
         "CAD",
     ];
+    const resetModal = () => {
+        setFormData({
+            serviceType: "PetGrooming",
+            price: "",
+            petType: "Cat",
+            currency: "USD",
+        })
+    }
     const [formData, setFormData] = useState({
         serviceType: "PetGrooming",
         price: "",
-        note: "",
         petType: "Cat",
         currency: "USD",
     });
@@ -90,56 +100,113 @@ const ProviderDashboard = () => {
     }
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        axiosInstance.post("/providers/details", formData)
-            .then((response) => {
-                getServices();
-                console.log(response.data);
-
-                if (response.status === 200) {
-                    setShowModal(false);
-                    toast.success("Added Service Successfully", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 3000,
-                    });
-                } else {
-                    toast.error("An error occurred. Please try again.", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 3000,
-                    });
-                }
-            })
-            .catch((error) => {
-                toast.error("An error occurred. Please try again.", {
-                    position: toast.POSITION.TOP_RIGHT,
-                    autoClose: 3000,
-                });
-
-                setShowModal(false);
-                console.error("API request failed:", error);
-
-                if (error.response) {
-                    console.error("Error response:", error.response.data);
-
-                    if (error.response.status === 400) {
-                        toast.error(error.response.data.message || "Bad Request", {
-                            position: toast.POSITION.TOP_RIGHT,
-                            autoClose: 3000,
-                        });
-                    } else if (error.response.status === 401) {
-                        toast.error("Unauthorized. Please log in.", {
+        if (addNewService) {
+            axiosInstance.post("/providers/details", formData)
+                .then((response) => {
+                    console.log(response.data);
+                    SetAddNewService(false);
+                    if (response.status === 200) {
+                        getServices();
+                        setShowModal(false);
+                        toast.success("Added Service Successfully", {
                             position: toast.POSITION.TOP_RIGHT,
                             autoClose: 3000,
                         });
                     } else {
-                        toast.error("An unexpected error occurred. Please try again later.", {
+                        toast.error("An error occurred. Please try again.", {
                             position: toast.POSITION.TOP_RIGHT,
                             autoClose: 3000,
                         });
                     }
-                } else {
-                    console.error("Network error:", error.message);
-                }
-            });
+                })
+                .catch((error) => {
+                    SetAddNewService(false);
+                    toast.error("An error occurred. Please try again.", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 3000,
+                    });
+
+                    setShowModal(false);
+                    console.error("API request failed:", error);
+
+                    if (error.response) {
+                        console.error("Error response:", error.response.data);
+
+                        if (error.response.status === 400) {
+                            toast.error(error.response.data.message || "Bad Request", {
+                                position: toast.POSITION.TOP_RIGHT,
+                                autoClose: 3000,
+                            });
+                        } else if (error.response.status === 401) {
+                            toast.error("Unauthorized. Please log in.", {
+                                position: toast.POSITION.TOP_RIGHT,
+                                autoClose: 3000,
+                            });
+                        } else {
+                            toast.error("An unexpected error occurred. Please try again later.", {
+                                position: toast.POSITION.TOP_RIGHT,
+                                autoClose: 3000,
+                            });
+                        }
+                    } else {
+                        console.error("Network error:", error.message);
+                    }
+                });
+        }
+        if (editService) {
+            axiosInstance.post("/providers/updateService", { id: serviceId, ...formData })
+                .then((response) => {
+                    console.log(response.data);
+                    SetAddNewService(false);
+                    SetServiceId('');
+                    if (response.status === 200) {
+                        getServices();
+                        setShowModal(false);
+                        toast.success("Updated Service Successfully", {
+                            position: toast.POSITION.TOP_RIGHT,
+                            autoClose: 3000,
+                        });
+                    } else {
+                        toast.error("An error occurred. Please try again.", {
+                            position: toast.POSITION.TOP_RIGHT,
+                            autoClose: 3000,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    SetAddNewService(false);
+                    toast.error("An error occurred. Please try again.", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 3000,
+                    });
+
+                    setShowModal(false);
+                    console.error("API request failed:", error);
+
+                    if (error.response) {
+                        console.error("Error response:", error.response.data);
+
+                        if (error.response.status === 400) {
+                            toast.error(error.response.data.message || "Bad Request", {
+                                position: toast.POSITION.TOP_RIGHT,
+                                autoClose: 3000,
+                            });
+                        } else if (error.response.status === 401) {
+                            toast.error("Unauthorized. Please log in.", {
+                                position: toast.POSITION.TOP_RIGHT,
+                                autoClose: 3000,
+                            });
+                        } else {
+                            toast.error("An unexpected error occurred. Please try again later.", {
+                                position: toast.POSITION.TOP_RIGHT,
+                                autoClose: 3000,
+                            });
+                        }
+                    } else {
+                        console.error("Network error:", error.message);
+                    }
+                });
+        }
     };
 
 
@@ -192,8 +259,11 @@ const ProviderDashboard = () => {
     const editClickHandler = () => {
         setEditProfile(true);
     };
-    const showModalClickHandler = () => {
-        setShowModal(true);
+    const closeModalHandler = () => {
+        resetModal();
+        SetAddNewService(false);
+        SetEditService(false);
+        setShowModal(false);
     };
     const navigate = useNavigate();
     const [settings, setSettings] = useState(false);
@@ -261,6 +331,39 @@ const ProviderDashboard = () => {
                 });
             });
     };
+    const addServiceHandler = () => {
+        SetAddNewService(true);
+        setShowModal(true);
+    }
+    const editServiceHandler = (service) => {
+        SetServiceId(service._id);
+        setFormData({ serviceType: service.serviceType, petType: service.petType, price: service.price, currency: service.priceTicker });
+        SetEditService(true);
+        setShowModal(true);
+    }
+    const deleteServiceHandler = async (service) => {
+        try {
+            console.log(service);
+            const response = await axiosInstance.delete(`/providers/service/${service._id}`);
+
+            if (response.status === 200) {
+                getServices();
+                toast.success("Service Deleted Successfully", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 3000,
+                });
+            } else {
+                throw new Error(`Unexpected status code: ${response.status}`);
+            }
+        } catch (error) {
+            console.error('Error deleting service:', error.message);
+
+            toast.error("An error occurred while deleting the service", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 3000,
+            });
+        }
+    };
     useEffect(() => {
         resetFormData();
         getServices();
@@ -269,6 +372,7 @@ const ProviderDashboard = () => {
         ? styles.activeButton
         : styles.button;
     let activeReviewStyles = reviewActive ? styles.activeButton : styles.button;
+    console.log(addNewService, editService, serviceId);
     return (
         <>
             <Header />
@@ -479,28 +583,24 @@ const ProviderDashboard = () => {
                 )}
                 {reviewActive && (
                     <div className={styles.review}>
-                        <div className={styles.heading}>
-                            <h1>Services</h1>
-                        </div>
                         {!showModal && (
-                            <div className={styles.servicesListMain}>
-                                {services.map((doc, index) => (
-                                    <div className={styles.servicesList}>
-                                        <div
-                                            className={styles.serviceAddCard}
-                                        >
-                                            {doc.price}
-                                            { }
-                                        </div>
-                                    </div>
-                                ))}
-                                <div className={styles.servicesList}>
-                                    <div
-                                        className={styles.serviceAddCard}
-                                        onClick={showModalClickHandler}
-                                    >
-                                        {addCircularButton}
-                                    </div>
+                            <div className={styles.serviceDetails}>
+                                <h1>Services</h1>
+                                <div className={styles.servicesTable}>
+                                    {services.map((item, index) =>
+                                        <div key={item?._id} className={styles.service}>
+                                            <p className={styles.first}>{item?.serviceType}</p>
+                                            <p className={styles.second}>{item?.petType}</p>
+                                            <p className={styles.third}>{item?.priceTicker}{item?.price}</p>
+                                            <div>
+                                                <button onClick={() => { editServiceHandler(item) }} >Edit Service</button>
+                                                <button onClick={() => { deleteServiceHandler(item) }}>Delete Service</button>
+                                            </div>
+                                        </div>)
+                                    }
+                                </div>
+                                <div className={styles.serviceAddButton}>
+                                    <button onClick={addServiceHandler}>Add Service</button>
                                 </div>
                             </div>
                         )}
@@ -508,9 +608,7 @@ const ProviderDashboard = () => {
                             <div className={styles.formModal}>
                                 <button
                                     className={styles.closeModalButton}
-                                    onClick={() => {
-                                        setShowModal(false);
-                                    }}
+                                    onClick={closeModalHandler}
                                 >
                                     {closeCircularCross}
                                 </button>
@@ -587,7 +685,7 @@ const ProviderDashboard = () => {
                                             />
                                         </div>
                                     </div>
-                                    <div className={styles.inputGroup}>
+                                    {/* <div className={styles.inputGroup}>
                                         <label>Note</label>
                                         <input
                                             value={formData.note}
@@ -598,7 +696,7 @@ const ProviderDashboard = () => {
                                                 })
                                             }
                                         />
-                                    </div>
+                                    </div> */}
                                     <div className={styles.inputGroup}>
                                         <label>Pet Type</label>
                                         <select
